@@ -1,3 +1,3 @@
 Hello. In subpage.
 
-[ToMain](index.html)
+[ToMain](https://hl-ren.github.io/)
