@@ -1,7 +1,7 @@
 # Hello, web
 ## Welcome to my Pages
 
-- [Overview](pages/MyFirstSubpage.html)
+- [Hello,Web](pages/blog1.html)
 - [Resources](pages/resources.html)
 
 ---
