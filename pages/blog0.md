@@ -1,4 +1,4 @@
 # Second page.
 
 
-- [blog1](blog0.html)
+- [blog1](pages/blog0.html)
