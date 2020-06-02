@@ -1,3 +1,3 @@
 Hello. In subpage.
 
-[ToMain](index.md)
+[ToMain](index.html)
