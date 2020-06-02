@@ -1,11 +1,4 @@
-# Hello, web
 ## Welcome to my Pages
-
-- [Hello,Web](pages/blog1.html)
-- [Resources](pages/resources.html)
-
----
-layout: page
-title: simple site
-tagline: Easy websites with GitHub Pages
----
+Below is a list of content.
+- [Hello,Web,020620](pages/blog1.html)
+- [CV](pages/blog0.html)
