@@ -1,3 +1,5 @@
+# German 5000
+
 ## 1
 reich
 das Flugzeug
@@ -7,7 +9,7 @@ bekannt
 tief
 regeln
 die Bank
-der Professorn
+der Professoren
 der Partners
 das Opfer
 der See
@@ -61,7 +63,7 @@ der Besuch
 wohnen
 lieb
 persönlich
-die Entscheidungn
+die Entscheidungen
 interessant
 passen
 der Wind
@@ -72,7 +74,7 @@ verraten
 lagern
 kaputt
 das Dorf
-das Glasr
+das Glas
 nervös
 zuhause
 die Firma; die Firmen
@@ -104,7 +106,7 @@ schreien
 
 ## 2
 der Rat
-die Aufmerksamkeitn
+die Aufmerksamkeits
 heiß
 pro
 die Lage
@@ -129,7 +131,7 @@ drinnen
 der Computer
 verstecken
 das Verstecken
-die Königinen
+die Königinnen
 der Bericht
 miteinander
 zufrieden
@@ -145,7 +147,7 @@ der Ring
 die Gegend
 nah
 die Verbindungen
-das Kleidr
+das Kleid
 die Ecke
 das Radios
 das Eis
@@ -214,7 +216,7 @@ rauchen
 das Rauchen
 der Vogel
 verantwortlich
-das Dachr
+das Dach
 der Lehrer
 steigen
 stiften
@@ -377,7 +379,7 @@ verbringen
 der Garten
 der Mantel
 das Brot
-die Lösungn
+die Lösungen
 das Wetter
 schätzen
 der Champagner
@@ -417,7 +419,7 @@ das Ohrn
 ## 5
 der Berg
 die Rose
-die Erinnerungn
+die Erinnerungen
 normalerweise
 aufgeben
 der Ton
@@ -428,7 +430,7 @@ der Staaten
 stehlen
 einander
 merken
-der Direktorn
+der Direktorin
 der Kuchen
 wundervoll
 die Kohle
@@ -438,11 +440,11 @@ die Medizin
 das Videos
 scharf
 der Beruf
-das Hemdn
+das Hemden
 abholen
 trotz
 langweilig
-die Rechnungn
+die Rechnungen
 der Termin
 erlauben
 wetten
@@ -453,7 +455,7 @@ nieder
 selbstverständlich
 der Sturm
 lösen
-der Motorn
+der Motoren
 reiten
 funktionieren
 überprüfen
@@ -537,7 +539,7 @@ enthalten
 Mexiko
 auseinander
 das Verfahren
-die Sendungn
+die Sendungen
 packen
 die Heimat
 hingehen
@@ -549,12 +551,12 @@ fressen
 ausgezeichnet
 die Jacke
 hungrig
-die Kleidungn
+die Kleidungen
 aufgeregt
 getrennt
 die Absichtn
 die Aussage
-das Feldr
+das Feld
 schief
 die Mühe
 interessieren
@@ -578,7 +580,7 @@ die Not
 der Stil
 das Schlafzimmer
 fein
-das Grasr
+das Gras
 fehlen
 der Strom
 merkwürdig
@@ -593,7 +595,7 @@ der Müll
 riskieren
 anfassen
 der Staub
-der Narrnn
+der Narren
 der Vorschlag
 das Klos
 das Werk
@@ -692,7 +694,7 @@ das Gedächtnisse
 der Auftritt
 der Sand
 anstatt
-die Stellungn
+die Stellungen
 fürchten
 geraten
 deutlich
@@ -722,7 +724,7 @@ die Stärke
 geil
 der Donnerstag
 der Anteil
-die Unterhaltungn
+die Unterhaltungen
 
 
 
@@ -739,7 +741,7 @@ der Text
 taub
 berichten
 beseitigen
-das Mitgliedr
+das Mitglied
 derjenige
 angeblich
 schneiden
@@ -758,7 +760,7 @@ die Schulter
 der Krebs
 bequem
 ausziehen
-die Einladungn
+die Einladungen
 das Gerät
 schenken
 die Informationen
@@ -787,7 +789,7 @@ das Viertel
 real
 erscheinen
 sparen
-die Einstellungn
+die Einstellungen
 hässlich
 der Verdacht
 elf
@@ -819,7 +821,7 @@ sich verabschieden
 die Puppe
 die Universitätn
 der September
-das Schildr
+das Schild
 lecker
 steuern
 das Klavier
@@ -835,7 +837,7 @@ eindeutig
 aussteigen
 die Warnung
 anbieten
-der Patientnn
+der Patienten
 wenden,drehen
 die Dusche
 gewohnt
@@ -854,7 +856,7 @@ der Juli
 die Behandlung
 der April
 Juli
-die Neigungn
+die Neigungen
 ungemein
 der Unterricht
 der Verlust
@@ -874,7 +876,7 @@ hinsetzen
 der Apparat
 weggehen
 rund
-die Versicherungn
+die Versicherungen
 unterstützen (not befürworten)
 die Ankunft
 bewaffnung
@@ -893,7 +895,7 @@ der Turm
 leiten
 der Trainer
 pünktlich
-die Entfernungn
+die Entfernungen
 grausam
 die Werbungen
 der Empfang
@@ -927,7 +929,7 @@ die Befürchtungen
 bereuen
 das Netz
 das Zentrum; die Zentren
-das Huhnr
+das Huhn
 das Ergebnisse
 die Blume
 die Unis
@@ -994,7 +996,7 @@ der Appetit
 bilden
 der Begriff
 großzügig
-der Autorn
+der Autoren
 die Transparenz
 der Mittwoch
 die Maus
@@ -1032,9 +1034,9 @@ die Gegenwart
 der Juni
 fegen
 der Lohn
-der Bärnn
+der Bären
 schämen
-das Talr
+das Tal
 
 
 
@@ -1093,7 +1095,7 @@ die Lampe
 das Cafés
 der Musiker
 fischen
-die Ausbildungn
+die Ausbildungs
 die Geschwindigkeitn
 lehren
 der Saft
@@ -1127,18 +1129,18 @@ fällen
 existieren
 vorhanden
 aufmerksam
-die Kulturn
+die Kulturen
 die Tradition
 die Mannschaftn
 das Bewusstsein
 auftauchen
-die Rettungn
+die Rettungs
 ordentlich
 der Alptraum
 allzu
 das Objekt
 ausrichten
-die Stirnn
+die Stirn
 
 
 
@@ -1182,9 +1184,9 @@ höflich
 eröffnen
 ausgeben
 lediglich
-das Amtr
+das Amt
 der Schnaps
-das Blattr
+das Blatt
 das Golf
 die Pfeife
 der Zahnarzt
@@ -1197,7 +1199,7 @@ unterbrechen
 löschen
 Dezember
 Kanada
-die Prüfungn
+die Prüfungen
 breit
 grüßen
 rausgehen
@@ -1211,7 +1213,7 @@ dünn
 die Telefonnummer
 hinauf
 der Reis
-das Brettr
+das Brett
 das Internet
 März
 beherrschen
@@ -1238,7 +1240,7 @@ die Bevölkerungs
 die Persönlichkeitn
 der Schneider
 bedienen
-die Villa; die Villain
+die Villa; die Villa In
 entdecken
 solcher; solches; solche
 gelangen
@@ -1292,7 +1294,7 @@ die Therapie
 hinlegen
 das Rezept
 die Produktion
-die Landungn
+die Landungs
 der Vertreter
 kotzen
 der Nachbar
@@ -1304,11 +1306,11 @@ rasen
 der Umschlag
 vergangen
 das Kaninchen
-die Versammlungn
+die Versammlungen
 geschieden
 der Pfad
 klagen
-das Auslander
+das Ausländer
 das Datum; die Daten
 das Magazin
 das Kompliment
@@ -1326,7 +1328,7 @@ wegnehmen, entnehmen
 der Salat
 die Krankenschwester
 die Mode
-die Erfindungn
+die Erfindungen
 übernachten
 die Möbel
 die Ente
@@ -1397,7 +1399,7 @@ das Kissen
 die Werkstatt
 ausdrücken
 besoffen
-die Konferenzn
+die Konferenzen
 ohnehin
 verlaufen
 der Ausflug
@@ -1415,17 +1417,17 @@ der Stall
 die Verwandte
 die Länge
 das Missverständnisse
-die Haltungn
+die Haltungen
 die Medien
-die Frisurn
-die Zeuginen
+die Frisuren
+die Zeuginnen
 die Eifersucht
 der Honig
 empfinden
 der Irre
 der Detektiv
 harmlos
-das Kleingeldr
+das Kleingeld
 Polen
 hilfreich
 empfehlen
@@ -1574,7 +1576,7 @@ die Kreditkarte
 neidisch
 die Analyse
 beachten
-der Studentnn
+der Studenten
 die Autobahn
 entgehen,entkommen, flüchten
 die Masse
@@ -1584,7 +1586,7 @@ beeindrucken
 vorschlagen
 die Strategie
 hoffnungslos
-die Kommissionn
+die Kommission
 die Zeile
 fotografieren
 die Messe
@@ -1681,7 +1683,7 @@ unabhängig
 das Lebensmittel
 blond
 der Klubs
-die Sängerinen
+die Sängerinnen
 der Chor
 aufräumen
 die Komödie
@@ -1729,8 +1731,8 @@ servieren
 sorgfältig
 das Kennzeichen
 der Russe
-der Fotografnn
-das Lammr
+der Fotograf
+das Lamm
 gebildet
 das Plastik
 die Umweltn
@@ -1747,7 +1749,7 @@ versichern
 der Passagier
 das Feuerwerk
 die Kurve
-der Journalistnn
+der Journalisten
 sentimental
 das Bedürfnisse
 hierfür
@@ -1759,9 +1761,9 @@ der Bekannte
 nachmittags
 die Apotheke
 die Geige
-die Bildungn
+die Bildungs
 München
-der Produzentnn
+der Produzenten
 golden
 
 
@@ -1776,7 +1778,7 @@ international
 der Hörer
 die Verletzungen
 der Verband
-die Kommunikationn
+die Kommunikation
 die Chemie
 männlich
 die Abkürzungen (Abk.)
@@ -1811,7 +1813,7 @@ die Badewanne
 die Formel
 das Klimata
 die Uhrzeitn
-die Literaturn
+die Literaturen
 die Erziehungs
 der BHs
 das Obst
@@ -1842,7 +1844,7 @@ der Umgang
 ursprünglich
 die Vase
 der Schal or -s
-die Nachbarinen
+die Nachbarinnen
 die Jeans
 arabisch
 vermuten
@@ -1866,7 +1868,7 @@ sichtbar
 der Ratschlag
 der Rechtsanwalt
 gefährden
-die Kellnerinen
+die Kellnerinnen
 
 
 
@@ -1905,12 +1907,12 @@ die Wurst
 sofern
 das Argument
 winzig
-die Umarmungn
+die Umarmungen
 niedrig
 der Bund
 durstig
 anzünden
-das Streichholzr
+das Streichholz
 enorm
 der Schweiß
 die Dauer
@@ -1927,7 +1929,7 @@ der Terrorist
 die Notizen
 der Gipfel
 das Weltall,Universum, Weltraum
-die Packungn
+die Packungs
 das Drittel
 gütig
 der Gastgeber
@@ -1993,7 +1995,7 @@ der Flugplatz
 der Orangensaft
 der Mieter
 tanken
-die Ausstellungn
+die Ausstellungen
 der Puddings
 Ireland
 der Frost
@@ -2004,7 +2006,7 @@ backen
 das Popcorn
 aufsetzen
 Ungarn
-die Heizungn
+die Heizungs
 die Taschenlampe
 der Felsen
 politisch
@@ -2029,7 +2031,7 @@ die Türkei
 das Frühjahr
 einpacken
 Latein
-die Haustürn
+die Haustüren
 die Erkältungs
 der Briefkasten
 teilweise
@@ -2041,7 +2043,7 @@ kopieren
 die Industrie
 der Wohlstand
 die Lupe
-der Skir
+der Ski
 die Region
 der Slips
 reduziert
@@ -2057,7 +2059,7 @@ verhören, befragen, ausfragen
 der Kanzler
 der Scanner
 die Stiefmutter
-die Investitionn
+die Investitionen
 modern
 das Arbeitszimmer
 verstärken
@@ -2127,7 +2129,7 @@ unerhört
 die Verwaltungs
 tätig
 der Arbeitgeber
-das Kaufhausr
+das Kaufhaus
 das Medikament
 ausfüllen
 die Bremse
@@ -2154,7 +2156,7 @@ versammeln
 wegrennen
 die Enkelin
 die Gabel
-das Wachstumr
+das Wachstum
 griechisch
 die Dimensionen
 schlank
@@ -2185,7 +2187,7 @@ der Oberst
 ## 22
 flirten
 die Taktikn
-die Existenzn
+die Existenzen
 der Heiligabend
 der Schreiber
 sympathisch
@@ -2238,15 +2240,15 @@ die Hausfrauen
 beschämt
 kritisieren
 der Lebensunterhalt
-der Kandidatnn
+der Kandidaten
 zornig
 die Darstellungen
 die Freundlichkeit
 die Banane
 undankbar
 das Nachthemden
-der Elefantnn
-das Einhornr
+der Elefant
+das Einhorn
 der Feiertag
 die Tablette
 das Parlament
@@ -2257,9 +2259,9 @@ belasten
 katholisch
 der Arbeitsplatz
 der Ochse
-der Touristnn
+der Touristen
 erweitert
-die Chefinen
+die Chefinnen
 die Grundschule
 die Krankenpflege
 der Entwurf
@@ -2301,7 +2303,7 @@ die Schwiegermutter
 auspacken
 der Durchschnitt
 erfassen
-die Vorlesungn
+die Vorlesungen
 aufessen
 der Bleistift
 die Flöte
@@ -2380,10 +2382,10 @@ die Shorts
 die Salamis
 die Zahnpasta
 die Belastung
-die Kolleginen
+die Kolleginnen
 die Reklame
 dröhnen
-die Reparaturn
+die Reparaturen
 die Fremdsprache
 die DDR
 das Pfand
@@ -2403,19 +2405,19 @@ die Saunas
 buchstabieren
 das Konsulat
 die Kartoffel
-das Treppenhausr
+das Treppenhaus
 die Hochschule
 der Schnabel
 der Toaster
 das Gymnasium; die Gymnasien
-das Taschengeldr
+das Taschengeld
 der Vormittag
 vorbeigehen
 erzielen
 donnern
 ergeben
 die Überwachungs
-die Beerdigungn
+die Beerdigungen
 umkommen
 vereinbaren
 der Ablauf
@@ -2439,7 +2441,7 @@ jemanden kleiden
 flüchtig
 hineingehen
 der Millimeter
-das Kalbr
+das Kalb R
 das Getue
 qualifiziert
 jährlich
@@ -2466,7 +2468,7 @@ der Versuch
 gefährlich
 außerdem
 legen
-der Präsidentnn
+der Präsident
 die Person
 nochmal
 perfekt
@@ -2514,7 +2516,7 @@ festlegen
 der Nichtsnutz
 die Tätigkeitn
 einführen
-die Buchhandlungn
+die Buchhandlungen
 die Umfrage
 entwerfen
 der Lebensstil
@@ -2526,7 +2528,7 @@ einreichen
 abfahren
 joggen
 das Klopapier
-das Postamtr
+das Postamt
 die Olive
 der Reisende
 das Thermometer
@@ -2545,7 +2547,7 @@ Portugal
 lebhaft
 der Abgeordnete
 der Briefträger
-der Komponistnn
+der Komponist
 der Urgroßvater
 der Acker
 mittlere
@@ -2560,7 +2562,7 @@ stürmisch
 gesetzlich
 Finnland
 der Rotwein
-die Zensurn
+die Zensuren
 renovieren
 die Zugabe
 der Regenmantel
@@ -2606,7 +2608,7 @@ nachweisen
 das Abitur
 vorgeben
 Kolumbien
-das Stichwortr
+das Stichwort
 die Auseinandersetzungen
 das Babysitten
 unehrlich
@@ -2628,7 +2630,7 @@ beschränken
 tolerieren
 unangenehm
 die Schrecken
-der Dirigentn
+der Dirigentin
 der Handwerker
 der Sketch
 der Gitarrist (male)nn
@@ -2688,7 +2690,7 @@ das Wunderkind
 windig
 der Jockeys
 die Geldstrafe
-der Seniorn
+der Senioren
 schneien
 umstellen
 die Vorderseite
@@ -2705,7 +2707,7 @@ das Reisebüros
 ## 27
 der Essig
 anprobieren
-der Moderatorn
+der Moderatorin
 ermüdend
 die Halskette
 Norwegen
@@ -2717,7 +2719,7 @@ der Ohrring
 der Wetterbericht
 die Ausdauer
 der Nachteil
-die Expertinen
+die Expertinnen
 die Mithilfe
 brandneu
 das Diplom
@@ -2727,7 +2729,7 @@ künftig
 färben
 einigermaßen
 zerfallen
-der Athletnn
+der Athleten
 zumal
 die Synagoge
 der Apfelkuchen
@@ -2785,7 +2787,7 @@ die Gebühren
 die Russinen
 die Alpen
 populär
-die Verpackungn
+die Verpackungen
 der Rüssel
 bewölkt
 entsorgen
@@ -2822,7 +2824,7 @@ das Olivenöl
 zunehmend
 die Vorspeise
 das Mikroskop
-die Vorwahln
+die Vorwahlen
 der Vorsatz
 der Abwasch
 die Mikrowelle
@@ -2841,7 +2843,7 @@ begründen
 die Straßenbahn
 der Brunches
 die Buche
-die Kassiererinen
+die Kassiererinnen
 die Warze
 wirksam
 die Aufforderungen
@@ -2879,13 +2881,13 @@ das Stadtzentrum; die Stadtzentren
 einordnen
 die Spalte
 selbstständig
-der Gasomethingof
+der Ga Something Of
 die Untertasse
 duzen
 das Bewerbungsgespräch
 gesellig
 das Referat
-die Anmeldungn
+die Anmeldungen
 die Tastatur
 verbrauchen
 kombinieren
@@ -2944,7 +2946,7 @@ die Forderungen
 erfordern
 militärisch
 gurgeln
-das Namensschildr
+das Namensschild
 elektronisch
 die Nudel
 der Treibhauseffekt
@@ -2957,7 +2959,7 @@ vorgehen
 die Annäherungen
 bürsten
 tolerant
-die Popmusikn
+die Popmusic N
 überwiegend
 der Schlager
 die Vorschaun
@@ -2979,7 +2981,7 @@ die Broschüre
 prägen
 Rumänien
 gesellschaftlich
-die Italienerinen
+die Italienerinnen
 selbstlos
 umsteigen
 der Brokkoli
@@ -2989,7 +2991,7 @@ die Schlaftablette
 monatlich
 die Konditorei
 der Schuldschein
-der Bankdirektorn
+der Bankdirektoren
 der Teig
 fade
 schütten
@@ -3001,7 +3003,7 @@ der Schlüsselbund
 die Sünde
 der Nachttisch
 der Krimis
-die Auswirkungn
+die Auswirkungen
 der Bizeps
 die Metzgerei
 abtrocknen
@@ -3018,7 +3020,7 @@ der Fahrplan
 zusammenhängen
 irisch
 der Dokumentarfilm
-der Projektorn
+der Projektoren
 langfristig
 brünett
 die Startseite
@@ -3121,7 +3123,7 @@ der Dosenöffner
 
 ## 31
 übermitteln
-die Postleitzahln
+die Postleitzahlen
 der Luftdruck
 einwerfen
 rostig
@@ -3130,7 +3132,7 @@ der Abfalleimer
 kuschelig
 die Grafik
 die Modenschau
-die Verschmutzungn
+die Verschmutzungen
 gründlich
 unregelmäßig
 unterstreichen
@@ -3151,7 +3153,7 @@ der Harz
 der Stundenplan
 die Ode
 lebenswichtig
-das Sozialamtr
+das Sozialamt
 die Einnahme
 vorwiegend
 die Erfrischungen
@@ -3169,10 +3171,10 @@ der Sitzplatz
 abhaken
 das Doppelbettn
 der Büstenhalter
-das Tischtuchr
+das Tischtuch R
 eintauchen
 der Untergrund
-das Ferienhausr
+das Ferienhaus
 der Waschsalons
 Serbien
 verknüpfen
@@ -3201,8 +3203,8 @@ zensiert
 der Freundeskreis
 der Teelöffel
 zwangsläufig
-die Anwendungn
-die Dienstleistungn
+die Anwendungen
+die Dienstleistungen
 stinklangweilig
 der Muttertag
 regional
@@ -3243,7 +3245,7 @@ der Wettlauf
 das Lampenfieber
 der Tennisplatz
 farblos
-die Einwanderungn
+die Einwanderungs
 die Geburtstagskarte
 durchlesen
 überschwemmen
@@ -3253,9 +3255,9 @@ spezifisch
 dumpf
 der Erste Weltkrieg
 verschmutzen
-die Türkinen
+die Türkinnen
 kulturell
-das Wohnhausr
+das Wohnhaus
 tipptopp
 nachfüllen
 das Kochbuch
@@ -3287,7 +3289,7 @@ das Scheckheft
 die Kontaktlinse
 herfahren
 die Datenbankn
-die Volksmusikn
+die Volksmusig
 das Mietshäuser
 mütterlicherseits
 der Automechaniker
@@ -3296,7 +3298,7 @@ die Aktiengesellschaftn
 das Bücherregal
 die Botanik
 der Gemüsehändler
-die Relativitätsomethingeorie
+die Relativität Somethingeorie
 die Verhütungs
 das Waschpulver
 der Gasherd
@@ -3306,9 +3308,9 @@ die Gaststätte
 die Furche
 holländisch
 die Plakatwand
-der Ministerpräsidentnn
+der Ministerpräsident
 das Skilaufen
-die Pianistinen
+die Pianisten
 die Hausaufgabe
 die Rechtskurve
 der Wegfall
@@ -3316,7 +3318,7 @@ die Geographie
 galoppieren
 die Komposition
 der Igel
-das Schimpfwortr
+das Schimpfwort
 die Klarinette
 das Büfetts
 preiswert
@@ -3353,7 +3355,7 @@ der Rowdys
 der Ruhm
 der Rasierer
 sooft
-das Steuerradr
+das Steuerrad
 ausreichend
 schlaflos
 der Farbfernseher
@@ -3368,19 +3370,19 @@ die Diele
 der Fremdenführer
 der Tausendfüßler
 jahraus; jahrein
-die Fassungn
+die Fassungen
 der Kork
 das Anzeichen
 der Walkman; die Walkmen
 die Aufheiternden
-die Sitzungn
+die Sitzungen
 rosarot
 herunterfallen
 das Sparkontos
 uneben
 euphorisch
 die Staatskasse
-das Taschenbuchr
+das Taschenbuch
 seidig
 der Stadtplan
 würzig
@@ -3396,7 +3398,7 @@ magersüchtig
 beständig
 das Spülbecken
 der Schopf
-die Musikerinen
+die Musikerinnen
 das Computerspiel
 die Bildhauerin
 der Griff
@@ -3419,7 +3421,7 @@ die Zwischenprüfungen
 der Gourmets
 verschwenderisch
 ökonomisch
-das Fahrgeldr
+das Fahrgeld
 die Mitgliedschaftn
 tödlich
 das Telefongespräch
@@ -3503,7 +3505,7 @@ das Grundgesetz
 der Blumenhändler
 die Gärtnerinnen
 der Anbieter
-die Friseurinen
+die Friseurinnen
 die Nähmaschine
 der Vorstand
 der Brieffreund
@@ -3511,7 +3513,7 @@ schneeweiß
 stabil
 der Backstein
 profitieren
-die Einbrecherinen
+die Einbrecherinnen
 die Kritiker Linen
 das Substantiv
 der Reisebegleiter
@@ -3543,9 +3545,9 @@ der Turnschuh
 der Buchenwald
 der Fußweg
 windstill
-die Entwicklungn
+die Entwicklungen
 verkünden
-die Neuerungn
+die Neuerungen
 der Zeichentrickfilm
 das Spülmittel
 zusammenbinden
@@ -3557,8 +3559,8 @@ die Geschwindigkeitsbegrenzungen
 der Luftschutzkeller
 der Auswanderer
 die Eisenbahnlinie
-die Griechinen
-das Weinglasr
+die Griechinnen
+das Weinglas
 enterben
 das Mitbringsel
 die Waschküche
@@ -3590,7 +3592,7 @@ die Erzählerinnen
 die Erdkunde
 der Hundehaufen
 das Alltagsleben
-die Sandburgn
+die Sandburgen
 Estland
 der Schnellimbiss
 nackt
@@ -3621,7 +3623,7 @@ schwarzfahren
 der Weihnachtsfeiertag
 die Dampflokomotive
 veränderlich
-das Pflichtfachr
+das Pflichtfach
 das Schwarzbrot
 kürzen
 vielfältig
@@ -3629,7 +3631,7 @@ das Regenwetter
 kommunistisch
 der Mittelstand
 touristisch
-die Komponistinen
+die Komponisten
 der Hockeyschläger
 die Akkus
 der Gastarbeiter
@@ -3662,7 +3664,7 @@ der Personenwagen
 schlüpfrig
 wolkig
 die Abbildungen
-der Emigrantnn
+der Emigranten
 die Fabel
 das Schulzeugnisse
 zuordnen
@@ -3673,7 +3675,7 @@ die Klassenarbeitn
 jobben
 hageln
 der Fensterladen
-das Schaubildr
+das Schaubild
 der Klapptisch
 die vorgehensweise
 das Umland
@@ -3701,7 +3703,7 @@ die Buslinie
 Liechtenstein
 verwandeln
 das Gerücht
-die Seniorinen
+die Seniorinnen
 der Staatschefs
 proklamieren
 das Junkfoods
@@ -3799,7 +3801,7 @@ der Ortsnames
 die Dreiergruppe
 die Peseta; die Peseten
 einschmieren
-die Residenzn
+die Residenzen
 emigrieren
 nieseln
 der Winterschlussverkauf
@@ -3835,7 +3837,7 @@ sich in jemand verlieben
 die klassische Musik
 aufs Land
 sich die Haare trocknen
-Sie ist eine Nerv Tante.
+Sie ist eine Nervige Tante.
 der Stab
 die Übertragungen
 der Klappstuhl
@@ -3868,7 +3870,7 @@ sich langweilen
 die Gießkanne
 fallen lassen
 zusammenstoßen
-der Familiennames
+der Familiennamens
 begründet
 um ... zu ...
 der Wohnraum
@@ -3925,7 +3927,7 @@ Das ist echt toll.
 sich etwas vorstellen
 sämtlich
 der Südpol
-die Empfehlungn
+die Empfehlungen
 neuseeländisch
 anonym
 der Ruf
@@ -4130,7 +4132,7 @@ die Ähnlichkeitn
 illegal
 zu Weihnachten
 der Standpunkt
-das Reformhausr
+das Reformhaus
 keinerlei
 Verzeihung!
 die Weltfirma; die Weltfirmen
@@ -4171,7 +4173,7 @@ radikal
 
 ## 41
 leihen
-die Auswanderungn
+die Auswanderungen
 der Darsteller
 die Scheidungen
 der Flugbegleiter
@@ -4254,7 +4256,7 @@ zum Mittagessen
 der Fahrradhelm
 eine Glatze bekommen
 um Rat fragen
-das Lexicon; die Lexica
+das Lexikon; die Lexika
 damalig
 stattdessen
 zum Abendessen
@@ -4280,10 +4282,10 @@ Neuseeland
 Frohe Weihnachten!
 ins Bett
 eines Tages
-wieder verwerten
+wiederverwerten
 der Nachweis
 sonnenbaden
-die Aufregungn
+die Aufregungen
 jemanden diskriminieren
 Wie ist das Wetter?
 die Gabe
@@ -4306,7 +4308,7 @@ Mist!
 das Fußballmatchs
 noch einmal
 nichts als Ärger
-die Anwendungn
+die Anwendungen
 beeindruckend
 das Gewissen
 in aller Ruhe
@@ -4349,7 +4351,7 @@ der Jahrestag
 die verstärkungen
 dort unten
 sexuell
-Die Erwartungn
+Die Erwartungen
 die Buchung
 Bitte schön!
 Viel Glück!
@@ -4465,7 +4467,7 @@ der Anbauten
 jeglicher; (jegliche; jegliches)
 schaden
 grenzen an
-die Betrachtungn
+die Betrachtungen
 in der Tat
 die herkunft
 an bord
@@ -4475,7 +4477,7 @@ die Überraschungen
 Wie heißen Sie?
 der Studiengang
 danklos
-die Existenzn
+die Existenzen
 Kein Problem!
 der Zauber
 der Deals
@@ -4487,7 +4489,7 @@ Guten Abend!
 ## 44
 das Seil
 einzigartig
-Ski laufen
+Skilaufen
 so genannt
 genauso gut
 auspfeifen
@@ -4503,7 +4505,7 @@ bestreuen
 Guten Tag!
 meiner Meinung nach
 die Maßnahme
-die Entdeckungn
+die Entdeckungen
 heute Nachmittag
 in der Öffentlichkeit
 Viertel vor elf
@@ -4537,7 +4539,7 @@ vorbei sein
 sich ausruhen
 z.B. (zum Beispiel)
 die Übersetzungen
-die Kanzlerinen
+die Kanzlerinnen
 sich anziehen
 dort drüben
 mit einem Mal
@@ -4577,10 +4579,10 @@ bedroht (past p.)
 der Gesetzgeber
 versetzen
 fertig schreiben
-der Moderatorn
+der Moderatorin
 der Beschluss; -e
 die Todesstrafe; n
-die Genehmigungn
+die Genehmigungen
 vorstellbar
 schrittweise
 die Freiheitsstrafe; n
@@ -4609,4 +4611,3 @@ die Freigabe
 der Alarm
 ausreichen
 das Sein
-
