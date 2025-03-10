@@ -14,3 +14,5 @@ Here’s another block equation:
 $$ E = mc^2 $$
 
 Learn more about me and my work!
+
+[Back to Home](index.md)
