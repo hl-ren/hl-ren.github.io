@@ -9,4 +9,6 @@ This is a simple article with a LaTeX equation:
 
 $$ F = ma $$
 
-Inline equation: $E = mc^2$
+Inline equation: $$E = mc^2$$
+
+$$\sqrt{\frac{12}{x y \sin(x)}}$$
