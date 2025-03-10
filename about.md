@@ -15,4 +15,7 @@ $$ E = mc^2 $$
 
 Learn more about me and my work!
 
-[Back to Home](index.md)
+Feel free to reach out or explore my projects.
+
+[Back to Home](/)
+
