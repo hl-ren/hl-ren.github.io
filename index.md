@@ -14,6 +14,10 @@ Check out my other pages:
 
 Enjoy!
 
+$\frac{x}{y}$
+
+中文
+
 $$ F = ma $$
 
 Inline equation: $$E = mc^2$$
