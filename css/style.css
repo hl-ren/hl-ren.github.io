@@ -1,30 +1,33 @@
 /* Global styles */
 body {
-    font-family: Arial, sans-serif;  /* Change the font family */
-    font-size: 16px;                /* Change the base font size */
-    background-color: #f4f4f4;      /* Light gray background */
-    color: #333;                    /* Dark text color */
-    line-height: 1.6;                /* Spacing between lines */
+    font-family: 'Roboto', sans-serif;  /* Google Font for body */
+    font-size: 16px;                    /* Base font size */
+    background-color: #f4f4f4;          /* Light gray background */
+    color: #333;                        /* Dark text color */
+    line-height: 1.6;                   /* Spacing between lines */
     margin: 0;
     padding: 0;
 }
 
 /* Header styles */
 h1, h2, h3 {
-    font-family: 'Georgia', serif;  /* Custom font for headers */
-    color: #2c3e50;                 /* Darker color for headers */
+    font-family: 'Georgia', serif;      /* Custom font for headers */
+    color: #2c3e50;                     /* Darker color for headers */
 }
 
 h1 {
-    font-size: 2em; /* Adjust the font size of h1 */
+    font-size: 2.5em;                   /* Larger font size for h1 */
+    margin-bottom: 0.5em;
 }
 
 h2 {
-    font-size: 1.5em; /* Adjust the font size of h2 */
+    font-size: 2em;                     /* Font size for h2 */
+    margin-bottom: 0.5em;
 }
 
 h3 {
-    font-size: 1.2em; /* Adjust the font size of h3 */
+    font-size: 1.5em;                   /* Font size for h3 */
+    margin-bottom: 0.5em;
 }
 
 /* Navigation bar styles */
@@ -37,6 +40,7 @@ nav ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
+    margin: 0;
 }
 
 nav ul li {
@@ -56,15 +60,16 @@ nav ul li a:hover {
     color: black;
 }
 
-/* Add some spacing to the content */
+/* Main content area */
 .content {
     margin: 20px;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
 }
 
-/* Footer styles (optional) */
+/* Footer styles */
 footer {
     text-align: center;
     padding: 20px;
@@ -72,3 +77,41 @@ footer {
     color: white;
 }
 
+/* Optional styles for links */
+a {
+    color: #3498db;                     /* Blue link color */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2c3e50;                     /* Dark color on hover */
+    text-decoration: underline;
+}
+
+/* Background image for body (optional) */
+body {
+    background-image: url('https://example.com/background.jpg');  /* Replace with your image */
+    background-size: cover;
+    background-position: center;
+}
+
+/* Spacing and layout for larger screens */
+@media (min-width: 768px) {
+    .content {
+        max-width: 800px;
+        margin: 20px auto;  /* Center content on larger screens */
+    }
+}
+
+/* Make sure the page elements are responsive */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
