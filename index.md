@@ -1,6 +1,6 @@
 ---
 layout: default
-title: My First Article
+title: Ren's Homepage
 ---
 
 # Welcome to My Homepage!
