@@ -3,9 +3,16 @@ layout: default
 title: My First Article
 ---
 
-# My First Article
+# Welcome to My Homepage!
 
-This is a simple article with a LaTeX equation:
+This is the main page of my website.
+
+Check out my other pages:
+- [About Me](about.md)
+- [Contact](contact.md)
+- [My Projects](projects.md)
+
+Enjoy!
 
 $$ F = ma $$
 
