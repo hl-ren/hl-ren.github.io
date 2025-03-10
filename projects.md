@@ -7,6 +7,6 @@ title: Projects
 
 ...
 
-<img src="/images/hydraulic fracture, dh-pd.gif" alt="My Image" width="200">
+<img src="/images/hydraulic fracture, dh-pd.gif" alt="My Image" width="500">
 
 [Back to Home](index.md)
