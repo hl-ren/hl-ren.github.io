@@ -1,1 +1,8 @@
-some projects
+---
+layout: default
+title: Projects
+---
+
+# Some projects
+
+...
