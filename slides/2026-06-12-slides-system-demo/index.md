@@ -30,6 +30,10 @@ Browser-first decks for posts, tools, research notes, and teaching.
 
 ### Deck folder
 
+- Keep one deck in one folder
+- Put `index.md` at the folder root
+- Split pages with `---`
+
 ```text
 slides/YYYY-MM-DD-slug/
   index.md
@@ -42,7 +46,9 @@ slides/YYYY-MM-DD-slug/
 
 ![Slides system diagram](images/slides-system.svg)
 
-Keep figures, videos, and data next to the deck.
+- Keep figures near the deck
+- Use relative image paths
+- Copy the folder as one unit
 
 ---
 
