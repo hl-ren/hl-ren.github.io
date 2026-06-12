@@ -17,11 +17,12 @@ Browser-first decks for posts, tools, research notes, and teaching.
 
 ---
 
-<div class="section-kicker">Section 1</div>
+# Outline
 
-# From Notes to a Talk
-
-Turn a Markdown folder into a shareable presentation URL.
+- One Markdown file defines one deck
+- `#` after the cover becomes a section or outline page
+- `##` creates ordinary content pages
+- The final page is styled as the closing slide
 
 ---
 
@@ -61,7 +62,7 @@ Use the theme buttons in the upper-right corner.
 
 ---
 
-# Conclusion
+## Conclusion
 
 <div class="equation-box" markdown="1">
 

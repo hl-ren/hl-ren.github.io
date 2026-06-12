@@ -83,6 +83,7 @@
       if (kicker) kicker.remove();
 
       var heading = section.querySelector("h1, h2, h3");
+      var headingLevel = heading ? heading.tagName.toLowerCase() : "";
       if (heading) heading.remove();
 
       Array.prototype.slice.call(section.childNodes).forEach(function (child) {
@@ -119,7 +120,14 @@
       footer.appendChild(footerCenter);
       footer.appendChild(footerRight);
 
-      section.classList.toggle("title-slide", index === 0);
+      var isTitleSlide = index === 0;
+      var isEndSlide = index === total - 1 && total > 1;
+      var isSectionSlide = !isTitleSlide && !isEndSlide && headingLevel === "h1";
+      section.dataset.slideKind = isTitleSlide ? "title" : isEndSlide ? "end" : isSectionSlide ? "section" : "content";
+      section.classList.toggle("title-slide", isTitleSlide);
+      section.classList.toggle("section-slide", isSectionSlide);
+      section.classList.toggle("content-slide", !isTitleSlide && !isSectionSlide && !isEndSlide);
+      section.classList.toggle("end-slide", isEndSlide);
       section.appendChild(topbar);
       section.appendChild(content);
       section.appendChild(footer);
