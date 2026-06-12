@@ -252,6 +252,7 @@
   min-height: 0;
   padding: 38px 54px 36px;
   background: var(--slide-soft);
+  font-family: var(--slide-content-font);
   overflow: hidden;
 }
 
