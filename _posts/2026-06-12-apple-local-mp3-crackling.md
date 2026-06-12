@@ -1,33 +1,33 @@
 ---
-title: "Is Apple completely out of its mind with greed?! A $2000 Mac can't even play a local MP3 without crackling?!"
+title: "A $2000 Mac should not struggle to play a local MP3"
 date: 2026-06-12
 category: "产品感想"
 tags: ["Apple", "Mac", "Apple Music", "Audio", "TechFail"]
 series: ""
-summary: "A furious note on Apple Music subscription prompts, local MP3 playback crackling, and the strange decline of basic Mac user experience."
+summary: "A note on Apple Music subscription prompts, local MP3 playback crackling, and the gap between premium hardware and basic media playback."
 lang: "en"
 ---
 
-I am officially done. Consider this a massive warning to anyone thinking about buying a Mac for its "seamless experience." Apple's desperate push to force users into paying for an Apple Music subscription has reached a whole new, pathetic level.
+I bought a Mac partly because Apple has long marketed the platform around a polished, seamless user experience. That expectation makes the following experience especially frustrating: playing a local MP3 file, something that should be completely routine, has become unnecessarily annoying.
 
-Here is what happened: I just wanted to listen to some local MP3 files that I already own on my Mac. Simple, right? But the moment I opened the native Music app and QuickTime, boom. My screen was blasted with Apple Music subscription banners, practically begging me to swipe my card.
+Here is what happened. I wanted to listen to local MP3 files that I already own. The task is simple: open a file and play audio. But when I used Apple's native Music app and QuickTime, I was immediately pushed toward Apple Music subscription prompts and related interface distractions.
 
-But it gets worse. **Whenever I try to play a local MP3, the audio starts crackling, popping, and distorting like crazy.** A perfectly fine song sounds like a broken, industrial techno nightmare. At first, I thought my hardware was fried. But guess what? I opened the exact same files in a third-party player, and the audio was crystal clear and smooth.
+The bigger issue is playback quality. **Whenever I try to play a local MP3 through Apple's native apps, the audio starts crackling, popping, and distorting.** At first, I suspected a hardware problem or a corrupted file. Then I opened the exact same MP3 files in a third-party player, and the audio was clear and smooth.
 
-So, Apple is literally "poisoning" its native decoding system for local users now?
+That makes the situation difficult to ignore. If the file works properly in another player, why does basic playback fail in Apple's own apps?
 
-I looked up troubleshooting guides online, and they just made my blood boil. To fix this, you are expected to:
+The common troubleshooting advice also says a lot about the state of the experience. To fix local audio playback, users are often told to:
 
-1. Dig into the buried "Audio MIDI Setup" to manually change sample rates.
-2. Force-restart the audio background processes via Terminal commands.
-3. Hunt down hidden settings just to turn off their intrusive subscription UI and glitchy sound effects.
+1. Open "Audio MIDI Setup" and manually change sample rates.
+2. Restart audio background processes through Terminal commands.
+3. Look through settings to reduce subscription prompts or unwanted media effects.
 
-**Are you kidding me?!** I paid thousands of dollars for a premium machine. Why on earth do I need to act like an IT technician just to double-click and play a local MP3, a basic feature that a 20-year-old desktop could handle flawlessly?
+For a premium computer, this is hard to justify. Playing a local MP3 should not require users to inspect audio sample rates, restart system processes, or search for hidden settings. It is one of the most basic things a desktop operating system can do.
 
-Let's call it what it is: **Apple is blinded by greed.**
+The problem is not just one bug. It is the direction of the product experience.
 
-They don't want you listening to your own files. Every single annoying bug and ad-choked interface is designed to subtly harass local users into giving up and thinking: "Fine, I'll just pay for Apple Music."
+Apple's software increasingly feels optimized around services, subscriptions, and ecosystem nudges, while long-standing local workflows receive less attention. For users who still manage their own files, that creates the impression that local media playback is no longer treated as a first-class use case.
 
-Well, I am not playing along, and I am certainly not wasting my time fixing their broken native apps. Since Apple chose to completely neglect its core user experience, I'm moving to third-party players permanently. Get your act together, Apple. Shoving subscriptions down our throats while breaking basic features is a pathetic way to treat your customers.
+I am not interested in spending time troubleshooting native apps for a task this basic. For now, I am moving to third-party players for local audio playback. Apple can promote its services if it wants, but basic local file playback should remain reliable, quiet, and free from unnecessary friction.
 
-#MacBook #AppleScam #AppleMusic #TechFail #GreedyTech
+#MacBook #AppleMusic #MacOS #Audio #TechFail
