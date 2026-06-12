@@ -34,6 +34,63 @@
     }
   }
 
+  function getDeckMeta() {
+    return {
+      title: document.body.dataset.deckTitle || document.title || "Slides",
+      author: document.body.dataset.deckAuthor || "",
+      category: document.body.dataset.deckCategory || "Slides"
+    };
+  }
+
+  function getSlideTopic(section, meta) {
+    var kicker = section.querySelector(".section-kicker");
+    if (kicker && kicker.textContent.trim()) return kicker.textContent.trim();
+
+    var heading = section.querySelector("h1, h2, h3");
+    if (heading && heading.textContent.trim()) return heading.textContent.trim();
+
+    return meta.category;
+  }
+
+  function createNode(className, text) {
+    var node = document.createElement("div");
+    node.className = className;
+    node.textContent = text;
+    return node;
+  }
+
+  function enhanceSlides() {
+    var meta = getDeckMeta();
+    var sections = Array.prototype.slice.call(target.children);
+    var total = sections.length;
+
+    sections.forEach(function (section, index) {
+      var topic = getSlideTopic(section, meta);
+      var content = document.createElement("div");
+      content.className = "slide-content";
+
+      Array.prototype.slice.call(section.childNodes).forEach(function (child) {
+        content.appendChild(child);
+      });
+
+      var topbar = document.createElement("div");
+      topbar.className = "slide-topbar";
+      topbar.appendChild(createNode("slide-deck-title", meta.title));
+      topbar.appendChild(createNode("slide-deck-category", meta.category));
+
+      var footer = document.createElement("div");
+      footer.className = "slide-footer";
+      footer.appendChild(createNode("slide-author", meta.author));
+      footer.appendChild(createNode("slide-topic", topic));
+      footer.appendChild(createNode("slide-page-number", String(index + 1) + " / " + String(total)));
+
+      section.classList.toggle("title-slide", index === 0);
+      section.appendChild(topbar);
+      section.appendChild(content);
+      section.appendChild(footer);
+    });
+  }
+
   function localizeDeckLink() {
     var link = document.querySelector(".deck-home");
     if (!link) return;
@@ -106,6 +163,25 @@
     button.setAttribute("aria-pressed", active ? "true" : "false");
   }
 
+  function syncSlideStatus() {
+    var status = document.querySelector("[data-slide-status]");
+    if (!status || !window.Reveal || !window.Reveal.getIndices) return;
+    var total = target.children.length || 1;
+    var current = window.Reveal.getIndices().h + 1;
+    status.textContent = String(current) + " / " + String(total);
+  }
+
+  function toggleSettings(forceOpen) {
+    var panel = document.getElementById("deck-settings-panel");
+    var button = document.querySelector("[data-slide-settings-toggle]");
+    if (!panel || !button) return;
+
+    var open = typeof forceOpen === "boolean" ? forceOpen : panel.hasAttribute("hidden");
+    panel.toggleAttribute("hidden", !open);
+    button.classList.toggle("is-active", open);
+    button.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
   function setupDeckControls() {
     var autoplay = getStoredAutoplay();
 
@@ -118,6 +194,15 @@
       if (event.target.closest("[data-slide-next]")) {
         window.Reveal.next();
         return;
+      }
+
+      if (event.target.closest("[data-slide-settings-toggle]")) {
+        toggleSettings();
+        return;
+      }
+
+      if (!event.target.closest(".deck-controls")) {
+        toggleSettings(false);
       }
 
       if (event.target.closest("[data-slide-fullscreen]")) {
@@ -136,7 +221,12 @@
     });
 
     document.addEventListener("fullscreenchange", syncFullscreenButton);
+    if (window.Reveal && window.Reveal.on) {
+      window.Reveal.on("slidechanged", syncSlideStatus);
+      window.Reveal.on("ready", syncSlideStatus);
+    }
     syncFullscreenButton();
+    syncSlideStatus();
     applyAutoplay(autoplay);
   }
 
@@ -149,6 +239,7 @@
   }
 
   splitSlides();
+  enhanceSlides();
   localizeDeckLink();
   setupThemeSwitcher();
 

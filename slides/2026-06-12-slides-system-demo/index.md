@@ -25,6 +25,9 @@ Turn a Markdown folder into a shareable presentation URL.
 
 ## Authoring workflow
 
+<div class="slide-columns" markdown="1">
+  <div markdown="1">
+
 ```text
 slides/YYYY-MM-DD-slug/
   index.md
@@ -33,7 +36,13 @@ slides/YYYY-MM-DD-slug/
   data/
 ```
 
+  </div>
+  <div class="slide-card-panel" markdown="1">
+
 ![Slides system diagram](images/slides-system.svg)
+
+  </div>
+</div>
 
 ---
 
@@ -51,6 +60,14 @@ Use the theme buttons in the upper-right corner.
 ---
 
 # Conclusion
+
+<div class="equation-box" markdown="1">
+
+$$
+\text{Deck} = \text{Markdown} + \text{Assets} + \text{Browser}
+$$
+
+</div>
 
 - One folder becomes one deck
 - Assets stay next to the deck

@@ -117,6 +117,27 @@ summary: "一句话摘要，会显示在 /slides/ 列表页。"
 - 幻灯片页面支持键盘翻页、全屏演示、代码高亮、图片和 LaTeX
 - deck 内图片可以直接写相对路径，例如 `![图](images/example.png)`
 
+Slides 里可以用内置版式辅助类做分栏和公式块：
+
+```html
+<div class="slide-columns" markdown="1">
+  <div markdown="1">
+    左栏内容
+  </div>
+  <div class="slide-card-panel" markdown="1">
+    右栏图片、表格或说明
+  </div>
+</div>
+
+<div class="equation-box" markdown="1">
+
+$$
+E = mc^2
+$$
+
+</div>
+```
+
 ## 评论和点击量
 
 模板已经预留评论和统计配置：
