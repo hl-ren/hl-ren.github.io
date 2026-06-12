@@ -37,6 +37,7 @@
   function getDeckMeta() {
     return {
       title: document.body.dataset.deckTitle || document.title || "Slides",
+      subtitle: document.body.dataset.deckSubtitle || "",
       author: document.body.dataset.deckAuthor || "",
       category: document.body.dataset.deckCategory || "Slides",
       logo: document.body.dataset.deckLogo || "",
@@ -198,6 +199,7 @@
     var info = document.createElement("div");
 
     hero.className = "title-slide-hero";
+    hero.classList.toggle("has-title-slide-subtitle", Boolean(meta.subtitle));
     textBlock.className = "title-slide-text";
     info.className = "title-slide-info";
 
@@ -210,6 +212,7 @@
     textBlock.appendChild(title);
     if (authorText) textBlock.appendChild(author);
     if (info.childNodes.length) textBlock.appendChild(info);
+    if (meta.subtitle) hero.appendChild(createNode("title-slide-subtitle", meta.subtitle));
     hero.appendChild(textBlock);
 
     if (meta.logo) {

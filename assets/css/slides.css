@@ -1,4 +1,5 @@
 .slides-body {
+  --slide-topbar-height: 142px;
   --slide-ink: #1f2523;
   --slide-muted: #69716d;
   --slide-accent: #0f766e;
@@ -259,7 +260,7 @@
 
 .reveal .slides > section {
   display: grid !important;
-  grid-template-rows: 142px minmax(0, 1fr) 60px;
+  grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 60px;
   width: 100%;
   height: 100%;
   padding: 0;
@@ -289,7 +290,8 @@
   grid-template-columns: minmax(0, 1fr) auto;
   column-gap: 34px;
   position: relative;
-  padding: 22px 260px 24px 54px;
+  min-height: var(--slide-topbar-height);
+  padding: 22px 320px 24px 54px;
   border-bottom: 2px solid var(--slide-line);
   background: var(--slide-topbar-bg);
   font-size: 0.36em;
@@ -326,10 +328,10 @@
   display: block;
   position: absolute;
   top: 0;
-  right: 54px;
+  right: 0;
   width: auto;
-  height: 100%;
-  max-width: 220px;
+  height: var(--slide-topbar-height);
+  max-width: none;
   max-height: none;
   margin: 0;
   border: 0;
@@ -373,8 +375,8 @@
 .title-slide .slide-content {
   position: relative;
   display: grid;
-  align-content: center;
-  padding: 70px 82px;
+  align-content: stretch;
+  padding: 0;
   border-radius: 0;
 }
 
@@ -388,9 +390,10 @@
 
 .title-slide-hero {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  align-items: center;
+  justify-items: stretch;
+  align-items: stretch;
   min-height: 100%;
   text-align: center;
 }
@@ -398,12 +401,31 @@
 .title-slide-text {
   min-width: 0;
   display: grid;
+  align-content: center;
   justify-items: center;
+  padding: 0 0 92px;
+}
+
+.title-slide-hero:not(.has-title-slide-subtitle) .title-slide-text {
+  grid-row: 1 / -1;
+}
+
+.title-slide-subtitle {
+  display: flex;
+  align-items: center;
+  min-height: var(--slide-topbar-height);
+  padding: 0 320px 0 54px;
+  color: var(--slide-heading);
+  font-family: var(--slide-display-font);
+  font-size: 0.72em;
+  font-weight: 820;
+  line-height: 1.18;
+  text-align: left;
 }
 
 .title-slide-heading {
-  width: min(100%, 980px);
-  padding: 0.32em 0.55em 0.38em;
+  width: 100%;
+  padding: 0.32em 54px 0.38em;
   background: var(--slide-topbar-bg);
   color: var(--slide-topbar-ink);
   font-family: var(--slide-content-font);
@@ -439,11 +461,12 @@
 
 .reveal img.title-slide-logo {
   position: absolute;
-  top: 70px;
-  right: 82px;
-  width: min(100%, 230px);
-  height: auto;
-  max-height: 150px;
+  top: 0;
+  right: 0;
+  width: auto;
+  height: var(--slide-topbar-height);
+  max-width: none;
+  max-height: none;
   margin: 0;
   border: 0;
   border-radius: 0;
@@ -730,6 +753,10 @@
 }
 
 @media (max-width: 720px) {
+  .slides-body {
+    --slide-topbar-height: 86px;
+  }
+
   .deck-controls {
     flex: 0 0 auto;
   }
@@ -783,7 +810,7 @@
   }
 
   .reveal .slides > section {
-    grid-template-rows: 86px minmax(0, 1fr) 51px;
+    grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 51px;
     padding: 0;
     border-radius: 0;
   }
@@ -810,7 +837,7 @@
   }
 
   .title-slide .slide-content {
-    padding: 36px 30px;
+    padding: 0;
   }
 
   .title-slide-controls {
@@ -820,11 +847,22 @@
 
   .title-slide-hero {
     grid-template-columns: 1fr;
-    gap: 24px;
   }
 
   .title-slide-heading {
     font-size: 1.18em;
+    padding-right: 26px;
+    padding-left: 26px;
+  }
+
+  .title-slide-subtitle {
+    min-height: var(--slide-topbar-height);
+    padding: 0 190px 0 26px;
+    font-size: 0.52em;
+  }
+
+  .title-slide-text {
+    padding-bottom: 76px;
   }
 
   .title-slide-author {
@@ -836,10 +874,12 @@
   }
 
   .reveal img.title-slide-logo {
-    position: static;
-    justify-self: center;
-    max-width: 120px;
-    max-height: 86px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: var(--slide-topbar-height);
+    max-width: none;
+    max-height: none;
   }
 
   .section-slide .slide-content p,
@@ -855,14 +895,14 @@
   }
 
   .slide-topbar {
-    padding: 20px 120px 16px 26px;
+    padding: 20px 190px 16px 26px;
     column-gap: 16px;
   }
 
   .reveal img.slide-logo {
-    right: 26px;
-    height: 100%;
-    max-width: 82px;
+    right: 0;
+    height: var(--slide-topbar-height);
+    max-width: none;
     max-height: none;
   }
 

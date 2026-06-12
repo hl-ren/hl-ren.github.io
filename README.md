@@ -113,6 +113,7 @@ slides/YYYY-MM-DD-slug/
 ---
 layout: slides
 title: "Online Slides System"
+subtitle: "可选副标题"
 date: 2026-06-12
 category: "Research"
 tags: ["Slides", "Reveal.js"]
@@ -165,7 +166,7 @@ logo_alt: "Logo description"
 约定：
 
 - 第一个 `#` 是封面页
-- 封面页中，`#` 是大标题，第一段是作者，后续段落是作者信息，`logo` 会显示在右侧
+- 封面页中，`#` 是大标题，第一段是作者，后续段落是作者信息，`subtitle` 会显示在封面顶部，`logo` 会贴在右上角
 - 后续 `#` 是章节页或大纲页
 - 章节页顶部标题会显示 `Outline`，列表里和当前章节同名的 item 会自动高亮加粗
 - `##` 是普通内容页

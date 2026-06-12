@@ -1,6 +1,7 @@
 ---
 layout: slides
 title: "Online Slides System"
+subtitle: "Browser-first decks for posts, tools, research notes, and teaching."
 date: 2026-06-12
 category: "Site"
 tags: ["Slides", "Reveal.js", "GitHub Pages"]
@@ -21,8 +22,6 @@ Huilong Ren
 Ren's Homepage
 
 2026-06-12
-
-Browser-first decks for posts, tools, research notes, and teaching.
 
 ---
 
