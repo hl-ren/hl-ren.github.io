@@ -93,9 +93,21 @@
 
       var footer = document.createElement("div");
       footer.className = "slide-footer";
-      footer.appendChild(createNode("slide-author", meta.author));
-      footer.appendChild(createNode("slide-topic", topic));
-      footer.appendChild(createNode("slide-page-number", String(index + 1) + " / " + String(total)));
+      var footerLeft = document.createElement("div");
+      footerLeft.className = "slide-footer-cell slide-author";
+      footerLeft.textContent = meta.author;
+
+      var footerCenter = document.createElement("div");
+      footerCenter.className = "slide-footer-cell slide-topic";
+      footerCenter.textContent = topic;
+
+      var footerRight = document.createElement("div");
+      footerRight.className = "slide-footer-cell slide-footer-actions";
+      footerRight.appendChild(createNode("slide-page-number", String(index + 1) + " / " + String(total)));
+
+      footer.appendChild(footerLeft);
+      footer.appendChild(footerCenter);
+      footer.appendChild(footerRight);
 
       section.classList.toggle("title-slide", index === 0);
       section.appendChild(topbar);
@@ -127,8 +139,9 @@
   function applyTheme(theme) {
     var selected = theme || "paper";
     document.body.dataset.slideTheme = selected;
-    var select = document.querySelector("[data-slide-theme-select]");
-    if (select) select.value = selected;
+    document.querySelectorAll("[data-slide-theme-select]").forEach(function (select) {
+      select.value = selected;
+    });
 
     try {
       localStorage.setItem("slide-theme", selected);
@@ -156,8 +169,9 @@
   function applyAutoplay(value) {
     var selected = value || "0";
     var interval = parseInt(selected, 10) || 0;
-    var select = document.querySelector("[data-slide-autoplay]");
-    if (select) select.value = String(interval);
+    document.querySelectorAll("[data-slide-autoplay]").forEach(function (select) {
+      select.value = String(interval);
+    });
     if (window.Reveal && window.Reveal.configure) {
       window.Reveal.configure({ autoSlide: interval });
     }
@@ -168,12 +182,12 @@
   }
 
   function syncFullscreenButton() {
-    var button = document.querySelector("[data-slide-fullscreen]");
-    if (!button) return;
     var active = Boolean(document.fullscreenElement);
-    button.textContent = active ? button.dataset.exitLabel : button.dataset.fullscreenLabel;
-    button.classList.toggle("is-active", active);
-    button.setAttribute("aria-pressed", active ? "true" : "false");
+    document.querySelectorAll("[data-slide-fullscreen]").forEach(function (button) {
+      button.textContent = active ? button.dataset.exitLabel : button.dataset.fullscreenLabel;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
   }
 
   function syncSlideStatus() {
@@ -184,19 +198,58 @@
     status.textContent = String(current) + " / " + String(total);
   }
 
-  function toggleSettings(forceOpen) {
-    var panel = document.getElementById("deck-settings-panel");
-    var button = document.querySelector("[data-slide-settings-toggle]");
+  function closeSettingsPanels() {
+    document.querySelectorAll(".deck-controls").forEach(function (controls) {
+      var panel = controls.querySelector(".deck-settings-panel");
+      var button = controls.querySelector("[data-slide-settings-toggle]");
+      if (!panel || !button) return;
+      panel.hidden = true;
+      button.classList.remove("is-active");
+      button.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  function toggleSettings(button, forceOpen) {
+    var controls = button && button.closest(".deck-controls");
+    var panel = controls && controls.querySelector(".deck-settings-panel");
     if (!panel || !button) return;
 
     var open = typeof forceOpen === "boolean" ? forceOpen : panel.hasAttribute("hidden");
-    panel.toggleAttribute("hidden", !open);
+    closeSettingsPanels();
+    panel.hidden = !open;
     button.classList.toggle("is-active", open);
     button.setAttribute("aria-expanded", open ? "true" : "false");
   }
 
+  function attachDeckControls() {
+    var template = document.querySelector("[data-slide-controls-template]");
+    if (!template) return;
+
+    document.querySelectorAll(".slide-footer-actions").forEach(function (slot, index) {
+      var controls = template.cloneNode(true);
+      var panel = controls.querySelector(".deck-settings-panel");
+      var button = controls.querySelector("[data-slide-settings-toggle]");
+      var panelId = "deck-settings-panel-" + String(index + 1);
+
+      controls.removeAttribute("data-slide-controls-template");
+      if (panel) {
+        panel.id = panelId;
+        panel.hidden = true;
+      }
+      if (button) {
+        button.setAttribute("aria-controls", panelId);
+        button.setAttribute("aria-expanded", "false");
+      }
+
+      slot.insertBefore(controls, slot.firstChild);
+    });
+
+    template.remove();
+  }
+
   function setupDeckControls() {
     var autoplay = getStoredAutoplay();
+    attachDeckControls();
 
     document.addEventListener("click", function (event) {
       if (event.target.closest("[data-slide-prev]")) {
@@ -209,13 +262,14 @@
         return;
       }
 
-      if (event.target.closest("[data-slide-settings-toggle]")) {
-        toggleSettings();
+      var settingsButton = event.target.closest("[data-slide-settings-toggle]");
+      if (settingsButton) {
+        toggleSettings(settingsButton);
         return;
       }
 
       if (!event.target.closest(".deck-controls")) {
-        toggleSettings(false);
+        closeSettingsPanels();
       }
 
       if (event.target.closest("[data-slide-fullscreen]")) {
@@ -224,6 +278,7 @@
         } else {
           document.documentElement.requestFullscreen().catch(function () {});
         }
+        return;
       }
     });
 
@@ -240,6 +295,7 @@
     }
     syncFullscreenButton();
     syncSlideStatus();
+    applyTheme(getStoredTheme());
     applyAutoplay(autoplay);
   }
 
@@ -265,7 +321,7 @@
     transition: "slide",
     width: 1280,
     height: 720,
-    margin: 0.03,
+    margin: 0.01,
     minScale: 0.2,
     maxScale: 1.6,
     plugins: window.RevealHighlight ? [window.RevealHighlight] : []
