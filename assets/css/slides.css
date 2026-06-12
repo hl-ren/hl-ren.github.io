@@ -267,6 +267,10 @@
   height: 100vh;
 }
 
+.slides-body.is-print-pdf .reveal {
+  height: 100vh;
+}
+
 .reveal .slides {
   text-align: left;
 }
@@ -307,6 +311,11 @@
 
 .slides-body.is-overview .slide-thumbnails {
   display: none;
+}
+
+.slides-body.is-print-pdf .deck-controls,
+.slides-body.is-print-pdf .slide-thumbnails {
+  display: none !important;
 }
 
 .slide-thumbnail-grid {
@@ -847,6 +856,17 @@
 
 .reveal img.slide-img-plain {
   border-radius: 0;
+}
+
+@media print {
+  .deck-controls,
+  .slide-thumbnails {
+    display: none !important;
+  }
+
+  .reveal {
+    height: 100vh !important;
+  }
 }
 
 .reveal section > :first-child {

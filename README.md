@@ -173,9 +173,10 @@ logo_alt: "Logo description"
 - 普通页里两个或以上的 `###` 会自动变成分栏
 - 每个 `#` section 后面的 `##` 普通页，底部中间只显示当前 section 标题
 - 最后一页自动作为结束页
-- `logo` 可选；填写后会显示在每页标题栏右侧
+- `logo` 可选；填写后会显示在每页标题栏右侧。推荐使用透明背景的 SVG；PNG 也可以，但不要带白底、圆角或内部留白
 - `slide_theme`、`slide_topbar_color`、`slide_content_color`、`slide_footer_color` 可选；也可以演示时在 Settings 里临时切换
 - 普通页和结束页的 bullet 支持播放模式：`item` 逐条播放、`page` 整页播放、`off` 不播放；section/outline 页的 bullet 会直接显示
+- Settings 里有 `Export PDF`，会打开当前 deck 的 `print-pdf` 页面；在浏览器打印窗口中选择保存为 PDF
 - 内容字号会按可用宽高自动缩放，最大不超过页面标题字号；某页不想自动缩放时，加 `.no-fit` 或 `data-no-fit`
 - 某个区域不想 bullet 动画时，加 `.no-fragments` 或 `data-no-fragments`
 

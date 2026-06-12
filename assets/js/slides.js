@@ -3,6 +3,16 @@
   var target = document.getElementById("deck-slides");
   if (!source || !target) return;
 
+  function isPdfExportPage() {
+    try {
+      return new URLSearchParams(window.location.search).has("print-pdf");
+    } catch (error) {
+      return window.location.search.indexOf("print-pdf") !== -1;
+    }
+  }
+
+  if (isPdfExportPage()) document.body.classList.add("is-print-pdf");
+
   function hasContent(section) {
     return section.textContent.trim() || section.querySelector("img, video, iframe, table, pre");
   }
@@ -630,6 +640,20 @@
     } catch (error) {}
   }
 
+  function getPdfExportUrl() {
+    var url = new URL(window.location.href);
+    url.searchParams.set("print-pdf", "");
+    url.hash = window.location.hash || "";
+    return url.toString();
+  }
+
+  function openPdfExport() {
+    closeSettingsPanels();
+
+    var opened = window.open(getPdfExportUrl(), "_blank", "noopener");
+    if (!opened) window.location.href = getPdfExportUrl();
+  }
+
   function syncFullscreenButton() {
     var active = Boolean(document.fullscreenElement);
     document.body.classList.toggle("is-fullscreen", active);
@@ -748,6 +772,11 @@
         } else {
           document.documentElement.requestFullscreen().catch(function () {});
         }
+        return;
+      }
+
+      if (event.target.closest("[data-slide-export-pdf]")) {
+        openPdfExport();
         return;
       }
     });
