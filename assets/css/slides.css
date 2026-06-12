@@ -429,7 +429,7 @@
   background: var(--slide-topbar-bg);
   color: var(--slide-topbar-ink);
   font-family: var(--slide-content-font);
-  font-size: 1.36em;
+  font-size: 1.52em;
   font-weight: 830;
   line-height: 1.05;
   text-align: center;
@@ -850,7 +850,7 @@
   }
 
   .title-slide-heading {
-    font-size: 1.18em;
+    font-size: 1.3em;
     padding-right: 26px;
     padding-left: 26px;
   }
