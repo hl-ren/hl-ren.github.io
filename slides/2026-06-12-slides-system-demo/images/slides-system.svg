@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Slides system diagram</title>
+  <desc id="desc">A simple diagram showing markdown decks becoming browser slides.</desc>
+  <rect width="960" height="520" fill="#f6f8f8"/>
+  <rect x="84" y="126" width="220" height="268" rx="12" fill="#ffffff" stroke="#d9e1df" stroke-width="3"/>
+  <rect x="370" y="126" width="220" height="268" rx="12" fill="#ffffff" stroke="#d9e1df" stroke-width="3"/>
+  <rect x="656" y="126" width="220" height="268" rx="12" fill="#ffffff" stroke="#d9e1df" stroke-width="3"/>
+  <text x="194" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1f2523">index.md</text>
+  <text x="480" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1f2523">Reveal.js</text>
+  <text x="766" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1f2523">Browser</text>
+  <text x="194" y="244" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Markdown</text>
+  <text x="194" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Math</text>
+  <text x="194" y="316" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Images</text>
+  <text x="480" y="244" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Slides</text>
+  <text x="480" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Keyboard</text>
+  <text x="480" y="316" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Fullscreen</text>
+  <text x="766" y="244" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Share URL</text>
+  <text x="766" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Present</text>
+  <text x="766" y="316" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#69716d">Review later</text>
+  <path d="M322 260h30" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/>
+  <path d="M346 244l18 16-18 16" fill="none" stroke="#0f766e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M608 260h30" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/>
+  <path d="M632 244l18 16-18 16" fill="none" stroke="#0f766e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

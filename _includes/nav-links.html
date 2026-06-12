@@ -1,6 +1,7 @@
 {% assign current_path = page.url | default: "/" %}
 <a href="{{ '/posts/' | relative_url }}?v={{ site.time | date: '%s' }}"{% if current_path contains '/posts/' %} aria-current="page"{% endif %} data-i18n-key="nav.posts">文章</a>
 <a href="{{ '/tools/' | relative_url }}?v={{ site.time | date: '%s' }}"{% if current_path contains '/tools/' %} aria-current="page"{% endif %} data-i18n-key="nav.tools">工具</a>
+<a href="{{ '/slides/' | relative_url }}?v={{ site.time | date: '%s' }}"{% if current_path contains '/slides/' %} aria-current="page"{% endif %} data-i18n-key="nav.slides">幻灯片</a>
 <a href="{{ '/categories/' | relative_url }}?v={{ site.time | date: '%s' }}"{% if current_path contains '/categories/' %} aria-current="page"{% endif %} data-i18n-key="nav.categories">分类</a>
 <a href="{{ '/tags/' | relative_url }}?v={{ site.time | date: '%s' }}"{% if current_path contains '/tags/' %} aria-current="page"{% endif %} data-i18n-key="nav.tags">标签</a>
 <a href="{{ '/archive/' | relative_url }}?v={{ site.time | date: '%s' }}"{% if current_path contains '/archive/' %} aria-current="page"{% endif %} data-i18n-key="nav.archive">归档</a>

@@ -1,0 +1,43 @@
+---
+layout: page
+title: 幻灯片
+title_en: Slides
+description: 研究分享、课程材料、论文解释和工具介绍，可以直接在浏览器里打开和演示。
+description_en: Browser-based research talks, course materials, paper explanations, and tool introductions.
+permalink: /slides/
+---
+
+{% assign decks = site.pages | where: "layout", "slides" | sort: "date" | reverse %}
+
+{% if decks.size > 0 %}
+  <div class="slide-grid">
+    {% for deck in decks %}
+      <article class="slide-card">
+        <div class="post-card-meta">
+          {% if deck.date %}
+            <time datetime="{{ deck.date | date_to_xmlschema }}">{{ deck.date | date: "%Y-%m-%d" }}</time>
+          {% endif %}
+          {% if deck.category %}
+            <span>{{ deck.category }}</span>
+          {% endif %}
+        </div>
+        <h2><a href="{{ deck.url | relative_url }}">{{ deck.title }}</a></h2>
+        {% if deck.summary %}
+          <p>{{ deck.summary }}</p>
+        {% endif %}
+        {% if deck.tags and deck.tags.size > 0 %}
+          <div class="tag-row" aria-label="幻灯片标签">
+            {% for tag in deck.tags %}
+              <span>{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="slide-actions">
+          <a href="{{ deck.url | relative_url }}" data-i18n-key="slides.open">打开幻灯片</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="muted" data-i18n-key="slides.empty">还没有发布幻灯片。</p>
+{% endif %}

@@ -1,6 +1,6 @@
 # 我的短文章
 
-这是一个面向 GitHub Pages 的 Jekyll 主站模板，适合同时放博客文章、小工具、项目入口和长期记录。
+这是一个面向 GitHub Pages 的 Jekyll 主站模板，适合同时放博客文章、小工具、在线幻灯片、项目入口和长期记录。
 
 ## 写新文章：只新增一个 Markdown 文件
 
@@ -83,6 +83,39 @@ $$
 ## 小工具
 
 小工具列表放在 `_data/tools.yml`。新增工具时添加一条数据即可，`/tools/` 页面和首页侧栏会自动更新。工具和文章是平行的一级内容：文章在 `/posts/`，工具在 `/tools/`。
+
+## 在线幻灯片
+
+幻灯片放在 `slides/` 下，每个 deck 一个文件夹：
+
+```text
+slides/YYYY-MM-DD-slug/
+  index.md
+  images/
+  videos/
+  data/
+```
+
+`index.md` 使用 `layout: slides`，正文里用单独一行 `---` 分隔每一页幻灯片：
+
+```yaml
+---
+layout: slides
+title: "Online Slides System"
+date: 2026-06-12
+category: "Research"
+tags: ["Slides", "Reveal.js"]
+summary: "一句话摘要，会显示在 /slides/ 列表页。"
+---
+```
+
+自动完成的事情：
+
+- `/slides/` 自动列出所有幻灯片
+- 首页幻灯片区块自动更新
+- 顶部导航和快速入口自动包含幻灯片入口
+- 幻灯片页面支持键盘翻页、全屏演示、代码高亮、图片和 LaTeX
+- deck 内图片可以直接写相对路径，例如 `![图](images/example.png)`
 
 ## 评论和点击量
 

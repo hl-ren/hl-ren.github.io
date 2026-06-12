@@ -11,6 +11,7 @@ title: 首页
     <div class="hero-actions">
       <a href="{{ '/posts/' | relative_url }}" data-i18n-key="nav.posts">文章</a>
       <a href="{{ '/tools/' | relative_url }}" data-i18n-key="nav.tools">工具</a>
+      <a href="{{ '/slides/' | relative_url }}" data-i18n-key="nav.slides">幻灯片</a>
     </div>
   </div>
   <form class="search-box" action="{{ '/search/' | relative_url }}" role="search">
@@ -62,6 +63,25 @@ title: 首页
         <a href="{{ '/tools/' | relative_url }}">
           <span data-i18n-key="tools.all">全部工具</span>
           <strong>{{ site.data.tools.size }}</strong>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n-key="home.slides">幻灯片</h2>
+      <div class="category-list">
+        {% assign decks = site.pages | where: "layout", "slides" | sort: "date" | reverse %}
+        {% for deck in decks limit: 5 %}
+          <a href="{{ deck.url | relative_url }}">
+            <span>{{ deck.title }}</span>
+            {% if deck.date %}
+              <strong>{{ deck.date | date: "%m.%d" }}</strong>
+            {% endif %}
+          </a>
+        {% endfor %}
+        <a href="{{ '/slides/' | relative_url }}">
+          <span data-i18n-key="slides.all">全部幻灯片</span>
+          <strong>{{ decks.size }}</strong>
         </a>
       </div>
     </section>

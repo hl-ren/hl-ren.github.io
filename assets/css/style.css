@@ -372,7 +372,8 @@ a:hover {
 }
 
 .post-card,
-.tool-card {
+.tool-card,
+.slide-card {
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -381,19 +382,22 @@ a:hover {
 }
 
 .post-card h2,
-.tool-card h2 {
+.tool-card h2,
+.slide-card h2 {
   margin: 6px 0 6px;
   font-size: 19px;
   line-height: 1.3;
 }
 
 .post-card h2 a,
-.tool-card h2 a {
+.tool-card h2 a,
+.slide-card h2 a {
   text-decoration: none;
 }
 
 .post-card p,
-.tool-card p {
+.tool-card p,
+.slide-card p {
   margin: 0 0 12px;
   color: var(--muted);
   font-size: 14px;
@@ -415,19 +419,22 @@ a:hover {
   text-decoration: none;
 }
 
-.tool-grid {
+.tool-grid,
+.slide-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 12px;
 }
 
-.tool-actions {
+.tool-actions,
+.slide-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.tool-actions a {
+.tool-actions a,
+.slide-actions a {
   display: inline-flex;
   align-items: center;
   min-height: 32px;
