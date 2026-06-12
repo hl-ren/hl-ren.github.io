@@ -365,6 +365,31 @@
   align-items: start;
 }
 
+.slide-auto-columns {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+  gap: 34px;
+}
+
+.slide-auto-column {
+  min-width: 0;
+}
+
+.slide-auto-column h3 {
+  margin: 0 0 18px;
+  color: var(--slide-heading);
+  font-family: var(--slide-display-font);
+  font-size: 0.95em;
+}
+
+.slide-auto-column > :last-child {
+  margin-bottom: 0;
+}
+
+.reveal .slide-content li.fragment.fade-up {
+  will-change: opacity, transform;
+}
+
 .slide-card-panel,
 .equation-box {
   padding: 22px 24px;

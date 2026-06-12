@@ -28,8 +28,7 @@ Browser-first decks for posts, tools, research notes, and teaching.
 
 ## Authoring workflow
 
-<div class="slide-columns" markdown="1">
-  <div markdown="1">
+### Deck folder
 
 ```text
 slides/YYYY-MM-DD-slug/
@@ -39,13 +38,11 @@ slides/YYYY-MM-DD-slug/
   data/
 ```
 
-  </div>
-  <div class="slide-card-panel" markdown="1">
+### Local assets
 
 ![Slides system diagram](images/slides-system.svg)
 
-  </div>
-</div>
+Keep figures, videos, and data next to the deck.
 
 ---
 

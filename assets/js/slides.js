@@ -68,6 +68,55 @@
     return node;
   }
 
+  function isHeading(node, level) {
+    return node.nodeType === 1 && node.tagName.toLowerCase() === level;
+  }
+
+  function applyAutoColumns(content) {
+    if (content.querySelector(".slide-columns")) return;
+
+    var nodes = Array.prototype.slice.call(content.childNodes);
+    var columnHeadings = nodes.filter(function (node) {
+      return isHeading(node, "h3");
+    });
+    if (columnHeadings.length < 2) return;
+
+    var beforeColumns = document.createDocumentFragment();
+    var columns = document.createElement("div");
+    var currentColumn = null;
+    var startedColumns = false;
+    columns.className = "slide-columns slide-auto-columns";
+
+    nodes.forEach(function (node) {
+      if (isHeading(node, "h3")) {
+        startedColumns = true;
+        currentColumn = document.createElement("div");
+        currentColumn.className = "slide-auto-column";
+        columns.appendChild(currentColumn);
+        currentColumn.appendChild(node);
+        return;
+      }
+
+      if (startedColumns && currentColumn) {
+        currentColumn.appendChild(node);
+        return;
+      }
+
+      beforeColumns.appendChild(node);
+    });
+
+    content.appendChild(beforeColumns);
+    content.appendChild(columns);
+  }
+
+  function applyListFragments(content) {
+    Array.prototype.slice.call(content.querySelectorAll("li")).forEach(function (item) {
+      if (item.classList.contains("fragment")) return;
+      if (item.closest(".no-fragments, [data-no-fragments]")) return;
+      item.classList.add("fragment", "fade-up");
+    });
+  }
+
   function enhanceSlides() {
     var meta = getDeckMeta();
     var sections = Array.prototype.slice.call(target.children);
@@ -89,6 +138,8 @@
       Array.prototype.slice.call(section.childNodes).forEach(function (child) {
         content.appendChild(child);
       });
+      applyAutoColumns(content);
+      applyListFragments(content);
 
       var topbar = document.createElement("div");
       topbar.className = "slide-topbar";
