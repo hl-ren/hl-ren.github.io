@@ -71,8 +71,9 @@ a:hover {
   background: var(--ink);
   color: var(--bg);
   font-weight: 800;
-  font-size: 48px;
+  font-size: 42px;
   line-height: 1;
+  transform: translateY(-0.08em);
 }
 
 .brand strong,
@@ -701,7 +702,7 @@ a:hover {
     width: 42px;
     height: 42px;
     border-radius: 8px;
-    font-size: 34px;
+    font-size: 30px;
   }
 
   .brand strong {
