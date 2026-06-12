@@ -261,11 +261,11 @@
     controls: false,
     progress: true,
     center: true,
-    slideNumber: true,
+    slideNumber: false,
     transition: "slide",
     width: 1280,
     height: 720,
-    margin: 0.06,
+    margin: 0.03,
     minScale: 0.2,
     maxScale: 1.6,
     plugins: window.RevealHighlight ? [window.RevealHighlight] : []
