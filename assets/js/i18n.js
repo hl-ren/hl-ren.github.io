@@ -99,6 +99,27 @@
     } catch (error) {}
 
     document.dispatchEvent(new CustomEvent("site-language-change", { detail: { language: lang } }));
+    syncGiscusLanguage(lang);
+  }
+
+  function syncGiscusLanguage(lang) {
+    var giscusLang = lang === "en" ? "en" : "zh-CN";
+
+    function send() {
+      var frame = document.querySelector("iframe.giscus-frame, .giscus iframe, iframe[src*='giscus.app']");
+      if (!frame || !frame.contentWindow) return;
+      frame.contentWindow.postMessage({
+        giscus: {
+          setConfig: {
+            lang: giscusLang
+          }
+        }
+      }, "https://giscus.app");
+    }
+
+    send();
+    window.setTimeout(send, 600);
+    window.setTimeout(send, 1800);
   }
 
   document.addEventListener("click", function (event) {
