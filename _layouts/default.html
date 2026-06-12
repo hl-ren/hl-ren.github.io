@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ asset_version }}">
     <script src="{{ '/assets/js/search.js' | relative_url }}?v={{ asset_version }}" data-search-index="{{ '/search.json' | relative_url }}" defer></script>
     <script src="{{ '/assets/js/i18n.js' | relative_url }}?v={{ asset_version }}" defer></script>
+    <script src="{{ '/assets/js/post-enhancements.js' | relative_url }}?v={{ asset_version }}" defer></script>
+    {% include mathjax.html %}
     {% if site.analytics.enabled %}
       {% if site.analytics.provider == "goatcounter" and site.analytics.goatcounter.code %}
         <script src="{{ '/assets/js/click-tracking.js' | relative_url }}" data-track-outbound="{{ site.analytics.goatcounter.track_outbound_clicks }}" defer></script>

@@ -10,13 +10,13 @@ author:
   bio: "写一点生活、产品和技术里的真实感受，也放一些可以直接使用的小工具。"
 
 comments:
-  enabled: false
+  enabled: true
   provider: "giscus"
   giscus:
-    repo: ""
-    repo_id: ""
-    category: "Announcements"
-    category_id: ""
+    repo: "hl-ren/hl-ren.github.io"
+    repo_id: "MDEwOlJlcG9zaXRvcnkyNjg4MDAzNTU="
+    category: "General"
+    category_id: "DIC_kwDOEAWRY84C_APx"
     mapping: "pathname"
     strict: "1"
     reactions_enabled: "1"
@@ -32,6 +32,10 @@ analytics:
   goatcounter:
     code: ""
     track_outbound_clicks: true
+
+math:
+  enabled: true
+  provider: "mathjax"
 
 permalink: /posts/:year/:month/:day/:title/
 paginate: 10

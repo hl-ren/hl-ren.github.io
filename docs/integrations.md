@@ -1,16 +1,22 @@
 # 评论和点击量配置
 
-这个模板默认关闭评论和统计。配置完成后，在 `_config.yml` 里打开即可。
+评论配置已经写入 `_config.yml`，统计默认关闭。
 
 ## 评论：giscus
 
 giscus 使用 GitHub Discussions 存评论，读者需要登录 GitHub 才能评论。它适合静态博客，因为不需要自己维护数据库，也能利用 GitHub 的登录、通知、编辑、删除和举报机制来减少灌水。
 
-准备步骤：
+当前状态：
+
+- GitHub Discussions 已开启。
+- `_config.yml` 已配置 `hl-ren/hl-ren.github.io` 和 `General` 分类。
+- 如果页面底部没有显示评论框，需要安装 giscus GitHub App，并授权这个仓库。
+
+标准准备步骤：
 
 1. GitHub 仓库设为 public。
 2. 在仓库 Settings -> Features 里打开 Discussions。
-3. 安装 giscus GitHub App。
+3. 安装 giscus GitHub App：`https://github.com/apps/giscus`。
 4. 打开 `https://giscus.app/zh-CN`，按页面提示选择仓库和 Discussion 分类。
 5. 把页面生成脚本里的这些值复制到 `_config.yml`：
    - `data-repo`

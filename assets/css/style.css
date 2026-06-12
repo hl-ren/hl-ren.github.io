@@ -446,6 +446,44 @@ a:hover {
   font-size: 17px;
 }
 
+.post-toc {
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.post-toc-title {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.post-toc ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-toc li {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.post-toc li.is-sub {
+  padding-left: 16px;
+  font-size: 13px;
+}
+
+.post-toc a {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
 .prose h2 {
   margin-top: 2em;
   line-height: 1.3;
@@ -460,7 +498,19 @@ a:hover {
 
 .prose img {
   max-width: 100%;
+  height: auto;
   border-radius: 8px;
+}
+
+.prose figure {
+  margin: 1.4em 0;
+}
+
+.prose figcaption {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
 }
 
 .prose code {
