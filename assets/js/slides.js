@@ -52,6 +52,13 @@
     return meta.category;
   }
 
+  function getSlideTitle(section, meta) {
+    var heading = section.querySelector("h1, h2, h3");
+    if (heading && heading.textContent.trim()) return heading.textContent.trim();
+
+    return meta.title;
+  }
+
   function createNode(className, text) {
     var node = document.createElement("div");
     node.className = className;
@@ -66,8 +73,15 @@
 
     sections.forEach(function (section, index) {
       var topic = getSlideTopic(section, meta);
+      var slideTitle = getSlideTitle(section, meta);
       var content = document.createElement("div");
       content.className = "slide-content";
+
+      var kicker = section.querySelector(".section-kicker");
+      if (kicker) kicker.remove();
+
+      var heading = section.querySelector("h1, h2, h3");
+      if (heading) heading.remove();
 
       Array.prototype.slice.call(section.childNodes).forEach(function (child) {
         content.appendChild(child);
@@ -75,8 +89,7 @@
 
       var topbar = document.createElement("div");
       topbar.className = "slide-topbar";
-      topbar.appendChild(createNode("slide-deck-title", meta.title));
-      topbar.appendChild(createNode("slide-deck-category", meta.category));
+      topbar.appendChild(createNode("slide-current-title", slideTitle));
 
       var footer = document.createElement("div");
       footer.className = "slide-footer";

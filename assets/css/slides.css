@@ -49,24 +49,6 @@
   --slide-soft: #f3e7d4;
 }
 
-.deck-home {
-  position: fixed;
-  top: 16px;
-  left: 18px;
-  z-index: 40;
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--slide-line);
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--slide-panel) 88%, transparent);
-  color: var(--slide-accent);
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
 .deck-controls {
   position: fixed;
   right: 18px;
@@ -166,12 +148,12 @@
 
 .reveal .slides > section {
   display: grid !important;
-  grid-template-rows: 48px minmax(0, 1fr) 34px;
+  grid-template-rows: 86px minmax(0, 1fr) 42px;
   width: 100%;
   height: 100%;
-  padding: 34px 50px 30px;
+  padding: 38px 58px 34px;
   border: 1px solid var(--slide-line);
-  border-radius: 14px;
+  border-radius: 18px;
   background: linear-gradient(180deg, var(--slide-panel), color-mix(in srgb, var(--slide-panel) 94%, var(--slide-soft)));
   box-shadow: 0 18px 42px rgba(31, 37, 35, 0.1);
 }
@@ -183,33 +165,40 @@
   justify-content: space-between;
   gap: 18px;
   color: var(--slide-muted);
-  font-size: 0.34em;
+  font-size: 0.44em;
   font-weight: 800;
   letter-spacing: 0.02em;
 }
 
 .slide-topbar {
+  font-size: 0.34em;
+}
+
+.slide-topbar {
   border-bottom: 1px solid var(--slide-line);
-  padding-bottom: 12px;
+  padding-bottom: 18px;
 }
 
 .slide-footer {
   border-top: 1px solid var(--slide-line);
-  padding-top: 10px;
+  padding-top: 12px;
 }
 
-.slide-deck-title,
+.slide-current-title,
 .slide-topic {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.slide-deck-title {
-  color: var(--slide-accent);
+.slide-current-title {
+  color: var(--slide-heading);
+  font-size: 2.25em;
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 1.05;
 }
 
-.slide-deck-category,
 .slide-page-number {
   flex: 0 0 auto;
 }
@@ -225,7 +214,7 @@
 
 .slide-content {
   min-height: 0;
-  padding: 32px 10px 20px;
+  padding: 34px 10px 22px;
   overflow: hidden;
 }
 
@@ -402,14 +391,6 @@
 }
 
 @media (max-width: 720px) {
-  .deck-home {
-    top: 10px;
-    left: 10px;
-    min-height: 30px;
-    padding: 0 10px;
-    font-size: 12px;
-  }
-
   .deck-controls {
     left: 10px;
     right: 10px;
@@ -451,7 +432,7 @@
   }
 
   .reveal .slides > section {
-    grid-template-rows: 38px minmax(0, 1fr) 30px;
+    grid-template-rows: 62px minmax(0, 1fr) 34px;
     padding: 26px 28px 24px;
     border-radius: 10px;
   }
@@ -463,5 +444,9 @@
 
   .slide-content {
     padding: 24px 2px 16px;
+  }
+
+  .slide-current-title {
+    font-size: 1.55em;
   }
 }
