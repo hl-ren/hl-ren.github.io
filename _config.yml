@@ -1,3 +1,68 @@
-title: Ren's Homepage
-description: A simple webpage with LaTeX support using MathJax.
-theme: jekyll-theme-slate
+title: "Ren's Homepage"
+description: "文章、工具、项目和一些长期记录。"
+url: ""
+baseurl: ""
+lang: "zh-CN"
+timezone: "Asia/Shanghai"
+
+author:
+  name: "Huilong Ren"
+  bio: "写一点生活、产品和技术里的真实感受，也放一些可以直接使用的小工具。"
+
+comments:
+  enabled: false
+  provider: "giscus"
+  giscus:
+    repo: ""
+    repo_id: ""
+    category: "Announcements"
+    category_id: ""
+    mapping: "pathname"
+    strict: "1"
+    reactions_enabled: "1"
+    emit_metadata: "0"
+    input_position: "bottom"
+    theme: "preferred_color_scheme"
+    lang: "zh-CN"
+    loading: "lazy"
+
+analytics:
+  enabled: false
+  provider: "goatcounter"
+  goatcounter:
+    code: ""
+    track_outbound_clicks: true
+
+permalink: /posts/:year/:month/:day/:title/
+paginate: 10
+paginate_path: "/posts/page:num/"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Huilong Ren"
+      category: "随手记"
+      tags: []
+      series: ""
+      summary: ""
+      comments: true
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

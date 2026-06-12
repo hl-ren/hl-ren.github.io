@@ -1,0 +1,75 @@
+---
+layout: default
+title: 首页
+---
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">Personal Notes</p>
+    <h1>{{ site.title }}</h1>
+    <p>{{ site.description }}</p>
+  </div>
+  <form class="search-box" action="{{ '/search/' | relative_url }}" role="search">
+    <label for="home-search">搜索文章</label>
+    <div>
+      <input id="home-search" name="q" type="search" placeholder="产品、AI、生活、技术...">
+      <button type="submit">搜索</button>
+    </div>
+  </form>
+</section>
+
+<section class="section-grid">
+  <div class="section-main">
+    <div class="section-heading">
+      <p class="eyebrow">Latest</p>
+      <h2>最近文章</h2>
+    </div>
+    <div class="post-list">
+      {% for post in site.posts limit: 8 %}
+        {% include post-card.html post=post %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <section>
+      <h2>主要栏目</h2>
+      <div class="category-list">
+        {% assign categories = site.categories | sort %}
+        {% for category in categories %}
+          <a href="{{ '/categories/' | relative_url }}#{{ category[0] | slugify }}">
+            <span>{{ category[0] }}</span>
+            <strong>{{ category[1].size }}</strong>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <h2>小工具</h2>
+      <div class="category-list">
+        {% assign featured_tools = site.data.tools | where: "featured", true %}
+        {% for tool in featured_tools limit: 5 %}
+          <a href="{{ tool.url }}">
+            <span>{{ tool.name }}</span>
+            <strong>{{ tool.status }}</strong>
+          </a>
+        {% endfor %}
+        <a href="{{ '/tools/' | relative_url }}">
+          <span>全部工具</span>
+          <strong>{{ site.data.tools.size }}</strong>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>常用标签</h2>
+      <div class="tag-cloud">
+        {% assign tags = site.tags | sort %}
+        {% for tag in tags limit: 24 %}
+          <a href="{{ '/tags/' | relative_url }}#{{ tag[0] | slugify }}">{{ tag[0] }}</a>
+        {% endfor %}
+      </div>
+    </section>
+  </aside>
+</section>

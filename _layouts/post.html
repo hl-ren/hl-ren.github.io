@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+<article class="post-shell">
+  <header class="post-header">
+    <a class="back-link" href="{{ '/posts/' | relative_url }}">返回文章</a>
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+      <span>{{ page.category }}</span>
+      {% if page.series %}
+        <a href="{{ '/series/' | relative_url }}#{{ page.series | slugify }}">系列：{{ page.series }}</a>
+      {% endif %}
+    </p>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}
+      <p class="post-summary">{{ page.summary }}</p>
+    {% endif %}
+    {% if page.tags and page.tags.size > 0 %}
+      <div class="tag-row" aria-label="文章标签">
+        {% for tag in page.tags %}
+          <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <nav class="post-nav" aria-label="文章前后导航">
+    {% if page.previous %}
+      <a href="{{ page.previous.url | relative_url }}">
+        <span>上一篇</span>
+        {{ page.previous.title }}
+      </a>
+    {% endif %}
+    {% if page.next %}
+      <a href="{{ page.next.url | relative_url }}">
+        <span>下一篇</span>
+        {{ page.next.title }}
+      </a>
+    {% endif %}
+  </nav>
+
+  {% include comments.html %}
+</article>

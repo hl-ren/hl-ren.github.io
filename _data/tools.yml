@@ -1,0 +1,14 @@
+- name: "FrameSolve 3D"
+  url: "https://hl-ren.github.io/FrameSolve-3D/"
+  repo: "https://github.com/hl-ren/FrameSolve-3D"
+  category: "结构计算"
+  status: "在线"
+  summary: "用于三维框架结构分析的小工具。"
+  featured: true
+- name: "HexRefine"
+  url: "https://hl-ren.github.io/HexRefine/"
+  repo: "https://github.com/hl-ren/HexRefine"
+  category: "网格工具"
+  status: "在线"
+  summary: "面向 Q1/Hex 局部加密的浏览器工作台。"
+  featured: true

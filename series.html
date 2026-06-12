@@ -1,0 +1,30 @@
+---
+layout: page
+title: 系列
+description: 系列适合承载长期主题，比如 AI 产品观察、产品反思、个人操作系统。
+eyebrow: Series
+permalink: /series/
+---
+
+{% assign posts_with_series = site.posts | where_exp: "post", "post.series != ''" %}
+{% assign grouped = posts_with_series | group_by: "series" | sort: "name" %}
+
+{% if grouped.size > 0 %}
+  <div class="taxonomy-list">
+    {% for series in grouped %}
+      <section id="{{ series.name | slugify }}">
+        <h2>{{ series.name }} <span>{{ series.items.size }}</span></h2>
+        <ul class="compact-list">
+          {% for post in series.items %}
+            <li>
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>还没有系列文章。以后在文章 front matter 里填写 <code>series</code> 就会出现在这里。</p>
+{% endif %}

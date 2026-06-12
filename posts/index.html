@@ -1,0 +1,12 @@
+---
+layout: page
+title: 全部文章
+description: 按发布时间倒序排列，适合快速浏览最近写过什么。
+eyebrow: Posts
+---
+
+<div class="post-list">
+  {% for post in site.posts %}
+    {% include post-card.html post=post %}
+  {% endfor %}
+</div>

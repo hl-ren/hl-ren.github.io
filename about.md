@@ -1,21 +1,18 @@
 ---
-layout: default
-title: About Me
+layout: page
+title: 关于
+description: 这里可以写你是谁，为什么写，以及这个博客会记录什么。
+eyebrow: About
+permalink: /about/
 ---
 
-# About Me
+你好，我是 Hui。
 
-This is the "About Me" page.
+这里会放一些生活吐槽、产品感想、技术反思和短文章。它不是一个正式媒体，更像是一个长期更新的个人记录系统。
 
-Inline equation: $F = ma$
+## 我会写
 
-Here’s another block equation:
-
-$$ E = mc^2 $$
-
-Learn more about me and my work!
-
-Feel free to reach out or explore my projects.
-
-[Back to Home](/)
-
+- 对产品和工具的真实使用感受
+- 对技术选择、工程实践和工作流的复盘
+- 对生活里小问题和小情绪的观察
+- 读书、看文章、聊天之后留下来的笔记

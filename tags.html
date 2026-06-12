@@ -1,0 +1,30 @@
+---
+layout: page
+title: 标签
+description: 标签是跨分类的线索，用来串起重复出现的主题。
+eyebrow: Tags
+permalink: /tags/
+---
+
+{% assign tags = site.tags | sort %}
+<div class="tag-cloud tag-cloud-large">
+  {% for tag in tags %}
+    <a href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+  {% endfor %}
+</div>
+
+<div class="taxonomy-list">
+  {% for tag in tags %}
+    <section id="{{ tag[0] | slugify }}">
+      <h2>{{ tag[0] }} <span>{{ tag[1].size }}</span></h2>
+      <ul class="compact-list">
+        {% for post in tag[1] %}
+          <li>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+</div>

@@ -1,0 +1,10 @@
+{% if site.analytics.enabled %}
+  {% if site.analytics.provider == "goatcounter" %}
+    {% assign goatcounter = site.analytics.goatcounter %}
+    {% if goatcounter.code %}
+      <script data-goatcounter="https://{{ goatcounter.code }}.goatcounter.com/count"
+        async
+        src="https://gc.zgo.at/count.js"></script>
+    {% endif %}
+  {% endif %}
+{% endif %}

@@ -1,29 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="/css/style.css">  <!-- Link to the custom CSS -->
-    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/index">Home</a></li>
-            <li><a href="/about">About Me</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/projects">Projects</a></li>
-        </ul>
-    </nav>
-
-    <div class="content">
-        {{ content }}
-    </div>
-
-    <!-- Optional footer -->
-    <footer>
-        <p>&copy; 2025 Huilong Ren. All rights reserved.</p>
-    </footer>
-</body>
+<!doctype html>
+<html lang="{{ site.lang | default: 'zh-CN' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% seo %}
+    <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <script src="{{ '/assets/js/search.js' | relative_url }}" data-search-index="{{ '/search.json' | relative_url }}" defer></script>
+    {% if site.analytics.enabled %}
+      {% if site.analytics.provider == "goatcounter" and site.analytics.goatcounter.code %}
+        <script src="{{ '/assets/js/click-tracking.js' | relative_url }}" data-track-outbound="{{ site.analytics.goatcounter.track_outbound_clicks }}" defer></script>
+      {% endif %}
+    {% endif %}
+  </head>
+  <body>
+    {% include header.html %}
+    <main class="site-main">
+      {{ content }}
+    </main>
+    {% include footer.html %}
+    {% include analytics.html %}
+  </body>
 </html>
