@@ -22,7 +22,11 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
   </head>
-  <body class="slides-body" data-deck-title="{{ page.title | escape }}" data-deck-author="{{ page.author | default: site.author.name | escape }}" data-deck-category="{{ page.category | default: 'Slides' | escape }}">
+  {% assign deck_logo = '' %}
+  {% if page.logo %}
+    {% assign deck_logo = page.logo | relative_url %}
+  {% endif %}
+  <body class="slides-body" data-deck-title="{{ page.title | escape }}" data-deck-author="{{ page.author | default: site.author.name | escape }}" data-deck-category="{{ page.category | default: 'Slides' | escape }}" data-deck-logo="{{ deck_logo | escape }}" data-deck-logo-alt="{{ page.logo_alt | default: page.title | escape }}">
     <div class="reveal">
       <div class="slides" id="deck-slides"></div>
     </div>

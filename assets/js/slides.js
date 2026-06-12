@@ -38,7 +38,9 @@
     return {
       title: document.body.dataset.deckTitle || document.title || "Slides",
       author: document.body.dataset.deckAuthor || "",
-      category: document.body.dataset.deckCategory || "Slides"
+      category: document.body.dataset.deckCategory || "Slides",
+      logo: document.body.dataset.deckLogo || "",
+      logoAlt: document.body.dataset.deckLogoAlt || ""
     };
   }
 
@@ -90,6 +92,14 @@
       var topbar = document.createElement("div");
       topbar.className = "slide-topbar";
       topbar.appendChild(createNode("slide-current-title", slideTitle));
+      if (meta.logo) {
+        var logo = document.createElement("img");
+        logo.className = "slide-logo";
+        logo.src = meta.logo;
+        logo.alt = meta.logoAlt || "";
+        logo.loading = "eager";
+        topbar.appendChild(logo);
+      }
 
       var footer = document.createElement("div");
       footer.className = "slide-footer";

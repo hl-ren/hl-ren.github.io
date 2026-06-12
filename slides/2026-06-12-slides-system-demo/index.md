@@ -5,6 +5,8 @@ date: 2026-06-12
 category: "Site"
 tags: ["Slides", "Reveal.js", "GitHub Pages"]
 summary: "A small browser-based deck demonstrating the site slides workflow."
+logo: "/slides/2026-06-12-slides-system-demo/images/rho-logo.svg"
+logo_alt: "Ren rho mark"
 ---
 
 # Online Slides System
