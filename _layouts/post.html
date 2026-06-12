@@ -4,12 +4,12 @@ layout: default
 
 <article class="post-shell">
   <header class="post-header">
-    <a class="back-link" href="{{ '/posts/' | relative_url }}">返回文章</a>
+    <a class="back-link" href="{{ '/posts/' | relative_url }}" data-i18n-key="post.back">返回文章</a>
     <p class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
       <span>{{ page.category }}</span>
       {% if page.series %}
-        <a href="{{ '/series/' | relative_url }}#{{ page.series | slugify }}">系列：{{ page.series }}</a>
+        <a href="{{ '/series/' | relative_url }}#{{ page.series | slugify }}"><span data-i18n-key="nav.series">系列</span>：{{ page.series }}</a>
       {% endif %}
     </p>
     <h1>{{ page.title }}</h1>
@@ -32,13 +32,13 @@ layout: default
   <nav class="post-nav" aria-label="文章前后导航">
     {% if page.previous %}
       <a href="{{ page.previous.url | relative_url }}">
-        <span>上一篇</span>
+        <span data-i18n-key="post.previous">上一篇</span>
         {{ page.previous.title }}
       </a>
     {% endif %}
     {% if page.next %}
       <a href="{{ page.next.url | relative_url }}">
-        <span>下一篇</span>
+        <span data-i18n-key="post.next">下一篇</span>
         {{ page.next.title }}
       </a>
     {% endif %}

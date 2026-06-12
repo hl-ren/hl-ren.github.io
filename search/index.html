@@ -1,16 +1,18 @@
 ---
 layout: page
 title: 搜索
+title_en: Search
 description: 搜索标题、摘要、分类和标签。
+description_en: Search titles, summaries, categories, and tags.
 eyebrow: Search
 ---
 
 <div class="search-page">
   <form class="search-box local-search" role="search">
-    <label for="search-input">搜索文章</label>
+    <label for="search-input" data-i18n-key="search.label">搜索文章</label>
     <div>
-      <input id="search-input" type="search" placeholder="输入关键词">
-      <button type="submit">搜索</button>
+      <input id="search-input" type="search" placeholder="输入关键词" data-i18n-placeholder="search.inputPlaceholder">
+      <button type="submit" data-i18n-key="nav.search">搜索</button>
     </div>
   </form>
   <div id="search-results" class="search-results" aria-live="polite"></div>

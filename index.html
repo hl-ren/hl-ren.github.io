@@ -7,17 +7,17 @@ title: 首页
   <div>
     <p class="eyebrow">Homepage</p>
     <h1>{{ site.title }}</h1>
-    <p>{{ site.description }}</p>
+    <p data-i18n-key="site.description">{{ site.description }}</p>
     <div class="hero-actions">
-      <a href="{{ '/posts/' | relative_url }}">文章</a>
-      <a href="{{ '/tools/' | relative_url }}">工具</a>
+      <a href="{{ '/posts/' | relative_url }}" data-i18n-key="nav.posts">文章</a>
+      <a href="{{ '/tools/' | relative_url }}" data-i18n-key="nav.tools">工具</a>
     </div>
   </div>
   <form class="search-box" action="{{ '/search/' | relative_url }}" role="search">
-    <label for="home-search">搜索文章</label>
+    <label for="home-search" data-i18n-key="search.label">搜索文章</label>
     <div>
-      <input id="home-search" name="q" type="search" placeholder="产品、AI、生活、技术...">
-      <button type="submit">搜索</button>
+      <input id="home-search" name="q" type="search" placeholder="产品、AI、生活、技术..." data-i18n-placeholder="search.placeholder">
+      <button type="submit" data-i18n-key="nav.search">搜索</button>
     </div>
   </form>
 </section>
@@ -26,7 +26,7 @@ title: 首页
   <div class="section-main">
     <div class="section-heading">
       <p class="eyebrow">Latest</p>
-      <h2>最近文章</h2>
+      <h2 data-i18n-key="home.latest">最近文章</h2>
     </div>
     <div class="post-list">
       {% for post in site.posts limit: 8 %}
@@ -37,7 +37,7 @@ title: 首页
 
   <aside class="sidebar">
     <section>
-      <h2>主要栏目</h2>
+      <h2 data-i18n-key="home.sections">主要栏目</h2>
       <div class="category-list">
         {% assign categories = site.categories | sort %}
         {% for category in categories %}
@@ -50,24 +50,24 @@ title: 首页
     </section>
 
     <section>
-      <h2>小工具</h2>
+      <h2 data-i18n-key="home.tools">小工具</h2>
       <div class="category-list">
         {% assign featured_tools = site.data.tools | where: "featured", true %}
         {% for tool in featured_tools limit: 5 %}
           <a href="{{ tool.url }}">
             <span>{{ tool.name }}</span>
-            <strong>{{ tool.status }}</strong>
+            <strong data-i18n-zh="{{ tool.status }}" data-i18n-en="{{ tool.status_en | default: tool.status }}">{{ tool.status }}</strong>
           </a>
         {% endfor %}
         <a href="{{ '/tools/' | relative_url }}">
-          <span>全部工具</span>
+          <span data-i18n-key="tools.all">全部工具</span>
           <strong>{{ site.data.tools.size }}</strong>
         </a>
       </div>
     </section>
 
     <section>
-      <h2>常用标签</h2>
+      <h2 data-i18n-key="home.tags">常用标签</h2>
       <div class="tag-cloud">
         {% assign tags = site.tags | sort %}
         {% for tag in tags limit: 24 %}

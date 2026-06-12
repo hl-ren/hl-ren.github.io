@@ -1,7 +1,9 @@
 ---
 layout: page
 title: 系列
+title_en: Series
 description: 系列适合承载长期主题，比如 AI 产品观察、产品反思、个人操作系统。
+description_en: Series collect long-running themes such as AI product notes or product reflections.
 eyebrow: Series
 permalink: /series/
 ---
@@ -26,5 +28,5 @@ permalink: /series/
     {% endfor %}
   </div>
 {% else %}
-  <p>还没有系列文章。以后在文章 front matter 里填写 <code>series</code> 就会出现在这里。</p>
+  <p data-i18n-zh="还没有系列文章。以后在文章 front matter 里填写 series 就会出现在这里。" data-i18n-en="No series yet. Add series to a post's front matter and it will appear here.">还没有系列文章。以后在文章 front matter 里填写 <code>series</code> 就会出现在这里。</p>
 {% endif %}

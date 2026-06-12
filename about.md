@@ -1,7 +1,9 @@
 ---
 layout: page
 title: 关于
+title_en: About
 description: 这里可以写你是谁，为什么写，以及这个博客会记录什么。
+description_en: A short note about who you are, why you write, and what this site records.
 eyebrow: About
 permalink: /about/
 ---

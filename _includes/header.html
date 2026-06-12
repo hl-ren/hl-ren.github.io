@@ -3,18 +3,23 @@
     <span class="brand-mark">R</span>
     <span>
       <strong>{{ site.title }}</strong>
-      <small>{{ site.description }}</small>
+      <small data-i18n-key="site.description">{{ site.description }}</small>
     </span>
   </a>
 
   <nav class="site-nav" aria-label="主导航">
-    <a href="{{ '/posts/' | relative_url }}">文章</a>
-    <a href="{{ '/tools/' | relative_url }}">工具</a>
-    <a href="{{ '/categories/' | relative_url }}">分类</a>
-    <a href="{{ '/tags/' | relative_url }}">标签</a>
-    <a href="{{ '/archive/' | relative_url }}">归档</a>
-    <a href="{{ '/series/' | relative_url }}">系列</a>
-    <a href="{{ '/search/' | relative_url }}">搜索</a>
-    <a href="{{ '/about/' | relative_url }}">关于</a>
+    <a href="{{ '/posts/' | relative_url }}" data-i18n-key="nav.posts">文章</a>
+    <a href="{{ '/tools/' | relative_url }}" data-i18n-key="nav.tools">工具</a>
+    <a href="{{ '/categories/' | relative_url }}" data-i18n-key="nav.categories">分类</a>
+    <a href="{{ '/tags/' | relative_url }}" data-i18n-key="nav.tags">标签</a>
+    <a href="{{ '/archive/' | relative_url }}" data-i18n-key="nav.archive">归档</a>
+    <a href="{{ '/series/' | relative_url }}" data-i18n-key="nav.series">系列</a>
+    <a href="{{ '/search/' | relative_url }}" data-i18n-key="nav.search">搜索</a>
+    <a href="{{ '/about/' | relative_url }}" data-i18n-key="nav.about">关于</a>
   </nav>
+
+  <div class="language-switcher" aria-label="Language">
+    <button type="button" data-lang-option="zh">中</button>
+    <button type="button" data-lang-option="en">EN</button>
+  </div>
 </header>

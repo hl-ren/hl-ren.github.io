@@ -1,7 +1,9 @@
 ---
 layout: page
 title: 小工具
+title_en: Tools
 description: 一些可以直接打开使用的工具和实验项目。
+description_en: Small web tools and experimental projects that can be opened directly.
 eyebrow: Tools
 permalink: /tools/
 ---
@@ -12,15 +14,15 @@ permalink: /tools/
   {% for tool in tools %}
     <article class="tool-card">
       <div class="tool-card-meta">
-        <span>{{ tool.category }}</span>
-        <span>{{ tool.status }}</span>
+        <span data-i18n-zh="{{ tool.category }}" data-i18n-en="{{ tool.category_en | default: tool.category }}">{{ tool.category }}</span>
+        <span data-i18n-zh="{{ tool.status }}" data-i18n-en="{{ tool.status_en | default: tool.status }}">{{ tool.status }}</span>
       </div>
       <h2><a href="{{ tool.url }}">{{ tool.name }}</a></h2>
-      <p>{{ tool.summary }}</p>
+      <p data-i18n-zh="{{ tool.summary }}" data-i18n-en="{{ tool.summary_en | default: tool.summary }}">{{ tool.summary }}</p>
       <div class="tool-actions">
-        <a href="{{ tool.url }}">打开工具</a>
+        <a href="{{ tool.url }}" data-i18n-key="tools.open">打开工具</a>
         {% if tool.repo %}
-          <a href="{{ tool.repo }}">代码仓库</a>
+          <a href="{{ tool.repo }}" data-i18n-key="tools.repo">代码仓库</a>
         {% endif %}
       </div>
     </article>

@@ -1,8 +1,8 @@
 <footer class="site-footer">
-  <p>© {{ site.time | date: "%Y" }} {{ site.author.name }}. Built with Jekyll.</p>
+  <p>© {{ site.time | date: "%Y" }} {{ site.author.name }}. <span data-i18n-key="footer.built">Built with Jekyll.</span></p>
   <p>
     <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
     <span aria-hidden="true">/</span>
-    <a href="{{ '/archive/' | relative_url }}">Archive</a>
+    <a href="{{ '/archive/' | relative_url }}" data-i18n-key="nav.archive">归档</a>
   </p>
 </footer>

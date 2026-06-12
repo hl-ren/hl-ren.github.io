@@ -102,6 +102,35 @@ a:hover {
   text-decoration: none;
 }
 
+.language-switcher {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.language-switcher button {
+  min-width: 34px;
+  min-height: 26px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.language-switcher button.is-active {
+  background: var(--ink);
+  color: var(--bg);
+}
+
 .site-main {
   padding: 18px 0 48px;
 }
@@ -127,7 +156,7 @@ a:hover {
 
 .hero h1 {
   max-width: 760px;
-  font-size: clamp(36px, 5vw, 58px);
+  font-size: clamp(32px, 4.2vw, 46px);
 }
 
 .hero p {
@@ -205,10 +234,12 @@ a:hover {
 }
 
 .search-box button {
+  flex: 0 0 auto;
   padding: 0 16px;
   background: var(--accent);
   color: #fff;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .section-grid {
@@ -566,13 +597,15 @@ a:hover {
 
 @media (max-width: 860px) {
   .site-header {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 12px;
     padding: 16px 0;
   }
 
   .site-nav {
+    order: 3;
+    width: 100%;
     justify-content: flex-start;
   }
 
@@ -616,11 +649,7 @@ a:hover {
   }
 
   .hero h1 {
-    font-size: 34px;
-  }
-
-  .search-box div {
-    flex-direction: column;
+    font-size: 30px;
   }
 
   .post-card,

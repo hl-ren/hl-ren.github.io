@@ -7,19 +7,37 @@
   var posts = [];
   var params = new URLSearchParams(window.location.search);
   var initialQuery = params.get("q") || "";
+  var lastQuery = "";
+
+  var labels = {
+    zh: {
+      empty: "输入关键词开始搜索。",
+      none: "没有找到相关文章。",
+      failed: "搜索索引加载失败。"
+    },
+    en: {
+      empty: "Type keywords to search.",
+      none: "No matching posts.",
+      failed: "Search index failed to load."
+    }
+  };
 
   function normalize(value) {
     return String(value || "").toLowerCase();
   }
 
+  function language() {
+    return document.documentElement.lang === "en" ? "en" : "zh";
+  }
+
   function render(items, query) {
     if (!query) {
-      results.innerHTML = '<p class="muted">输入关键词开始搜索。</p>';
+      results.innerHTML = '<p class="muted">' + labels[language()].empty + '</p>';
       return;
     }
 
     if (!items.length) {
-      results.innerHTML = '<p class="muted">没有找到相关文章。</p>';
+      results.innerHTML = '<p class="muted">' + labels[language()].none + '</p>';
       return;
     }
 
@@ -38,6 +56,7 @@
   }
 
   function runSearch(query) {
+    lastQuery = query;
     var q = normalize(query).trim();
     var words = q.split(/\s+/).filter(Boolean);
     var matches = posts.filter(function (post) {
@@ -62,7 +81,7 @@
       runSearch(initialQuery);
     })
     .catch(function () {
-      results.innerHTML = '<p class="muted">搜索索引加载失败。</p>';
+      results.innerHTML = '<p class="muted">' + labels[language()].failed + '</p>';
     });
 
   input.closest("form").addEventListener("submit", function (event) {
@@ -72,5 +91,9 @@
 
   input.addEventListener("input", function () {
     runSearch(input.value);
+  });
+
+  document.addEventListener("site-language-change", function () {
+    runSearch(lastQuery);
   });
 })();
