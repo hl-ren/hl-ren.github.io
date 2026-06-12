@@ -288,7 +288,8 @@
 .slide-topbar {
   grid-template-columns: minmax(0, 1fr) auto;
   column-gap: 34px;
-  padding: 22px 54px 24px;
+  position: relative;
+  padding: 22px 260px 24px 54px;
   border-bottom: 2px solid var(--slide-line);
   background: var(--slide-topbar-bg);
   font-size: 0.36em;
@@ -323,10 +324,13 @@
 
 .reveal img.slide-logo {
   display: block;
+  position: absolute;
+  top: 0;
+  right: 54px;
   width: auto;
-  height: 76px;
-  max-width: 170px;
-  max-height: 76px;
+  height: 100%;
+  max-width: 220px;
+  max-height: none;
   margin: 0;
   border: 0;
   border-radius: 0;
@@ -367,6 +371,7 @@
 }
 
 .title-slide .slide-content {
+  position: relative;
   display: grid;
   align-content: center;
   padding: 70px 82px;
@@ -397,18 +402,21 @@
 }
 
 .title-slide-heading {
-  max-width: 980px;
-  color: var(--slide-heading);
-  font-family: var(--slide-display-font);
+  width: min(100%, 980px);
+  padding: 0.32em 0.55em 0.38em;
+  background: var(--slide-topbar-bg);
+  color: var(--slide-topbar-ink);
+  font-family: var(--slide-content-font);
   font-size: 1.36em;
   font-weight: 830;
   line-height: 1.05;
+  text-align: center;
 }
 
 .title-slide-author {
   margin-top: 1.2em;
   color: var(--slide-ink);
-  font-family: var(--slide-display-font);
+  font-family: var(--slide-content-font);
   font-size: 0.62em;
   font-weight: 760;
 }
@@ -440,6 +448,13 @@
   border: 0;
   border-radius: 0;
   object-fit: contain;
+}
+
+.title-slide-controls {
+  position: absolute;
+  right: 54px;
+  bottom: 24px;
+  z-index: 4;
 }
 
 .section-slide .slide-content {
@@ -673,7 +688,7 @@
 .reveal video {
   max-width: 100%;
   max-height: 520px;
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 .reveal img.slide-img-xs {
@@ -798,6 +813,11 @@
     padding: 36px 30px;
   }
 
+  .title-slide-controls {
+    right: 26px;
+    bottom: 18px;
+  }
+
   .title-slide-hero {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -835,14 +855,15 @@
   }
 
   .slide-topbar {
-    padding: 20px 26px 16px;
+    padding: 20px 120px 16px 26px;
     column-gap: 16px;
   }
 
   .reveal img.slide-logo {
-    height: 48px;
-    max-width: 88px;
-    max-height: 48px;
+    right: 26px;
+    height: 100%;
+    max-width: 82px;
+    max-height: none;
   }
 
   .slide-footer {

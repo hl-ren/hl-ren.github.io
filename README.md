@@ -57,7 +57,7 @@ Markdown 原生支持标题、列表、代码块、表格、链接和图片。
 LaTeX 已启用 MathJax：
 
 ```markdown
-行内公式：\( a^2 + b^2 = c^2 \)
+行内公式：$a^2 + b^2 = c^2$
 
 块级公式：
 
@@ -66,7 +66,7 @@ E = mc^2
 $$
 ```
 
-为了避免和金额混淆，行内公式建议用 `\(...\)`，美元金额建议写成 `\$2000`。
+行内公式建议用 `$...$`；如果正文里有美元金额，建议写成 `\$2000`，避免被 MathJax 当成公式。
 
 图片放在 `assets/images/posts/`：
 
@@ -174,7 +174,7 @@ logo_alt: "Logo description"
 - 最后一页自动作为结束页
 - `logo` 可选；填写后会显示在每页标题栏右侧
 - `slide_theme`、`slide_topbar_color`、`slide_content_color`、`slide_footer_color` 可选；也可以演示时在 Settings 里临时切换
-- 普通页和结束页的 bullet item 会自动逐条播放；section/outline 页的 bullet 会直接显示
+- 普通页和结束页的 bullet 支持播放模式：`item` 逐条播放、`page` 整页播放、`off` 不播放；section/outline 页的 bullet 会直接显示
 - 内容字号会按可用宽高自动缩放，最大不超过页面标题字号；某页不想自动缩放时，加 `.no-fit` 或 `data-no-fit`
 - 某个区域不想 bullet 动画时，加 `.no-fragments` 或 `data-no-fragments`
 
@@ -194,9 +194,10 @@ slide_theme: "paper"
 slide_topbar_color: "sage"
 slide_content_color: "sage"
 slide_footer_color: "sage"
+slide_bullets: "item"
 ```
 
-颜色值可用 `default`、`white`、`sage`、`blue`、`amber`，顶部和底部还支持 `charcoal`。图片尺寸类可用 `.slide-img-xs`、`.slide-img-sm`、`.slide-img-md`、`.slide-img-lg`、`.slide-img-full`、`.slide-img-tall`，需要去掉圆角时加 `.slide-img-plain`。
+颜色值可用 `default`、`white`、`sage`、`blue`、`amber`，顶部和底部还支持 `charcoal`。`slide_bullets` 可用 `item`、`page`、`off`，也可以演示时在 Settings 里切换。图片尺寸类可用 `.slide-img-xs`、`.slide-img-sm`、`.slide-img-md`、`.slide-img-lg`、`.slide-img-full`、`.slide-img-tall`。
 
 Slides 里可以用内置版式辅助类做分栏和公式块：
 

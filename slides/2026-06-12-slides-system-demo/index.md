@@ -11,6 +11,7 @@ slide_theme: "paper"
 slide_topbar_color: "sage"
 slide_content_color: "sage"
 slide_footer_color: "sage"
+slide_bullets: "item"
 ---
 
 # Online Slides System
@@ -102,6 +103,6 @@ $$
 - One folder becomes one deck
 - Assets stay next to the deck
 - Keyboard presentation works in the browser
-- Math still works: \( a^2 + b^2 = c^2 \)
+- Math still works: $a^2 + b^2 = c^2$
 
 Slides now sit beside posts and tools as a first-class content area.

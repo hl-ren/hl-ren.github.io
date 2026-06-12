@@ -116,6 +116,64 @@
     });
   }
 
+  function clearBulletFragments(section) {
+    section.querySelectorAll(".slide-content li, .slide-content").forEach(function (node) {
+      if (!node.dataset.slideAutoFragment) return;
+      node.classList.remove("fragment", "fade-up", "visible", "current-fragment");
+      node.removeAttribute("data-fragment-index");
+      delete node.dataset.slideAutoFragment;
+    });
+  }
+
+  function applyBulletModeToSlide(section, mode) {
+    if (section.classList.contains("title-slide") || section.classList.contains("section-slide")) return;
+
+    clearBulletFragments(section);
+    if (mode === "off") return;
+
+    var content = section.querySelector(".slide-content");
+    if (!content || content.closest(".no-fragments, [data-no-fragments]")) return;
+
+    if (mode === "page") {
+      content.classList.add("fragment", "fade-up");
+      content.dataset.slideAutoFragment = "true";
+      return;
+    }
+
+    Array.prototype.slice.call(content.querySelectorAll("li")).forEach(function (item) {
+      if (item.closest(".no-fragments, [data-no-fragments]")) return;
+      if (item.classList.contains("fragment") && !item.dataset.slideAutoFragment) return;
+      item.classList.add("fragment", "fade-up");
+      item.dataset.slideAutoFragment = "true";
+    });
+  }
+
+  function applyBulletMode(mode) {
+    var selected = mode || "item";
+    document.body.dataset.slideBullets = selected;
+    Array.prototype.slice.call(target.children).forEach(function (section) {
+      applyBulletModeToSlide(section, selected);
+    });
+    document.querySelectorAll("[data-slide-bullets]").forEach(function (select) {
+      select.value = selected;
+    });
+
+    if (window.Reveal && window.Reveal.sync) window.Reveal.sync();
+    fitAllSlideContent();
+
+    try {
+      localStorage.setItem("slide-bullets", selected);
+    } catch (error) {}
+  }
+
+  function getStoredBulletMode() {
+    try {
+      return localStorage.getItem("slide-bullets") || (document.body.dataset.slideBulletsDefault || "item");
+    } catch (error) {
+      return document.body.dataset.slideBulletsDefault || "item";
+    }
+  }
+
   function applyCurrentSectionHighlight(content, sectionTitle) {
     var current = normalizeText(sectionTitle);
     if (!current) return;
@@ -239,10 +297,12 @@
       });
       if (isTitleSlide) {
         buildTitleSlide(content, slideTitle, meta);
+        var titleControlsSlot = document.createElement("div");
+        titleControlsSlot.className = "title-slide-controls";
+        content.appendChild(titleControlsSlot);
       } else {
         applyAutoColumns(content);
         if (isSectionSlide) applyCurrentSectionHighlight(content, slideTitle);
-        if (!isSectionSlide) applyListFragments(content);
       }
 
       var topbarTitle = isSectionSlide ? "Outline" : slideTitle;
@@ -467,11 +527,31 @@
       slot.insertBefore(controls, slot.firstChild);
     });
 
+    document.querySelectorAll(".title-slide-controls").forEach(function (slot, index) {
+      var controls = template.cloneNode(true);
+      var panel = controls.querySelector(".deck-settings-panel");
+      var button = controls.querySelector("[data-slide-settings-toggle]");
+      var panelId = "deck-settings-panel-title-" + String(index + 1);
+
+      controls.removeAttribute("data-slide-controls-template");
+      if (panel) {
+        panel.id = panelId;
+        panel.hidden = true;
+      }
+      if (button) {
+        button.setAttribute("aria-controls", panelId);
+        button.setAttribute("aria-expanded", "false");
+      }
+
+      slot.appendChild(controls);
+    });
+
     template.remove();
   }
 
   function setupDeckControls() {
     var autoplay = getStoredAutoplay();
+    var bulletMode = getStoredBulletMode();
     attachDeckControls();
 
     document.addEventListener("click", function (event) {
@@ -511,6 +591,12 @@
       applyAutoplay(select.value);
     });
 
+    document.addEventListener("change", function (event) {
+      var select = event.target.closest("[data-slide-bullets]");
+      if (!select) return;
+      applyBulletMode(select.value);
+    });
+
     document.addEventListener("fullscreenchange", syncFullscreenButton);
     if (window.Reveal && window.Reveal.on) {
       window.Reveal.on("slidechanged", syncSlideStatus);
@@ -522,6 +608,7 @@
     syncFullscreenButton();
     syncSlideStatus();
     applyTheme(getStoredTheme());
+    applyBulletMode(bulletMode);
     applyAutoplay(autoplay);
   }
 
