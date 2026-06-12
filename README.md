@@ -2,6 +2,17 @@
 
 这是一个面向 GitHub Pages 的 Jekyll 主站模板，适合同时放博客文章、小工具、在线幻灯片、项目入口和长期记录。
 
+## 本地预览
+
+本机已安装 Homebrew Ruby 3.1 和本项目的 Jekyll 依赖。以后在仓库目录运行：
+
+```bash
+/opt/homebrew/opt/ruby@3.1/bin/bundle install
+/opt/homebrew/opt/ruby@3.1/bin/bundle exec jekyll serve --host 127.0.0.1 --port 4000
+```
+
+然后打开 `http://127.0.0.1:4000/`。
+
 ## 写新文章：只新增一个 Markdown 文件
 
 在 `_posts/` 下新建 Markdown 文件：
