@@ -369,6 +369,11 @@
   max-width: 76%;
   padding-left: 1.1em;
   font-size: 0.9em;
+  font-weight: 760;
+}
+
+.section-slide .slide-content li {
+  font-weight: 760;
 }
 
 .end-slide .slide-content {
@@ -465,7 +470,7 @@
 
 .reveal .slide-content li.is-current-section {
   color: var(--slide-heading);
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .reveal .slide-content li.is-current-section::marker {

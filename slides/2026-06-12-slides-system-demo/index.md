@@ -29,14 +29,6 @@ Browser-first decks for posts, tools, research notes, and teaching.
 
 ---
 
-## Why browser slides
-
-- One URL is enough for sharing
-- Assets live beside the deck
-- Posts, tools, and slides stay in one site
-
----
-
 ## Deck structure
 
 ```text
@@ -54,22 +46,6 @@ slides/YYYY-MM-DD-slug/
 - Framing
 - Authoring
 - Delivery
-
----
-
-## Markdown sections
-
-### Page roles
-
-- First `#` creates the cover
-- Later `#` creates section pages
-- `##` creates content pages
-
-### Local structure
-
-- Each section can hold many pages
-- This demo uses two pages per section
-- Footer shows the section title
 
 ---
 
@@ -94,19 +70,6 @@ slides/YYYY-MM-DD-slug/
 - Framing
 - Authoring
 - Delivery
-
----
-
-## Color templates
-
-Use the theme buttons in the settings menu.
-
-<div class="theme-swatch-row">
-  <div class="theme-swatch paper"><span></span>Paper</div>
-  <div class="theme-swatch sage"><span></span>Sage</div>
-  <div class="theme-swatch midnight"><span></span>Midnight</div>
-  <div class="theme-swatch amber"><span></span>Amber</div>
-</div>
 
 ---
 
