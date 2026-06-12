@@ -263,8 +263,33 @@
   height: 100vh;
 }
 
+.slides-body.is-overview .reveal {
+  height: 100vh;
+}
+
 .reveal .slides {
   text-align: left;
+}
+
+.reveal.overview-grid {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.reveal.overview-grid .slides {
+  transform-origin: 0 0 !important;
+}
+
+.reveal.overview-grid .backgrounds {
+  display: none;
+}
+
+.overview-grid-spacer {
+  position: relative;
+  z-index: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .slide-thumbnails {
@@ -277,6 +302,10 @@
 }
 
 .slides-body.is-fullscreen .slide-thumbnails {
+  display: none;
+}
+
+.slides-body.is-overview .slide-thumbnails {
   display: none;
 }
 

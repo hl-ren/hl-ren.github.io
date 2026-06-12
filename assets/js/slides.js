@@ -395,6 +395,124 @@
     });
   }
 
+  function getOverviewSpacer() {
+    var reveal = document.querySelector(".reveal");
+    var spacer = document.querySelector(".overview-grid-spacer");
+    if (!reveal) return null;
+
+    if (!spacer) {
+      spacer = document.createElement("div");
+      spacer.className = "overview-grid-spacer";
+      reveal.appendChild(spacer);
+    }
+
+    return spacer;
+  }
+
+  function getOverviewScale(revealWidth, slideWidth) {
+    var targetWidth = revealWidth < 720 ? 180 : 340;
+    var minScale = revealWidth < 720 ? 0.28 : 0.16;
+    var maxScale = revealWidth < 720 ? 0.42 : 0.22;
+    var scale = targetWidth / Math.max(slideWidth, 1);
+
+    scale = Math.max(minScale, Math.min(maxScale, scale));
+    return Math.min(scale, (revealWidth - 28) / Math.max(slideWidth, 1));
+  }
+
+  function layoutOverviewGrid() {
+    var reveal = document.querySelector(".reveal");
+    var slides = document.querySelector(".reveal .slides");
+    var sections = Array.prototype.slice.call(target.children);
+    if (!reveal || !slides || !sections.length || !reveal.classList.contains("overview")) return;
+
+    document.body.classList.add("is-overview");
+
+    var revealWidth = Math.max(reveal.clientWidth, 1);
+    var revealHeight = Math.max(reveal.clientHeight, 1);
+    var slideWidth = revealWidth;
+    var slideHeight = revealHeight;
+    var gap = revealWidth < 720 ? 10 : 18;
+    var pad = revealWidth < 720 ? 10 : 18;
+    var scale = getOverviewScale(revealWidth, slideWidth);
+    var tileWidth = slideWidth * scale;
+    var tileHeight = slideHeight * scale;
+    var columns = Math.max(1, Math.floor((revealWidth - pad * 2 + gap) / (tileWidth + gap)));
+    var rows = Math.ceil(sections.length / columns);
+    var stepX = (tileWidth + gap) / scale;
+    var stepY = (tileHeight + gap) / scale;
+    var spacer = getOverviewSpacer();
+
+    reveal.classList.add("overview-grid");
+    slides.style.left = "0";
+    slides.style.top = "0";
+    slides.style.right = "auto";
+    slides.style.bottom = "auto";
+    slides.style.width = String(slideWidth) + "px";
+    slides.style.height = String(slideHeight) + "px";
+    slides.style.transformOrigin = "0 0";
+    slides.style.transform = "scale(" + String(scale) + ")";
+
+    sections.forEach(function (section, index) {
+      var column = index % columns;
+      var row = Math.floor(index / columns);
+      section.dataset.overviewGrid = "true";
+      section.style.width = String(slideWidth) + "px";
+      section.style.height = String(slideHeight) + "px";
+      section.style.transform = "translate3d(" +
+        String(pad / scale + column * stepX) + "px, " +
+        String(pad / scale + row * stepY) + "px, 0)";
+    });
+
+    if (spacer) {
+      spacer.style.width = String(pad * 2 + columns * tileWidth + Math.max(0, columns - 1) * gap) + "px";
+      spacer.style.height = String(pad * 2 + rows * tileHeight + Math.max(0, rows - 1) * gap) + "px";
+    }
+  }
+
+  function resetOverviewGrid() {
+    var reveal = document.querySelector(".reveal");
+    var slides = document.querySelector(".reveal .slides");
+    var spacer = document.querySelector(".overview-grid-spacer");
+
+    if (reveal) reveal.classList.remove("overview-grid");
+    document.body.classList.remove("is-overview");
+    if (spacer) spacer.remove();
+    if (slides) {
+      slides.style.left = "";
+      slides.style.top = "";
+      slides.style.right = "";
+      slides.style.bottom = "";
+      slides.style.width = "";
+      slides.style.height = "";
+      slides.style.transformOrigin = "";
+      slides.style.transform = "";
+    }
+
+    Array.prototype.slice.call(target.children).forEach(function (section) {
+      if (!section.dataset.overviewGrid) return;
+      section.style.width = "";
+      section.style.height = "";
+      delete section.dataset.overviewGrid;
+    });
+
+    window.requestAnimationFrame(function () {
+      if (window.Reveal && window.Reveal.layout) window.Reveal.layout();
+      fitAllSlideContent();
+    });
+  }
+
+  function setupOverviewGrid() {
+    if (!window.Reveal || !window.Reveal.on) return;
+
+    window.Reveal.on("overviewshown", function () {
+      window.requestAnimationFrame(layoutOverviewGrid);
+    });
+    window.Reveal.on("overviewhidden", resetOverviewGrid);
+    window.addEventListener("resize", function () {
+      if (document.querySelector(".reveal.overview")) layoutOverviewGrid();
+    });
+  }
+
   function localizeDeckLink() {
     var link = document.querySelector(".deck-home");
     if (!link) return;
@@ -695,6 +813,7 @@
     maxScale: 1.6,
     plugins: window.RevealHighlight ? [window.RevealHighlight] : []
   }).then(function () {
+    setupOverviewGrid();
     setupDeckControls();
     fitAllSlideContent();
     typesetMath(0);
