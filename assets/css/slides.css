@@ -1,5 +1,6 @@
 .slides-body {
   --slide-topbar-height: 142px;
+  --slide-thumbnails-height: 142px;
   --slide-ink: #1f2523;
   --slide-muted: #69716d;
   --slide-accent: #0f766e;
@@ -250,12 +251,87 @@
 .reveal,
 .reveal-viewport {
   width: 100vw;
-  height: 100vh;
   background: var(--slide-bg);
+}
+
+.reveal {
+  height: calc(100vh - var(--slide-thumbnails-height));
+}
+
+.reveal-viewport,
+.slides-body.is-fullscreen .reveal {
+  height: 100vh;
 }
 
 .reveal .slides {
   text-align: left;
+}
+
+.slide-thumbnails {
+  height: var(--slide-thumbnails-height);
+  padding: 10px 14px;
+  border-top: 1px solid var(--slide-line);
+  background: color-mix(in srgb, var(--slide-panel) 86%, var(--slide-bg));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.slides-body.is-fullscreen .slide-thumbnails {
+  display: none;
+}
+
+.slide-thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
+  gap: 8px;
+}
+
+.slide-thumbnail {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 8px 10px;
+  border: 1px solid var(--slide-line);
+  border-radius: 6px;
+  background: var(--slide-panel);
+  color: var(--slide-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 760;
+  text-align: left;
+}
+
+.slide-thumbnail:hover,
+.slide-thumbnail.is-active {
+  border-color: var(--slide-accent);
+  background: var(--slide-content-bg);
+  color: var(--slide-ink);
+}
+
+.slide-thumbnail.is-active {
+  box-shadow: inset 0 0 0 2px var(--slide-accent);
+}
+
+.slide-thumbnail-number {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--slide-footer-bg);
+  color: var(--slide-footer-ink);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.slide-thumbnail-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .reveal .slides > section {
@@ -755,6 +831,7 @@
 @media (max-width: 720px) {
   .slides-body {
     --slide-topbar-height: 86px;
+    --slide-thumbnails-height: 104px;
   }
 
   .deck-controls {
@@ -802,6 +879,21 @@
   .theme-swatch-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+  }
+
+  .slide-thumbnails {
+    padding: 8px;
+  }
+
+  .slide-thumbnail-grid {
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+    gap: 6px;
+  }
+
+  .slide-thumbnail {
+    min-height: 42px;
+    padding: 6px 8px;
+    font-size: 11px;
   }
 
   .slide-columns {

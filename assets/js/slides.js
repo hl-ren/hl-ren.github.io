@@ -340,6 +340,8 @@
       footer.appendChild(footerRight);
 
       section.dataset.slideKind = isTitleSlide ? "title" : isEndSlide ? "end" : isSectionSlide ? "section" : "content";
+      section.dataset.slideTitle = slideTitle;
+      section.dataset.slideTopic = topic;
       section.classList.toggle("title-slide", isTitleSlide);
       section.classList.toggle("section-slide", isSectionSlide);
       section.classList.toggle("content-slide", !isTitleSlide && !isSectionSlide && !isEndSlide);
@@ -347,6 +349,49 @@
       section.appendChild(topbar);
       section.appendChild(content);
       section.appendChild(footer);
+    });
+  }
+
+  function buildThumbnailTray() {
+    var tray = document.createElement("nav");
+    var grid = document.createElement("div");
+    tray.className = "slide-thumbnails";
+    tray.setAttribute("aria-label", "Slide thumbnails");
+    grid.className = "slide-thumbnail-grid";
+
+    Array.prototype.slice.call(target.children).forEach(function (section, index) {
+      var button = document.createElement("button");
+      var number = document.createElement("span");
+      var title = document.createElement("span");
+      button.type = "button";
+      button.className = "slide-thumbnail";
+      button.dataset.slideIndex = String(index);
+      button.setAttribute("aria-label", "Go to slide " + String(index + 1));
+      number.className = "slide-thumbnail-number";
+      number.textContent = String(index + 1);
+      title.className = "slide-thumbnail-title";
+      title.textContent = section.dataset.slideTitle || "Slide";
+      button.appendChild(number);
+      button.appendChild(title);
+      button.addEventListener("click", function () {
+        if (window.Reveal && window.Reveal.slide) window.Reveal.slide(index);
+        closeSettingsPanels();
+        syncThumbnailState();
+      });
+      grid.appendChild(button);
+    });
+
+    tray.appendChild(grid);
+    document.querySelector(".reveal").insertAdjacentElement("afterend", tray);
+  }
+
+  function syncThumbnailState() {
+    if (!window.Reveal || !window.Reveal.getIndices) return;
+    var current = window.Reveal.getIndices().h || 0;
+    document.querySelectorAll(".slide-thumbnail").forEach(function (button) {
+      var active = Number(button.dataset.slideIndex) === current;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-current", active ? "true" : "false");
     });
   }
 
@@ -469,6 +514,7 @@
 
   function syncFullscreenButton() {
     var active = Boolean(document.fullscreenElement);
+    document.body.classList.toggle("is-fullscreen", active);
     document.querySelectorAll("[data-slide-fullscreen]").forEach(function (button) {
       button.textContent = active ? button.dataset.exitLabel : button.dataset.fullscreenLabel;
       button.classList.toggle("is-active", active);
@@ -603,13 +649,16 @@
     document.addEventListener("fullscreenchange", syncFullscreenButton);
     if (window.Reveal && window.Reveal.on) {
       window.Reveal.on("slidechanged", syncSlideStatus);
+      window.Reveal.on("slidechanged", syncThumbnailState);
       window.Reveal.on("slidechanged", fitAllSlideContent);
       window.Reveal.on("ready", syncSlideStatus);
+      window.Reveal.on("ready", syncThumbnailState);
       window.Reveal.on("ready", fitAllSlideContent);
     }
     window.addEventListener("resize", fitAllSlideContent);
     syncFullscreenButton();
     syncSlideStatus();
+    syncThumbnailState();
     applyTheme(getStoredTheme());
     applyBulletMode(bulletMode);
     applyAutoplay(autoplay);
@@ -627,6 +676,7 @@
 
   splitSlides();
   enhanceSlides();
+  buildThumbnailTray();
   localizeDeckLink();
   setupThemeSwitcher();
   setupColorSwitchers();

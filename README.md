@@ -185,6 +185,7 @@ logo_alt: "Logo description"
 - 首页幻灯片区块自动更新
 - 顶部导航和快速入口自动包含幻灯片入口
 - 幻灯片页面支持键盘翻页、全屏演示、代码高亮、图片和 LaTeX
+- 非全屏模式下底部会显示多行缩略图导航；全屏演示时自动隐藏，退出全屏后恢复
 - deck 内图片可以直接写相对路径，例如 `![图](images/example.png)`
 - 图片尺寸可以用 Kramdown 属性控制，例如 `![图](images/example.png){: .slide-img-md }` 或 `![图](images/example.png){: width="60%" }`
 
