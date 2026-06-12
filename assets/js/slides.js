@@ -44,21 +44,19 @@
     };
   }
 
-  function getSlideTopic(section, meta) {
-    var kicker = section.querySelector(".section-kicker");
-    if (kicker && kicker.textContent.trim()) return kicker.textContent.trim();
-
-    var heading = section.querySelector("h1, h2, h3");
-    if (heading && heading.textContent.trim()) return heading.textContent.trim();
-
-    return meta.category;
-  }
-
   function getSlideTitle(section, meta) {
     var heading = section.querySelector("h1, h2, h3");
     if (heading && heading.textContent.trim()) return heading.textContent.trim();
 
     return meta.title;
+  }
+
+  function normalizeText(text) {
+    return String(text || "")
+      .toLowerCase()
+      .replace(/^\s*(section|part|chapter)\s*\d*\s*[:：.-]?\s*/i, "")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   function createNode(className, text) {
@@ -117,13 +115,23 @@
     });
   }
 
+  function applyCurrentSectionHighlight(content, sectionTitle) {
+    var current = normalizeText(sectionTitle);
+    if (!current) return;
+
+    Array.prototype.slice.call(content.querySelectorAll("li")).forEach(function (item) {
+      var itemText = normalizeText(item.textContent);
+      item.classList.toggle("is-current-section", itemText === current || itemText.endsWith(" " + current));
+    });
+  }
+
   function enhanceSlides() {
     var meta = getDeckMeta();
     var sections = Array.prototype.slice.call(target.children);
     var total = sections.length;
+    var currentSectionTitle = meta.category;
 
     sections.forEach(function (section, index) {
-      var topic = getSlideTopic(section, meta);
       var slideTitle = getSlideTitle(section, meta);
       var content = document.createElement("div");
       content.className = "slide-content";
@@ -135,10 +143,17 @@
       var headingLevel = heading ? heading.tagName.toLowerCase() : "";
       if (heading) heading.remove();
 
+      var isTitleSlide = index === 0;
+      var isEndSlide = index === total - 1 && total > 1;
+      var isSectionSlide = !isTitleSlide && !isEndSlide && headingLevel === "h1";
+      if (isSectionSlide) currentSectionTitle = slideTitle;
+      var topic = isTitleSlide ? meta.title : isEndSlide ? currentSectionTitle : currentSectionTitle;
+
       Array.prototype.slice.call(section.childNodes).forEach(function (child) {
         content.appendChild(child);
       });
       applyAutoColumns(content);
+      if (isSectionSlide) applyCurrentSectionHighlight(content, slideTitle);
       applyListFragments(content);
 
       var topbar = document.createElement("div");
@@ -171,9 +186,6 @@
       footer.appendChild(footerCenter);
       footer.appendChild(footerRight);
 
-      var isTitleSlide = index === 0;
-      var isEndSlide = index === total - 1 && total > 1;
-      var isSectionSlide = !isTitleSlide && !isEndSlide && headingLevel === "h1";
       section.dataset.slideKind = isTitleSlide ? "title" : isEndSlide ? "end" : isSectionSlide ? "section" : "content";
       section.classList.toggle("title-slide", isTitleSlide);
       section.classList.toggle("section-slide", isSectionSlide);

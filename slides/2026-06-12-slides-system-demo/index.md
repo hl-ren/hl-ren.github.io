@@ -17,22 +17,23 @@ Browser-first decks for posts, tools, research notes, and teaching.
 
 ---
 
-# Outline
+# Framing
 
-- One Markdown file defines one deck
-- `#` after the cover becomes a section or outline page
-- `##` creates ordinary content pages
-- The final page is styled as the closing slide
+- Framing
+- Authoring
+- Delivery
 
 ---
 
-## Authoring workflow
+## Why browser slides
 
-### Deck folder
+- One URL is enough for sharing
+- Assets live beside the deck
+- Posts, tools, and slides stay in one site
 
-- Keep one deck in one folder
-- Put `index.md` at the folder root
-- Split pages with `---`
+---
+
+## Deck structure
 
 ```text
 slides/YYYY-MM-DD-slug/
@@ -42,19 +43,59 @@ slides/YYYY-MM-DD-slug/
   data/
 ```
 
-### Local assets
+---
 
-![Slides system diagram](images/slides-system.svg)
+# Authoring
 
-- Keep figures near the deck
-- Use relative image paths
-- Copy the folder as one unit
+- Framing
+- Authoring
+- Delivery
+
+---
+
+## Markdown sections
+
+### Page roles
+
+- First `#` creates the cover
+- Later `#` creates section pages
+- `##` creates content pages
+
+### Local structure
+
+- Each section can hold many pages
+- This demo uses two pages per section
+- Footer shows the section title
+
+---
+
+## Markdown columns
+
+### Left column
+
+- Write `###` headings
+- Add bullets below each heading
+- The deck builds columns automatically
+
+### Right column
+
+- Bullet items reveal one by one
+- HTML columns still work
+- Use `.no-fragments` to disable animation
+
+---
+
+# Delivery
+
+- Framing
+- Authoring
+- Delivery
 
 ---
 
 ## Color templates
 
-Use the theme buttons in the upper-right corner.
+Use the theme buttons in the settings menu.
 
 <div class="theme-swatch-row">
   <div class="theme-swatch paper"><span></span>Paper</div>
@@ -62,6 +103,18 @@ Use the theme buttons in the upper-right corner.
   <div class="theme-swatch midnight"><span></span>Midnight</div>
   <div class="theme-swatch amber"><span></span>Amber</div>
 </div>
+
+---
+
+## Local assets
+
+### Local assets
+
+![Slides system diagram](images/slides-system.svg)
+
+- Keep figures near the deck
+- Use relative image paths
+- Copy the folder as one unit
 
 ---
 

@@ -390,6 +390,15 @@
   will-change: opacity, transform;
 }
 
+.reveal .slide-content li.is-current-section {
+  color: var(--slide-heading);
+  font-weight: 800;
+}
+
+.reveal .slide-content li.is-current-section::marker {
+  color: var(--slide-accent);
+}
+
 .slide-card-panel,
 .equation-box {
   padding: 22px 24px;

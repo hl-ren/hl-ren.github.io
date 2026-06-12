@@ -155,6 +155,8 @@ logo_alt: "Logo description"
 - 后续 `#` 是章节页或大纲页
 - `##` 是普通内容页
 - 普通页里两个或以上的 `###` 会自动变成分栏
+- 每个 `#` section 后面的 `##` 普通页，底部中间只显示当前 section 标题
+- section 页列表中，和当前 section 同名的 bullet 会自动高亮
 - 最后一页自动作为结束页
 - `logo` 可选；填写后会显示在每页标题栏右侧
 - bullet item 会自动逐条播放；某个区域不想动画时，加 `.no-fragments` 或 `data-no-fragments`
