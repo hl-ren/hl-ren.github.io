@@ -1,0 +1,20 @@
+<header class="site-header">
+  <a class="brand" href="{{ '/' | relative_url }}">
+    <span class="brand-mark">R</span>
+    <span>
+      <strong>{{ site.title }}</strong>
+      <small>{{ site.description }}</small>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="主导航">
+    <a href="{{ '/posts/' | relative_url }}">文章</a>
+    <a href="{{ '/tools/' | relative_url }}">工具</a>
+    <a href="{{ '/categories/' | relative_url }}">分类</a>
+    <a href="{{ '/tags/' | relative_url }}">标签</a>
+    <a href="{{ '/archive/' | relative_url }}">归档</a>
+    <a href="{{ '/series/' | relative_url }}">系列</a>
+    <a href="{{ '/search/' | relative_url }}">搜索</a>
+    <a href="{{ '/about/' | relative_url }}">关于</a>
+  </nav>
+</header>

@@ -1,0 +1,33 @@
+{% if site.comments.enabled and page.comments != false %}
+  <section class="comments-section" id="comments" aria-labelledby="comments-title">
+    <div class="comments-header">
+      <p class="eyebrow">Discussion</p>
+      <h2 id="comments-title">评论</h2>
+    </div>
+
+    {% if site.comments.provider == "giscus" %}
+      {% assign giscus = site.comments.giscus %}
+      {% if giscus.repo and giscus.repo_id and giscus.category and giscus.category_id %}
+        <div class="giscus"></div>
+        <script src="https://giscus.app/client.js"
+          data-repo="{{ giscus.repo }}"
+          data-repo-id="{{ giscus.repo_id }}"
+          data-category="{{ giscus.category }}"
+          data-category-id="{{ giscus.category_id }}"
+          data-mapping="{{ giscus.mapping | default: 'pathname' }}"
+          data-strict="{{ giscus.strict | default: '1' }}"
+          data-reactions-enabled="{{ giscus.reactions_enabled | default: '1' }}"
+          data-emit-metadata="{{ giscus.emit_metadata | default: '0' }}"
+          data-input-position="{{ giscus.input_position | default: 'bottom' }}"
+          data-theme="{{ giscus.theme | default: 'preferred_color_scheme' }}"
+          data-lang="{{ giscus.lang | default: site.lang | default: 'zh-CN' }}"
+          data-loading="{{ giscus.loading | default: 'lazy' }}"
+          crossorigin="anonymous"
+          async>
+        </script>
+      {% else %}
+        <p class="muted">评论功能已开启，但还需要填写 giscus 的 repo、repo_id、category 和 category_id。</p>
+      {% endif %}
+    {% endif %}
+  </section>
+{% endif %}

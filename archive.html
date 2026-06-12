@@ -1,0 +1,26 @@
+---
+layout: page
+title: 归档
+description: 按年月回看文章，适合几年以后翻自己的想法。
+eyebrow: Archive
+permalink: /archive/
+---
+
+{% assign current_month = "" %}
+<div class="archive-list">
+  {% for post in site.posts %}
+    {% assign post_month = post.date | date: "%Y 年 %m 月" %}
+    {% if post_month != current_month %}
+      {% unless forloop.first %}</ul>{% endunless %}
+      <h2>{{ post_month }}</h2>
+      <ul class="compact-list">
+      {% assign current_month = post_month %}
+    {% endif %}
+    <li>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%m-%d" }}</time>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <span>{{ post.category }}</span>
+    </li>
+    {% if forloop.last %}</ul>{% endif %}
+  {% endfor %}
+</div>

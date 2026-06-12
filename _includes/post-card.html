@@ -1,0 +1,19 @@
+<article class="post-card">
+  <div class="post-card-meta">
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+    <a href="{{ '/categories/' | relative_url }}#{{ post.category | slugify }}">{{ post.category }}</a>
+  </div>
+  <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+  {% if post.summary %}
+    <p>{{ post.summary }}</p>
+  {% else %}
+    <p>{{ post.excerpt | strip_html | truncate: 96 }}</p>
+  {% endif %}
+  {% if post.tags and post.tags.size > 0 %}
+    <div class="tag-row">
+      {% for tag in post.tags limit: 4 %}
+        <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</article>

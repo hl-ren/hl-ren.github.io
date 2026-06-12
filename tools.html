@@ -1,0 +1,28 @@
+---
+layout: page
+title: 小工具
+description: 一些可以直接打开使用的工具和实验项目。
+eyebrow: Tools
+permalink: /tools/
+---
+
+{% assign tools = site.data.tools | sort: "name" %}
+
+<div class="tool-grid">
+  {% for tool in tools %}
+    <article class="tool-card">
+      <div class="tool-card-meta">
+        <span>{{ tool.category }}</span>
+        <span>{{ tool.status }}</span>
+      </div>
+      <h2><a href="{{ tool.url }}">{{ tool.name }}</a></h2>
+      <p>{{ tool.summary }}</p>
+      <div class="tool-actions">
+        <a href="{{ tool.url }}">打开工具</a>
+        {% if tool.repo %}
+          <a href="{{ tool.repo }}">代码仓库</a>
+        {% endif %}
+      </div>
+    </article>
+  {% endfor %}
+</div>
