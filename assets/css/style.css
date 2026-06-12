@@ -414,12 +414,15 @@ a:hover {
 
 .page-header,
 .post-header {
-  margin-bottom: 28px;
-  padding-bottom: 22px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
 
-.page-header h1,
+.page-header h1 {
+  font-size: clamp(28px, 3vw, 36px);
+}
+
 .post-header h1 {
   font-size: clamp(32px, 4.4vw, 48px);
 }
@@ -428,7 +431,7 @@ a:hover {
 .post-summary {
   max-width: 680px;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .back-link {
