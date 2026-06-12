@@ -7,6 +7,10 @@ tags: ["Slides", "Reveal.js", "GitHub Pages"]
 summary: "A small browser-based deck demonstrating the site slides workflow."
 logo: "/slides/2026-06-12-slides-system-demo/images/rho-logo.svg"
 logo_alt: "Ren rho mark"
+slide_theme: "paper"
+slide_topbar_color: "sage"
+slide_content_color: "sage"
+slide_footer_color: "sage"
 ---
 
 # Online Slides System
@@ -77,7 +81,7 @@ slides/YYYY-MM-DD-slug/
 
 ### Local assets
 
-![Slides system diagram](images/slides-system.svg)
+![Slides system diagram](images/slides-system.svg){: .slide-img-md .slide-img-plain }
 
 - Keep figures near the deck
 - Use relative image paths

@@ -101,7 +101,7 @@ a:hover {
 
 .brand small {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.4;
 }
 
@@ -112,7 +112,7 @@ a:hover {
   justify-content: flex-end;
   gap: clamp(12px, 1.2vw, 20px);
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 650;
   white-space: nowrap;
 }
@@ -177,7 +177,7 @@ a:hover {
   padding: 7px 9px;
   border-radius: 6px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 650;
   line-height: 1.25;
   text-decoration: none;
@@ -207,7 +207,7 @@ a:hover {
   padding: 7px 0;
   border-top: 1px dashed rgba(105, 113, 109, 0.28);
   border-radius: 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .quick-post time {
@@ -281,7 +281,7 @@ a:hover {
 .hero p {
   max-width: 620px;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 18px;
   margin: 12px 0 0;
 }
 
@@ -310,7 +310,7 @@ a:hover {
   border-radius: 6px;
   background: var(--panel);
   color: var(--accent-strong);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 650;
   text-decoration: none;
 }
@@ -378,7 +378,7 @@ a:hover {
 .archive-list h2 {
   margin: 0 0 14px;
   line-height: 1.25;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .post-list {
@@ -400,7 +400,7 @@ a:hover {
 .tool-card h2,
 .slide-card h2 {
   margin: 6px 0 6px;
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.3;
 }
 
@@ -415,7 +415,7 @@ a:hover {
 .slide-card p {
   margin: 0 0 12px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .post-card-meta,
@@ -425,7 +425,7 @@ a:hover {
   flex-wrap: wrap;
   gap: 6px 12px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .post-card-meta a,
@@ -457,7 +457,7 @@ a:hover {
   border: 1px solid var(--line);
   border-radius: 5px;
   color: var(--accent-strong);
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
 }
 
@@ -479,7 +479,7 @@ a:hover {
   border-radius: 999px;
   background: #f9fbfa;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.2;
   text-decoration: none;
 }
@@ -524,7 +524,7 @@ a:hover {
   gap: 14px;
   padding: 7px 0;
   border-bottom: 1px dashed rgba(105, 113, 109, 0.32);
-  font-size: 14px;
+  font-size: 15px;
   text-decoration: none;
 }
 

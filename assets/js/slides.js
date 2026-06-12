@@ -40,7 +40,8 @@
       author: document.body.dataset.deckAuthor || "",
       category: document.body.dataset.deckCategory || "Slides",
       logo: document.body.dataset.deckLogo || "",
-      logoAlt: document.body.dataset.deckLogoAlt || ""
+      logoAlt: document.body.dataset.deckLogoAlt || "",
+      themeDefault: document.body.dataset.slideThemeDefault || "paper"
     };
   }
 
@@ -244,9 +245,10 @@
         if (!isSectionSlide) applyListFragments(content);
       }
 
+      var topbarTitle = isSectionSlide ? "Outline" : slideTitle;
       var topbar = document.createElement("div");
       topbar.className = "slide-topbar";
-      topbar.appendChild(createNode("slide-current-title", slideTitle));
+      topbar.appendChild(createNode("slide-current-title", topbarTitle));
       if (meta.logo) {
         var logo = document.createElement("img");
         logo.className = "slide-logo";
@@ -299,9 +301,9 @@
 
   function getStoredTheme() {
     try {
-      return localStorage.getItem("slide-theme") || "paper";
+      return localStorage.getItem("slide-theme") || (document.body.dataset.slideThemeDefault || "paper");
     } catch (error) {
-      return "paper";
+      return document.body.dataset.slideThemeDefault || "paper";
     }
   }
 
@@ -324,6 +326,58 @@
       var select = event.target.closest("[data-slide-theme-select]");
       if (!select) return;
       applyTheme(select.value);
+    });
+  }
+
+  function getColorDatasetKey(region) {
+    return {
+      topbar: "slideTopbarColor",
+      content: "slideContentColor",
+      footer: "slideFooterColor"
+    }[region];
+  }
+
+  function getColorDefault(region) {
+    var defaults = {
+      topbar: document.body.dataset.slideTopbarDefault,
+      content: document.body.dataset.slideContentDefault,
+      footer: document.body.dataset.slideFooterDefault
+    };
+    return defaults[region] || "default";
+  }
+
+  function getStoredColor(region) {
+    try {
+      return localStorage.getItem("slide-" + region + "-color") || getColorDefault(region);
+    } catch (error) {
+      return getColorDefault(region);
+    }
+  }
+
+  function applySlideColor(region, value) {
+    var key = getColorDatasetKey(region);
+    if (!key) return;
+
+    var selected = value || "default";
+    document.body.dataset[key] = selected;
+    document.querySelectorAll('[data-slide-color-select="' + region + '"]').forEach(function (select) {
+      select.value = selected;
+    });
+
+    try {
+      localStorage.setItem("slide-" + region + "-color", selected);
+    } catch (error) {}
+  }
+
+  function setupColorSwitchers() {
+    ["topbar", "content", "footer"].forEach(function (region) {
+      applySlideColor(region, getStoredColor(region));
+    });
+
+    document.addEventListener("change", function (event) {
+      var select = event.target.closest("[data-slide-color-select]");
+      if (!select) return;
+      applySlideColor(select.dataset.slideColorSelect, select.value);
     });
   }
 
@@ -485,6 +539,7 @@
   enhanceSlides();
   localizeDeckLink();
   setupThemeSwitcher();
+  setupColorSwitchers();
 
   Reveal.initialize({
     hash: true,

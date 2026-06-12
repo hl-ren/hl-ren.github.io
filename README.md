@@ -156,12 +156,13 @@ logo_alt: "Logo description"
 - 第一个 `#` 是封面页
 - 封面页中，`#` 是大标题，第一段是作者，后续段落是作者信息，`logo` 会显示在右侧
 - 后续 `#` 是章节页或大纲页
+- 章节页顶部标题会显示 `Outline`，列表里和当前章节同名的 item 会自动高亮加粗
 - `##` 是普通内容页
 - 普通页里两个或以上的 `###` 会自动变成分栏
 - 每个 `#` section 后面的 `##` 普通页，底部中间只显示当前 section 标题
-- section 页列表中，和当前 section 同名的 bullet 会自动高亮
 - 最后一页自动作为结束页
 - `logo` 可选；填写后会显示在每页标题栏右侧
+- `slide_theme`、`slide_topbar_color`、`slide_content_color`、`slide_footer_color` 可选；也可以演示时在 Settings 里临时切换
 - 普通页和结束页的 bullet item 会自动逐条播放；section/outline 页的 bullet 会直接显示
 - 内容字号会按可用宽高自动缩放，最大不超过页面标题字号；某页不想自动缩放时，加 `.no-fit` 或 `data-no-fit`
 - 某个区域不想 bullet 动画时，加 `.no-fragments` 或 `data-no-fragments`
@@ -173,6 +174,18 @@ logo_alt: "Logo description"
 - 顶部导航和快速入口自动包含幻灯片入口
 - 幻灯片页面支持键盘翻页、全屏演示、代码高亮、图片和 LaTeX
 - deck 内图片可以直接写相对路径，例如 `![图](images/example.png)`
+- 图片尺寸可以用 Kramdown 属性控制，例如 `![图](images/example.png){: .slide-img-md }` 或 `![图](images/example.png){: width="60%" }`
+
+Slides front matter 可选项示例：
+
+```yaml
+slide_theme: "paper"
+slide_topbar_color: "sage"
+slide_content_color: "sage"
+slide_footer_color: "sage"
+```
+
+颜色值可用 `default`、`white`、`sage`、`blue`、`amber`，顶部和底部还支持 `charcoal`。图片尺寸类可用 `.slide-img-xs`、`.slide-img-sm`、`.slide-img-md`、`.slide-img-lg`、`.slide-img-full`、`.slide-img-tall`，需要去掉圆角时加 `.slide-img-plain`。
 
 Slides 里可以用内置版式辅助类做分栏和公式块：
 

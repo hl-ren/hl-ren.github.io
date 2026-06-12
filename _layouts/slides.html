@@ -26,7 +26,11 @@
   {% if page.logo %}
     {% assign deck_logo = page.logo | relative_url %}
   {% endif %}
-  <body class="slides-body" data-deck-title="{{ page.title | escape }}" data-deck-author="{{ page.author | default: site.author.name | escape }}" data-deck-category="{{ page.category | default: 'Slides' | escape }}" data-deck-logo="{{ deck_logo | escape }}" data-deck-logo-alt="{{ page.logo_alt | default: page.title | escape }}">
+  {% assign slide_theme = page.slide_theme | default: 'paper' %}
+  {% assign slide_topbar_color = page.slide_topbar_color | default: page.slide_topbar | default: 'default' %}
+  {% assign slide_content_color = page.slide_content_color | default: page.slide_content | default: 'default' %}
+  {% assign slide_footer_color = page.slide_footer_color | default: page.slide_footer | default: 'default' %}
+  <body class="slides-body" data-deck-title="{{ page.title | escape }}" data-deck-author="{{ page.author | default: site.author.name | escape }}" data-deck-category="{{ page.category | default: 'Slides' | escape }}" data-deck-logo="{{ deck_logo | escape }}" data-deck-logo-alt="{{ page.logo_alt | default: page.title | escape }}" data-slide-theme="{{ slide_theme | escape }}" data-slide-theme-default="{{ slide_theme | escape }}" data-slide-topbar-color="{{ slide_topbar_color | escape }}" data-slide-topbar-default="{{ slide_topbar_color | escape }}" data-slide-content-color="{{ slide_content_color | escape }}" data-slide-content-default="{{ slide_content_color | escape }}" data-slide-footer-color="{{ slide_footer_color | escape }}" data-slide-footer-default="{{ slide_footer_color | escape }}">
     <div class="reveal">
       <div class="slides" id="deck-slides"></div>
     </div>
@@ -44,6 +48,39 @@
             <option value="sage">Sage</option>
             <option value="midnight">Midnight</option>
             <option value="amber">Amber</option>
+          </select>
+        </label>
+        <label>
+          <span>Top</span>
+          <select data-slide-color-select="topbar" aria-label="Top bar color">
+            <option value="default">Theme</option>
+            <option value="white">White</option>
+            <option value="sage">Sage</option>
+            <option value="blue">Blue</option>
+            <option value="amber">Amber</option>
+            <option value="charcoal">Charcoal</option>
+          </select>
+        </label>
+        <label>
+          <span>Middle</span>
+          <select data-slide-color-select="content" aria-label="Middle area color">
+            <option value="default">Theme</option>
+            <option value="white">White</option>
+            <option value="soft">Soft</option>
+            <option value="sage">Sage</option>
+            <option value="blue">Blue</option>
+            <option value="amber">Amber</option>
+          </select>
+        </label>
+        <label>
+          <span>Bottom</span>
+          <select data-slide-color-select="footer" aria-label="Bottom bar color">
+            <option value="default">Theme</option>
+            <option value="white">White</option>
+            <option value="sage">Sage</option>
+            <option value="blue">Blue</option>
+            <option value="amber">Amber</option>
+            <option value="charcoal">Charcoal</option>
           </select>
         </label>
         <label>
