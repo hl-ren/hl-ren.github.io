@@ -180,6 +180,10 @@
   overflow: hidden;
 }
 
+.reveal .slides > section.title-slide {
+  grid-template-rows: minmax(0, 1fr) 60px;
+}
+
 .slide-topbar,
 .slide-footer {
   display: grid;
@@ -272,8 +276,68 @@
 .title-slide .slide-content {
   display: grid;
   align-content: center;
-  padding: 48px 66px;
+  padding: 70px 82px;
   border-radius: 0;
+}
+
+.title-slide .slide-topbar {
+  display: none;
+}
+
+.title-slide-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 260px);
+  gap: 60px;
+  align-items: center;
+  min-height: 100%;
+}
+
+.title-slide-text {
+  min-width: 0;
+}
+
+.title-slide-heading {
+  max-width: 980px;
+  color: var(--slide-heading);
+  font-family: var(--slide-display-font);
+  font-size: 1.36em;
+  font-weight: 830;
+  line-height: 1.05;
+}
+
+.title-slide-author {
+  margin-top: 1.2em;
+  color: var(--slide-ink);
+  font-family: var(--slide-display-font);
+  font-size: 0.62em;
+  font-weight: 760;
+}
+
+.title-slide-info {
+  max-width: 900px;
+  margin-top: 0.55em;
+  color: var(--slide-muted);
+  font-size: 0.42em;
+  line-height: 1.45;
+}
+
+.title-slide-info > :first-child {
+  margin-top: 0;
+}
+
+.title-slide-info > :last-child {
+  margin-bottom: 0;
+}
+
+.reveal img.title-slide-logo {
+  justify-self: end;
+  width: min(100%, 230px);
+  height: auto;
+  max-height: 150px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  object-fit: contain;
 }
 
 .section-slide .slide-content {
@@ -572,6 +636,10 @@
     border-radius: 0;
   }
 
+  .reveal .slides > section.title-slide {
+    grid-template-rows: minmax(0, 1fr) 51px;
+  }
+
   .slide-topbar {
     font-size: 0.4em;
   }
@@ -587,6 +655,33 @@
   .section-slide .slide-content,
   .end-slide .slide-content {
     padding: 32px 30px;
+  }
+
+  .title-slide .slide-content {
+    padding: 36px 30px;
+  }
+
+  .title-slide-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .title-slide-heading {
+    font-size: 1.18em;
+  }
+
+  .title-slide-author {
+    font-size: 0.58em;
+  }
+
+  .title-slide-info {
+    font-size: 0.4em;
+  }
+
+  .reveal img.title-slide-logo {
+    justify-self: start;
+    max-width: 120px;
+    max-height: 86px;
   }
 
   .section-slide .slide-content p,

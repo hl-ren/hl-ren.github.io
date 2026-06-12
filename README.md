@@ -116,7 +116,9 @@ logo_alt: "Logo description"
 ```markdown
 # 封面标题
 
-作者 / 单位 / 日期
+作者
+
+作者单位 / 课程 / 日期
 
 ---
 
@@ -152,6 +154,7 @@ logo_alt: "Logo description"
 约定：
 
 - 第一个 `#` 是封面页
+- 封面页中，`#` 是大标题，第一段是作者，后续段落是作者信息，`logo` 会显示在右侧
 - 后续 `#` 是章节页或大纲页
 - `##` 是普通内容页
 - 普通页里两个或以上的 `###` 会自动变成分栏
@@ -159,7 +162,9 @@ logo_alt: "Logo description"
 - section 页列表中，和当前 section 同名的 bullet 会自动高亮
 - 最后一页自动作为结束页
 - `logo` 可选；填写后会显示在每页标题栏右侧
-- bullet item 会自动逐条播放；某个区域不想动画时，加 `.no-fragments` 或 `data-no-fragments`
+- 普通页和结束页的 bullet item 会自动逐条播放；section/outline 页的 bullet 会直接显示
+- 内容字号会按可用宽高自动缩放，最大不超过页面标题字号；某页不想自动缩放时，加 `.no-fit` 或 `data-no-fit`
+- 某个区域不想 bullet 动画时，加 `.no-fragments` 或 `data-no-fragments`
 
 自动完成的事情：
 

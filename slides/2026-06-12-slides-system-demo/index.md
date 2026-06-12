@@ -13,6 +13,10 @@ logo_alt: "Ren rho mark"
 
 Huilong Ren
 
+Ren's Homepage
+
+2026-06-12
+
 Browser-first decks for posts, tools, research notes, and teaching.
 
 ---
