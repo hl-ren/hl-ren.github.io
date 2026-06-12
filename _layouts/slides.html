@@ -24,15 +24,33 @@
   </head>
   <body class="slides-body">
     <a class="deck-home" href="{{ '/slides/' | relative_url }}" data-i18n-zh="幻灯片" data-i18n-en="Slides">幻灯片</a>
-    <div class="deck-theme-switcher" aria-label="Slide color theme">
-      <button type="button" data-slide-theme="paper">Paper</button>
-      <button type="button" data-slide-theme="sage">Sage</button>
-      <button type="button" data-slide-theme="midnight">Midnight</button>
-      <button type="button" data-slide-theme="amber">Amber</button>
-    </div>
 
     <div class="reveal">
       <div class="slides" id="deck-slides"></div>
+    </div>
+
+    <div class="deck-controls" aria-label="Slide controls">
+      <button type="button" data-slide-prev aria-label="Previous slide">‹</button>
+      <button type="button" data-slide-next aria-label="Next slide">›</button>
+      <button type="button" data-slide-fullscreen data-fullscreen-label="Fullscreen" data-exit-label="Exit">Fullscreen</button>
+      <label>
+        <span>Theme</span>
+        <select data-slide-theme-select aria-label="Slide theme">
+          <option value="paper">Paper</option>
+          <option value="sage">Sage</option>
+          <option value="midnight">Midnight</option>
+          <option value="amber">Amber</option>
+        </select>
+      </label>
+      <label>
+        <span>Play</span>
+        <select data-slide-autoplay aria-label="Autoplay">
+          <option value="0">Off</option>
+          <option value="5000">5s</option>
+          <option value="10000">10s</option>
+          <option value="20000">20s</option>
+        </select>
+      </label>
     </div>
 
     <template id="deck-source">

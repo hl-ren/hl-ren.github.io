@@ -1,7 +1,7 @@
 (function () {
   var messages = {
     zh: {
-      "site.description": "文章、工具、项目和一些长期记录。",
+      "site.description": "文章、工具、项目、笔记和幻灯片。",
       "nav.posts": "文章",
       "nav.tools": "工具",
       "nav.slides": "幻灯片",
@@ -46,7 +46,7 @@
       "search.failed": "搜索索引加载失败。"
     },
     en: {
-      "site.description": "Posts, tools, projects, and long-running notes.",
+      "site.description": "Posts, tools, projects, notes, and slides.",
       "nav.posts": "Posts",
       "nav.tools": "Tools",
       "nav.slides": "Slides",

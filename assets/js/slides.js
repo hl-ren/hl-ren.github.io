@@ -57,11 +57,8 @@
   function applyTheme(theme) {
     var selected = theme || "paper";
     document.body.dataset.slideTheme = selected;
-    document.querySelectorAll(".deck-theme-switcher [data-slide-theme]").forEach(function (button) {
-      var active = button.dataset.slideTheme === selected;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-pressed", active ? "true" : "false");
-    });
+    var select = document.querySelector("[data-slide-theme-select]");
+    if (select) select.value = selected;
 
     try {
       localStorage.setItem("slide-theme", selected);
@@ -71,11 +68,76 @@
   function setupThemeSwitcher() {
     applyTheme(getStoredTheme());
 
-    document.addEventListener("click", function (event) {
-      var button = event.target.closest(".deck-theme-switcher [data-slide-theme]");
-      if (!button) return;
-      applyTheme(button.dataset.slideTheme);
+    document.addEventListener("change", function (event) {
+      var select = event.target.closest("[data-slide-theme-select]");
+      if (!select) return;
+      applyTheme(select.value);
     });
+  }
+
+  function getStoredAutoplay() {
+    try {
+      return localStorage.getItem("slide-autoplay") || "0";
+    } catch (error) {
+      return "0";
+    }
+  }
+
+  function applyAutoplay(value) {
+    var selected = value || "0";
+    var interval = parseInt(selected, 10) || 0;
+    var select = document.querySelector("[data-slide-autoplay]");
+    if (select) select.value = String(interval);
+    if (window.Reveal && window.Reveal.configure) {
+      window.Reveal.configure({ autoSlide: interval });
+    }
+
+    try {
+      localStorage.setItem("slide-autoplay", String(interval));
+    } catch (error) {}
+  }
+
+  function syncFullscreenButton() {
+    var button = document.querySelector("[data-slide-fullscreen]");
+    if (!button) return;
+    var active = Boolean(document.fullscreenElement);
+    button.textContent = active ? button.dataset.exitLabel : button.dataset.fullscreenLabel;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  }
+
+  function setupDeckControls() {
+    var autoplay = getStoredAutoplay();
+
+    document.addEventListener("click", function (event) {
+      if (event.target.closest("[data-slide-prev]")) {
+        window.Reveal.prev();
+        return;
+      }
+
+      if (event.target.closest("[data-slide-next]")) {
+        window.Reveal.next();
+        return;
+      }
+
+      if (event.target.closest("[data-slide-fullscreen]")) {
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(function () {});
+        } else {
+          document.documentElement.requestFullscreen().catch(function () {});
+        }
+      }
+    });
+
+    document.addEventListener("change", function (event) {
+      var select = event.target.closest("[data-slide-autoplay]");
+      if (!select) return;
+      applyAutoplay(select.value);
+    });
+
+    document.addEventListener("fullscreenchange", syncFullscreenButton);
+    syncFullscreenButton();
+    applyAutoplay(autoplay);
   }
 
   function typesetMath(attempt) {
@@ -92,7 +154,7 @@
 
   Reveal.initialize({
     hash: true,
-    controls: true,
+    controls: false,
     progress: true,
     center: true,
     slideNumber: true,
@@ -104,6 +166,7 @@
     maxScale: 1.6,
     plugins: window.RevealHighlight ? [window.RevealHighlight] : []
   }).then(function () {
+    setupDeckControls();
     typesetMath(0);
   });
 })();

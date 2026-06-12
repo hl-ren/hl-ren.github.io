@@ -59,35 +59,62 @@
   text-decoration: none;
 }
 
-.deck-theme-switcher {
+.deck-controls {
   position: fixed;
-  top: 16px;
   right: 18px;
+  bottom: 16px;
   z-index: 40;
   display: inline-flex;
-  gap: 4px;
-  padding: 4px;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
   border: 1px solid var(--slide-line);
-  border-radius: 999px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--slide-panel) 88%, transparent);
+  box-shadow: 0 1px 3px rgba(31, 37, 35, 0.08);
 }
 
-.deck-theme-switcher button {
-  min-height: 26px;
-  padding: 0 10px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--slide-muted);
+.deck-controls button,
+.deck-controls select {
+  min-height: 32px;
+  border: 1px solid var(--slide-line);
+  border-radius: 7px;
+  background: var(--slide-panel);
+  color: var(--slide-ink);
   cursor: pointer;
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 
-.deck-theme-switcher button.is-active {
+.deck-controls button {
+  min-width: 34px;
+  padding: 0 10px;
+}
+
+.deck-controls button[data-slide-prev],
+.deck-controls button[data-slide-next] {
+  min-width: 38px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.deck-controls button.is-active {
   background: var(--slide-ink);
   color: var(--slide-bg);
+}
+
+.deck-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--slide-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.deck-controls select {
+  padding: 0 26px 0 9px;
 }
 
 .reveal {
@@ -231,12 +258,16 @@
     font-size: 12px;
   }
 
-  .deck-theme-switcher {
-    top: auto;
+  .deck-controls {
+    left: 10px;
     right: 10px;
     bottom: 10px;
-    max-width: calc(100% - 20px);
+    justify-content: flex-start;
     overflow-x: auto;
+  }
+
+  .deck-controls label span {
+    display: none;
   }
 
   .reveal {
