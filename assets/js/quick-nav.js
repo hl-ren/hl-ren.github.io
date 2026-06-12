@@ -2,7 +2,7 @@
   var dock = document.querySelector("[data-quick-nav]");
   if (!dock) return;
 
-  var toggle = dock.querySelector("[data-quick-nav-toggle]");
+  var toggle = document.querySelector("[data-quick-nav-toggle]");
   if (!toggle) return;
 
   var storageKey = "quick-nav-collapsed";
@@ -24,6 +24,7 @@
   function applyState(collapsed) {
     document.body.classList.toggle("quick-nav-collapsed", collapsed);
     dock.classList.toggle("is-collapsed", collapsed);
+    toggle.classList.toggle("is-collapsed", collapsed);
     toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
   }
 

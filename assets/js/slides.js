@@ -46,6 +46,38 @@
     link.textContent = lang === "en" ? link.dataset.i18nEn : link.dataset.i18nZh;
   }
 
+  function getStoredTheme() {
+    try {
+      return localStorage.getItem("slide-theme") || "paper";
+    } catch (error) {
+      return "paper";
+    }
+  }
+
+  function applyTheme(theme) {
+    var selected = theme || "paper";
+    document.body.dataset.slideTheme = selected;
+    document.querySelectorAll("[data-slide-theme]").forEach(function (button) {
+      var active = button.dataset.slideTheme === selected;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+
+    try {
+      localStorage.setItem("slide-theme", selected);
+    } catch (error) {}
+  }
+
+  function setupThemeSwitcher() {
+    applyTheme(getStoredTheme());
+
+    document.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-slide-theme]");
+      if (!button) return;
+      applyTheme(button.dataset.slideTheme);
+    });
+  }
+
   function typesetMath(attempt) {
     if (window.MathJax && window.MathJax.typesetPromise) {
       window.MathJax.typesetPromise([target]);
@@ -56,6 +88,7 @@
 
   splitSlides();
   localizeDeckLink();
+  setupThemeSwitcher();
 
   Reveal.initialize({
     hash: true,

@@ -1,11 +1,17 @@
 <header class="site-header">
-  <a class="brand" href="{{ '/' | relative_url }}">
-    <span class="brand-mark">ρ</span>
-    <span>
+  <div class="brand">
+    <div class="brand-mark-stack">
+      <a class="brand-mark" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">ρ</a>
+      <button class="side-nav-toggle" type="button" data-quick-nav-toggle aria-expanded="true" aria-controls="quick-nav-panel">
+        <span class="toggle-expanded" data-i18n-key="quick.collapse">收起</span>
+        <span class="toggle-collapsed" data-i18n-key="quick.open">快捷</span>
+      </button>
+    </div>
+    <a class="brand-text" href="{{ '/' | relative_url }}">
       <strong>{{ site.title }}</strong>
       <small data-i18n-key="site.description">{{ site.description }}</small>
-    </span>
-  </a>
+    </a>
+  </div>
 
   <nav class="site-nav top-nav" aria-label="主导航">
     {% include nav-links.html %}
