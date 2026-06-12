@@ -181,7 +181,7 @@
 }
 
 .reveal .slides > section.title-slide {
-  grid-template-rows: minmax(0, 1fr) 60px;
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .slide-topbar,
@@ -284,16 +284,23 @@
   display: none;
 }
 
+.title-slide .slide-footer {
+  display: none;
+}
+
 .title-slide-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(150px, 260px);
-  gap: 60px;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
   align-items: center;
   min-height: 100%;
+  text-align: center;
 }
 
 .title-slide-text {
   min-width: 0;
+  display: grid;
+  justify-items: center;
 }
 
 .title-slide-heading {
@@ -330,7 +337,9 @@
 }
 
 .reveal img.title-slide-logo {
-  justify-self: end;
+  position: absolute;
+  top: 70px;
+  right: 82px;
   width: min(100%, 230px);
   height: auto;
   max-height: 150px;
@@ -637,7 +646,7 @@
   }
 
   .reveal .slides > section.title-slide {
-    grid-template-rows: minmax(0, 1fr) 51px;
+    grid-template-rows: minmax(0, 1fr);
   }
 
   .slide-topbar {
@@ -679,7 +688,8 @@
   }
 
   .reveal img.title-slide-logo {
-    justify-self: start;
+    position: static;
+    justify-self: center;
     max-width: 120px;
     max-height: 86px;
   }
