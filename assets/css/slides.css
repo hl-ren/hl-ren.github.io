@@ -59,7 +59,7 @@
 .deck-controls {
   position: fixed;
   left: 18px;
-  bottom: 16px;
+  bottom: 6px;
   z-index: 40;
   display: inline-flex;
   align-items: center;
@@ -162,7 +162,7 @@
 
 .reveal .slides > section {
   display: grid !important;
-  grid-template-rows: 92px minmax(0, 1fr) 40px;
+  grid-template-rows: 108px minmax(0, 1fr) 40px;
   width: 100%;
   height: 100%;
   padding: 34px 50px 30px;
@@ -207,7 +207,7 @@
 
 .slide-current-title {
   color: var(--slide-heading);
-  font-size: 2.9em;
+  font-size: 4.1em;
   font-weight: 820;
   letter-spacing: 0;
   line-height: 1.05;
@@ -408,7 +408,7 @@
   .deck-controls {
     left: 10px;
     right: auto;
-    bottom: 10px;
+    bottom: 6px;
     justify-content: flex-start;
     overflow-x: auto;
   }
@@ -446,7 +446,7 @@
   }
 
   .reveal .slides > section {
-    grid-template-rows: 68px minmax(0, 1fr) 32px;
+    grid-template-rows: 82px minmax(0, 1fr) 32px;
     padding: 24px 26px 22px;
     border-radius: 10px;
   }
@@ -461,6 +461,6 @@
   }
 
   .slide-current-title {
-    font-size: 2em;
+    font-size: 2.6em;
   }
 }
