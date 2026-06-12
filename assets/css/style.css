@@ -50,27 +50,28 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 22px;
-  padding: 18px 0;
+  gap: 28px;
+  padding: 20px 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  min-width: 240px;
+  gap: 16px;
+  min-width: 320px;
   text-decoration: none;
 }
 
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 7px;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
   background: var(--ink);
   color: var(--bg);
   font-weight: 800;
+  font-size: 24px;
 }
 
 .brand strong,
@@ -80,12 +81,12 @@ a:hover {
 
 .brand strong {
   line-height: 1.2;
-  font-size: 15px;
+  font-size: 22px;
 }
 
 .brand small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.4;
 }
 
@@ -93,9 +94,10 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 6px 14px;
+  gap: 8px 22px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 650;
 }
 
 .site-nav a {
@@ -660,6 +662,8 @@ a:hover {
     order: 3;
     width: 100%;
     justify-content: flex-start;
+    gap: 8px 16px;
+    font-size: 15px;
   }
 
   .hero,
@@ -692,13 +696,24 @@ a:hover {
     min-width: 0;
   }
 
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    font-size: 18px;
+  }
+
+  .brand strong {
+    font-size: 18px;
+  }
+
   .brand small {
     display: none;
   }
 
   .site-nav {
-    gap: 6px 12px;
-    font-size: 13px;
+    gap: 7px 13px;
+    font-size: 14px;
   }
 
   .hero h1 {
