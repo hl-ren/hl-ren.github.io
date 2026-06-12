@@ -57,7 +57,7 @@
   function applyTheme(theme) {
     var selected = theme || "paper";
     document.body.dataset.slideTheme = selected;
-    document.querySelectorAll("[data-slide-theme]").forEach(function (button) {
+    document.querySelectorAll(".deck-theme-switcher [data-slide-theme]").forEach(function (button) {
       var active = button.dataset.slideTheme === selected;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
@@ -72,7 +72,7 @@
     applyTheme(getStoredTheme());
 
     document.addEventListener("click", function (event) {
-      var button = event.target.closest("[data-slide-theme]");
+      var button = event.target.closest(".deck-theme-switcher [data-slide-theme]");
       if (!button) return;
       applyTheme(button.dataset.slideTheme);
     });
