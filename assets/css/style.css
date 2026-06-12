@@ -114,6 +114,33 @@ a:hover {
   display: none;
 }
 
+.side-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 34px;
+  margin: 0 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--accent-strong);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.toggle-collapsed {
+  display: none;
+}
+
+.side-nav-panel {
+  display: grid;
+  gap: 16px;
+}
+
 .side-nav-title {
   margin: 0 0 10px;
   color: var(--warm);
@@ -124,12 +151,13 @@ a:hover {
   text-transform: uppercase;
 }
 
-.side-nav nav {
+.quick-links {
   display: grid;
-  gap: 2px;
+  gap: 6px;
 }
 
-.side-nav a {
+.quick-links a,
+.quick-post {
   display: block;
   padding: 7px 9px;
   border-radius: 6px;
@@ -140,14 +168,42 @@ a:hover {
   text-decoration: none;
 }
 
-.side-nav a:hover {
+.quick-links a {
+  border: 1px solid transparent;
+}
+
+.quick-links a:hover,
+.quick-post:hover {
   background: rgba(15, 118, 110, 0.08);
   color: var(--accent-strong);
 }
 
-.side-nav a[aria-current="page"] {
-  background: rgba(15, 118, 110, 0.1);
-  color: var(--accent-strong);
+.quick-section-title {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.quick-post {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px dashed rgba(105, 113, 109, 0.28);
+  border-radius: 0;
+  font-size: 13px;
+}
+
+.quick-post time {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.quick-post span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .language-switcher {
@@ -696,22 +752,43 @@ a:hover {
   margin: 0;
 }
 
-@media (min-width: 1120px) {
+@media (min-width: 1280px) {
   body {
-    padding-left: 168px;
-  }
-
-  .top-nav {
-    display: none;
+    padding-left: 216px;
+    transition: padding-left 0.16s ease;
   }
 
   .side-nav {
     position: fixed;
     top: 116px;
-    left: 24px;
+    left: 20px;
     z-index: 20;
     display: block;
-    width: 124px;
+    width: 176px;
+  }
+
+  body.quick-nav-collapsed {
+    padding-left: 76px;
+  }
+
+  .side-nav.is-collapsed {
+    width: 44px;
+  }
+
+  .side-nav.is-collapsed .side-nav-panel,
+  .side-nav.is-collapsed .toggle-expanded {
+    display: none;
+  }
+
+  .side-nav.is-collapsed .toggle-collapsed {
+    display: inline;
+  }
+
+  .side-nav.is-collapsed .side-nav-toggle {
+    width: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 0;
   }
 }
 

@@ -1,6 +1,29 @@
-<aside class="side-nav" aria-label="侧边导航">
-  <p class="side-nav-title" data-i18n-key="side.navigation">导航</p>
-  <nav>
-    {% include nav-links.html %}
-  </nav>
+<aside class="side-nav" data-quick-nav aria-label="快速入口">
+  <button class="side-nav-toggle" type="button" data-quick-nav-toggle aria-expanded="true" aria-controls="quick-nav-panel">
+    <span class="toggle-expanded" data-i18n-key="quick.collapse">收起</span>
+    <span class="toggle-collapsed" data-i18n-key="quick.open">快捷</span>
+  </button>
+
+  <div class="side-nav-panel" id="quick-nav-panel">
+    <p class="side-nav-title" data-i18n-key="quick.title">快速入口</p>
+    <nav class="quick-links">
+      <a href="{{ '/search/' | relative_url }}?v={{ site.time | date: '%s' }}" data-i18n-key="quick.search">搜索文章</a>
+      <a href="{{ '/posts/' | relative_url }}?v={{ site.time | date: '%s' }}" data-i18n-key="quick.allPosts">全部文章</a>
+      <a href="{{ '/tools/' | relative_url }}?v={{ site.time | date: '%s' }}" data-i18n-key="quick.tools">打开工具</a>
+      <a href="{{ '/archive/' | relative_url }}?v={{ site.time | date: '%s' }}" data-i18n-key="quick.archive">时间归档</a>
+      <a href="{{ '/tags/' | relative_url }}?v={{ site.time | date: '%s' }}" data-i18n-key="quick.tags">标签索引</a>
+    </nav>
+
+    {% if site.posts.size > 0 %}
+      <section class="quick-recent" aria-labelledby="quick-recent-title">
+        <p class="quick-section-title" id="quick-recent-title" data-i18n-key="quick.recent">最近文章</p>
+        {% for post in site.posts limit: 3 %}
+          <a class="quick-post" href="{{ post.url | relative_url }}">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%m.%d" }}</time>
+            <span data-i18n-zh="{{ post.title }}" data-i18n-en="{{ post.title_en | default: post.title }}">{{ post.title }}</span>
+          </a>
+        {% endfor %}
+      </section>
+    {% endif %}
+  </div>
 </aside>
