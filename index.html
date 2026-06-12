@@ -5,9 +5,13 @@ title: 首页
 
 <section class="hero">
   <div>
-    <p class="eyebrow">Personal Notes</p>
+    <p class="eyebrow">Homepage</p>
     <h1>{{ site.title }}</h1>
     <p>{{ site.description }}</p>
+    <div class="hero-actions">
+      <a href="{{ '/posts/' | relative_url }}">文章</a>
+      <a href="{{ '/tools/' | relative_url }}">工具</a>
+    </div>
   </div>
   <form class="search-box" action="{{ '/search/' | relative_url }}" role="search">
     <label for="home-search">搜索文章</label>
