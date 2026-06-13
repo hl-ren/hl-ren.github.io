@@ -273,6 +273,60 @@
   height: 100vh;
 }
 
+.slides-body.is-export-pdf {
+  width: var(--slide-print-width);
+  min-width: var(--slide-print-width);
+  margin: 0;
+  overflow: visible;
+  background: var(--slide-bg);
+}
+
+.slides-body.is-export-pdf .reveal {
+  width: var(--slide-print-width);
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.slides-body.is-export-pdf .reveal .slides {
+  position: static !important;
+  inset: auto !important;
+  width: var(--slide-print-width) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+  transform-origin: 0 0 !important;
+}
+
+.slides-body.is-export-pdf .reveal .slides > section {
+  position: relative !important;
+  inset: auto !important;
+  display: grid !important;
+  width: var(--slide-print-width) !important;
+  height: var(--slide-print-height) !important;
+  min-height: var(--slide-print-height) !important;
+  max-height: var(--slide-print-height) !important;
+  margin: 0 !important;
+  transform: none !important;
+  page-break-after: always;
+  break-after: page;
+}
+
+.slides-body.is-export-pdf .reveal .backgrounds,
+.slides-body.is-export-pdf .reveal .controls,
+.slides-body.is-export-pdf .reveal .progress,
+.slides-body.is-export-pdf .deck-controls,
+.slides-body.is-export-pdf .slide-thumbnails {
+  display: none !important;
+}
+
+.slides-body.is-export-pdf .fragment {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 .reveal .slides {
   text-align: left;
 }
@@ -932,6 +986,40 @@
     height: var(--slide-print-height) !important;
     min-height: var(--slide-print-height) !important;
     max-height: var(--slide-print-height) !important;
+  }
+
+  body.is-export-pdf {
+    width: var(--slide-print-width) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.is-export-pdf .reveal {
+    width: var(--slide-print-width) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.is-export-pdf .reveal .slides {
+    position: static !important;
+    width: var(--slide-print-width) !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+  body.is-export-pdf .reveal .slides > section {
+    position: relative !important;
+    display: grid !important;
+    width: var(--slide-print-width) !important;
+    height: var(--slide-print-height) !important;
+    min-height: var(--slide-print-height) !important;
+    max-height: var(--slide-print-height) !important;
+    margin: 0 !important;
+    transform: none !important;
+    page-break-after: always;
+    break-after: page;
   }
 }
 

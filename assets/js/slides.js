@@ -3,11 +3,19 @@
   var target = document.getElementById("deck-slides");
   if (!source || !target) return;
 
-  function isPdfExportPage() {
+  function isRevealPrintPage() {
     try {
       return new URLSearchParams(window.location.search).has("print-pdf");
     } catch (error) {
       return window.location.search.indexOf("print-pdf") !== -1;
+    }
+  }
+
+  function isPdfExportPage() {
+    try {
+      return new URLSearchParams(window.location.search).has("export-pdf");
+    } catch (error) {
+      return window.location.search.indexOf("export-pdf") !== -1;
     }
   }
 
@@ -19,7 +27,8 @@
     }
   }
 
-  if (isPdfExportPage()) document.body.classList.add("is-print-pdf");
+  if (isRevealPrintPage()) document.body.classList.add("is-print-pdf");
+  if (isPdfExportPage()) document.body.classList.add("is-export-pdf");
 
   function hasContent(section) {
     return section.textContent.trim() || section.querySelector("img, video, iframe, table, pre");
@@ -650,7 +659,8 @@
 
   function getPdfExportUrl() {
     var url = new URL(window.location.href);
-    url.searchParams.set("print-pdf", "");
+    url.searchParams.delete("print-pdf");
+    url.searchParams.set("export-pdf", "");
     url.searchParams.set("download-pdf", "");
     url.hash = window.location.hash || "";
     return url.toString();
@@ -833,7 +843,10 @@
   function autoPrintPdf(attempt) {
     if (!isPdfExportPage() || !shouldAutoPrintPdf()) return;
 
-    var ready = document.querySelectorAll(".pdf-page").length > 0;
+    var imagesReady = Array.prototype.slice.call(document.images).every(function (image) {
+      return image.complete;
+    });
+    var ready = target.children.length > 0 && imagesReady;
     if (ready || attempt > 80) {
       window.setTimeout(function () {
         window.print();
@@ -846,8 +859,45 @@
     }, 150);
   }
 
+  function showAllFragmentsForExport() {
+    document.querySelectorAll(".fragment").forEach(function (node) {
+      node.classList.add("visible");
+      node.classList.remove("current-fragment");
+      node.removeAttribute("data-fragment-index");
+    });
+  }
+
+  function preparePdfExport() {
+    var template = document.querySelector("[data-slide-controls-template]");
+    if (template) template.remove();
+
+    showAllFragmentsForExport();
+    applyTheme(getStoredTheme());
+    ["topbar", "content", "footer"].forEach(function (region) {
+      applySlideColor(region, getStoredColor(region));
+    });
+    fitAllSlideContent();
+    typesetMath(0);
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        fitAllSlideContent();
+        autoPrintPdf(0);
+      });
+      return;
+    }
+
+    autoPrintPdf(0);
+  }
+
   splitSlides();
   enhanceSlides();
+
+  if (isPdfExportPage()) {
+    preparePdfExport();
+    return;
+  }
+
   buildThumbnailTray();
   localizeDeckLink();
   setupThemeSwitcher();
