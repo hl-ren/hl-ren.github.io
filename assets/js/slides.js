@@ -186,7 +186,7 @@
 
   function isSlideCommentText(text) {
     var trimmed = String(text || "").trim();
-    return /^%%(?:\s|$|\{)/.test(trimmed);
+    return /^%%/.test(trimmed);
   }
 
   function removeRenderedSlideComments(root) {

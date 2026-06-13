@@ -358,7 +358,7 @@
         return;
       }
 
-      if (/^%%(?:\s|$)/.test(trimmed)) return;
+      if (/^%%/.test(trimmed)) return;
 
       output.push(line);
     });
