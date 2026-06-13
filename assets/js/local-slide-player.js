@@ -2,6 +2,42 @@
   var mdFile = null;
   var assetFiles = [];
   var objectUrls = [];
+  var currentLanguage = "zh";
+
+  var messages = {
+    zh: {
+      title: "打开本地 Markdown 幻灯片",
+      description: "选择一个 <code>index.md</code>，如有图片或视频，再选择同目录资源文件夹。播放器会在浏览器里生成和线上版相同的 PPT。",
+      markdown: "Markdown",
+      assets: "图片/视频文件夹",
+      open: "打开幻灯片",
+      notSelected: "未选择",
+      assetCount: "{count} 个文件",
+      ready: "已准备，可以打开。",
+      chooseMarkdown: "请选择一个 Markdown 文件。",
+      deckSelected: "已选择 Markdown 文件。",
+      assetsSelected: "已选择资源文件。",
+      parsing: "正在解析 Markdown...",
+      failed: "打开失败：{message}",
+      dropHint: "也可以把 md 和资源文件拖到这里。"
+    },
+    en: {
+      title: "Open a Local Markdown Deck",
+      description: "Choose an <code>index.md</code>. If it uses images or videos, choose the asset folder too. The browser will render it with the same slide engine as the online decks.",
+      markdown: "Markdown",
+      assets: "Image / video folder",
+      open: "Open Slides",
+      notSelected: "None",
+      assetCount: "{count} files",
+      ready: "Ready to open.",
+      chooseMarkdown: "Choose a Markdown file.",
+      deckSelected: "Markdown file selected.",
+      assetsSelected: "Asset folder selected.",
+      parsing: "Parsing Markdown...",
+      failed: "Could not open: {message}",
+      dropHint: "You can also drop the md and asset files here."
+    }
+  };
 
   var ui = {
     shell: document.querySelector("[data-local-player]"),
@@ -10,16 +46,80 @@
     openButton: document.querySelector("[data-local-open]"),
     deckName: document.querySelector("[data-local-deck-name]"),
     assetCount: document.querySelector("[data-local-asset-count]"),
+    assetWord: document.querySelector("[data-local-asset-word]"),
     status: document.querySelector("[data-local-status]"),
     dropZone: document.querySelector("[data-local-drop]")
   };
 
   if (!ui.shell || !ui.deckInput || !ui.openButton) return;
 
+  function t(key, values) {
+    var dict = messages[currentLanguage] || messages.zh;
+    var text = dict[key] || messages.zh[key] || key;
+
+    Object.keys(values || {}).forEach(function (name) {
+      text = text.replace("{" + name + "}", values[name]);
+    });
+
+    return text;
+  }
+
+  function getStoredLanguage() {
+    try {
+      return localStorage.getItem("site-language") || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function setLanguage(lang) {
+    currentLanguage = lang === "en" ? "en" : "zh";
+    document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+
+    document.querySelectorAll("[data-local-i18n]").forEach(function (node) {
+      node.innerHTML = t(node.dataset.localI18n);
+    });
+
+    document.querySelectorAll("[data-local-lang]").forEach(function (button) {
+      var active = button.dataset.localLang === currentLanguage;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+
+    try {
+      localStorage.setItem("site-language", currentLanguage);
+    } catch (error) {}
+
+    updateUi();
+    refreshStatusLanguage();
+  }
+
   function setStatus(text, isError) {
     if (!ui.status) return;
+    delete ui.status.dataset.localStatusKey;
+    delete ui.status.dataset.localStatusValues;
     ui.status.textContent = text || "";
     ui.status.classList.toggle("is-error", Boolean(isError));
+  }
+
+  function setStatusKey(key, isError, values) {
+    if (!ui.status) return;
+    ui.status.dataset.localStatusKey = key;
+    ui.status.dataset.localStatusValues = JSON.stringify(values || {});
+    ui.status.textContent = t(key, values);
+    ui.status.classList.toggle("is-error", Boolean(isError));
+  }
+
+  function refreshStatusLanguage() {
+    if (!ui.status) return;
+    var key = ui.status.dataset.localStatusKey;
+    if (!key) return;
+
+    var values = {};
+    try {
+      values = JSON.parse(ui.status.dataset.localStatusValues || "{}");
+    } catch (error) {}
+    ui.status.textContent = t(key, values);
   }
 
   function revokeObjectUrls() {
@@ -162,6 +262,30 @@
     );
   }
 
+  function protectMath(markdown) {
+    var blocks = [];
+
+    function store(match) {
+      var token = "@@LOCAL_MATH_" + String(blocks.length) + "@@";
+      blocks.push(escapeHtml(match));
+      return token;
+    }
+
+    var protectedMarkdown = String(markdown || "")
+      .replace(/\$\$[\s\S]*?\$\$/g, store)
+      .replace(/\\\[[\s\S]*?\\\]/g, store)
+      .replace(/\\\([\s\S]*?\\\)/g, store);
+
+    return {
+      markdown: protectedMarkdown,
+      restore: function (html) {
+        return html.replace(/@@LOCAL_MATH_(\d+)@@/g, function (_, index) {
+          return blocks[Number(index)] || "";
+        });
+      }
+    };
+  }
+
   function renderMarkdown(markdown) {
     var renderer = window.marked;
     if (!renderer || !renderer.parse) {
@@ -175,7 +299,8 @@
       mangle: false
     });
 
-    return renderer.parse(preprocessMarkdown(markdown));
+    var protectedMath = protectMath(markdown);
+    return protectedMath.restore(renderer.parse(preprocessMarkdown(protectedMath.markdown)));
   }
 
   function isExternalUrl(url) {
@@ -266,8 +391,13 @@
 
   function updateUi() {
     ui.openButton.disabled = !mdFile;
-    if (ui.deckName) ui.deckName.textContent = mdFile ? mdFile.name : "未选择";
+    if (ui.deckName) ui.deckName.textContent = mdFile ? mdFile.name : t("notSelected");
     if (ui.assetCount) ui.assetCount.textContent = String(assetFiles.length);
+    if (ui.assetWord) {
+      ui.assetWord.textContent = t("assetCount", { count: assetFiles.length })
+        .replace(String(assetFiles.length), "")
+        .trim();
+    }
   }
 
   function collectFiles(files) {
@@ -278,7 +408,7 @@
     if (deck) mdFile = deck;
     if (assets.length) assetFiles = assetFiles.concat(assets);
     updateUi();
-    setStatus(mdFile ? "已准备，可以打开。" : "请选择一个 Markdown 文件。", false);
+    setStatusKey(mdFile ? "ready" : "chooseMarkdown", false);
   }
 
   function showPlayer() {
@@ -309,7 +439,7 @@
   function openDeck() {
     if (!mdFile) return;
 
-    setStatus("正在解析 Markdown...", false);
+    setStatusKey("parsing", false);
 
     readFileText(mdFile)
       .then(function (text) {
@@ -319,21 +449,21 @@
         setStatus("", false);
       })
       .catch(function (error) {
-        setStatus("打开失败：" + (error && error.message ? error.message : String(error)), true);
+        setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
       });
   }
 
   ui.deckInput.addEventListener("change", function () {
     mdFile = ui.deckInput.files[0] || null;
     updateUi();
-    setStatus(mdFile ? "已选择 Markdown 文件。" : "", false);
+    setStatusKey(mdFile ? "deckSelected" : "dropHint", false);
   });
 
   if (ui.assetInput) {
     ui.assetInput.addEventListener("change", function () {
       assetFiles = Array.prototype.slice.call(ui.assetInput.files || []);
       updateUi();
-      setStatus(assetFiles.length ? "已选择资源文件。" : "", false);
+      setStatusKey(assetFiles.length ? "assetsSelected" : "dropHint", false);
     });
   }
 
@@ -357,7 +487,15 @@
     });
   }
 
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-local-lang]");
+    if (!button) return;
+    setLanguage(button.dataset.localLang);
+  });
+
   updateUi();
+  setLanguage(getStoredLanguage());
+  setStatusKey("dropHint", false);
 
   window.LocalSlidePlayer = {
     openMarkdownText: function (text, name) {
