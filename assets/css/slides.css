@@ -703,6 +703,25 @@
   overflow: hidden;
 }
 
+.slide-content.is-overflowing {
+  line-height: 1.22;
+}
+
+.slide-content.is-overflowing ul,
+.slide-content.is-overflowing ol {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+.slide-content.is-overflowing p,
+.slide-content.is-overflowing pre,
+.slide-content.is-overflowing table,
+.slide-content.is-overflowing .slide-env,
+.slide-content.is-overflowing .equation-box {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
 .title-slide .slide-content {
   position: relative;
   display: grid;
