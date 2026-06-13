@@ -3,14 +3,96 @@
   var assetFiles = [];
   var objectUrls = [];
   var currentLanguage = "zh";
+  var previewTimer = 0;
+  var pendingPreviewPayload = null;
+  var previewVersion = 0;
+
+  var DEFAULT_TEMPLATE = [
+    "---",
+    "title: \"Online Slides System\"",
+    "subtitle: \"A browser-first Markdown deck\"",
+    "author: \"Huilong Ren\"",
+    "category: \"Demo\"",
+    "slide_theme: \"paper\"",
+    "slide_topbar_color: \"blue\"",
+    "slide_content_color: \"blue\"",
+    "slide_footer_color: \"blue\"",
+    "slide_bullets: \"item\"",
+    "---",
+    "",
+    "# Online Slides System",
+    "",
+    "Affiliation / Course / Date",
+    "",
+    "---",
+    "",
+    "# Outline",
+    "",
+    "- Framing",
+    "- Authoring",
+    "- Delivery",
+    "",
+    "---",
+    "",
+    "## Framing",
+    "",
+    "- One Markdown file",
+    "- Browser-based presentation",
+    "- Same engine online and local",
+    "",
+    "---",
+    "",
+    "## Markdown columns",
+    "",
+    "### Left column",
+    "",
+    "- Use `###` headings",
+    "- Lists become fragments",
+    "",
+    "### Right column",
+    "",
+    "- Math works: \\(a^2+b^2=c^2\\)",
+    "- Images support height classes",
+    "",
+    "---",
+    "",
+    "## Math",
+    "",
+    "<div class=\"equation-box\" markdown=\"1\">",
+    "",
+    "$$",
+    "\\\\begin{aligned}",
+    "\\\\mathcal{L}(\\\\theta,\\\\lambda)",
+    "&= \\\\frac{1}{N}\\\\sum_{i=1}^{N} \\\\lVert f_{\\\\theta}(x_i)-y_i \\\\rVert_2^2",
+    "+ \\\\lambda \\\\lVert \\\\nabla f_{\\\\theta} \\\\rVert_2^2,\\\\\\\\",
+    "\\\\frac{\\\\partial \\\\mathcal{L}}{\\\\partial \\\\theta}",
+    "&= \\\\frac{2}{N}\\\\sum_{i=1}^{N}(f_{\\\\theta}(x_i)-y_i)",
+    "\\\\frac{\\\\partial f_{\\\\theta}(x_i)}{\\\\partial \\\\theta}.",
+    "\\\\end{aligned}",
+    "$$",
+    "",
+    "</div>",
+    "",
+    "---",
+    "",
+    "## Ending",
+    "",
+    "Thank you."
+  ].join("\n");
 
   var messages = {
     zh: {
       title: "打开本地 Markdown 幻灯片",
-      description: "选择一个 <code>index.md</code>，如有图片或视频，再选择同目录资源文件夹。播放器会在浏览器里生成和线上版相同的 PPT。",
+      description: "左边编辑或粘贴 md，右边即时渲染为 PPT。也可以导入本地 <code>index.md</code> 和图片/视频文件夹。",
       markdown: "Markdown",
       assets: "图片/视频文件夹",
       open: "打开幻灯片",
+      render: "刷新预览",
+      template: "载入模板",
+      editor: "Markdown",
+      editorHint: "编辑后会自动刷新预览",
+      preview: "预览",
+      previewHint: "使用同一套 slides 内核",
       notSelected: "未选择",
       assetCount: "{count} 个文件",
       ready: "已准备，可以打开。",
@@ -23,10 +105,16 @@
     },
     en: {
       title: "Open a Local Markdown Deck",
-      description: "Choose an <code>index.md</code>. If it uses images or videos, choose the asset folder too. The browser will render it with the same slide engine as the online decks.",
+      description: "Edit or paste Markdown on the left and preview slides on the right. You can also import a local <code>index.md</code> and asset folder.",
       markdown: "Markdown",
       assets: "Image / video folder",
       open: "Open Slides",
+      render: "Refresh Preview",
+      template: "Load Template",
+      editor: "Markdown",
+      editorHint: "Preview refreshes after edits",
+      preview: "Preview",
+      previewHint: "Same slide engine",
       notSelected: "None",
       assetCount: "{count} files",
       ready: "Ready to open.",
@@ -48,7 +136,11 @@
     assetCount: document.querySelector("[data-local-asset-count]"),
     assetWord: document.querySelector("[data-local-asset-word]"),
     status: document.querySelector("[data-local-status]"),
-    dropZone: document.querySelector("[data-local-drop]")
+    dropZone: document.querySelector("[data-local-drop]"),
+    editor: document.querySelector("[data-local-editor]"),
+    previewFrame: document.querySelector("[data-local-preview]"),
+    renderButton: document.querySelector("[data-local-render]"),
+    templateButton: document.querySelector("[data-local-template]")
   };
 
   if (!ui.shell || !ui.deckInput || !ui.openButton) return;
@@ -305,15 +397,16 @@
 
   function isExternalUrl(url) {
     return /^(?:[a-z]+:)?\/\//i.test(url) ||
-      /^(?:data|blob|mailto):/i.test(url) ||
-      String(url || "").charAt(0) === "/";
+      /^(?:data|blob|mailto):/i.test(url);
   }
 
   function resolveAssetUrl(path, assetMap) {
     if (!path || isExternalUrl(path)) return path;
 
-    var clean = normalizePath(decodeURIComponent(path).split("#")[0].split("?")[0]);
-    var suffix = path.slice(clean.length);
+    var raw = String(path);
+    var cleanRaw = raw.split("#")[0].split("?")[0];
+    var clean = normalizePath(decodeURIComponent(cleanRaw));
+    var suffix = raw.slice(cleanRaw.length);
     var matched = null;
 
     pathVariants(clean).some(function (variant) {
@@ -390,7 +483,8 @@
   }
 
   function updateUi() {
-    ui.openButton.disabled = !mdFile;
+    var hasEditorMarkdown = ui.editor && ui.editor.value.trim();
+    ui.openButton.disabled = !mdFile && !hasEditorMarkdown;
     if (ui.deckName) ui.deckName.textContent = mdFile ? mdFile.name : t("notSelected");
     if (ui.assetCount) ui.assetCount.textContent = String(assetFiles.length);
     if (ui.assetWord) {
@@ -398,6 +492,25 @@
         .replace(String(assetFiles.length), "")
         .trim();
     }
+  }
+
+  function getCurrentMarkdown() {
+    if (ui.editor && ui.editor.value.trim()) return ui.editor.value;
+    return "";
+  }
+
+  function getCurrentDeckName() {
+    if (mdFile && mdFile.name) return mdFile.name;
+    return "editor.md";
+  }
+
+  function loadTemplate() {
+    if (!ui.editor) return;
+    ui.editor.value = DEFAULT_TEMPLATE;
+    mdFile = null;
+    updateUi();
+    setStatusKey("ready", false);
+    schedulePreviewRender(0);
   }
 
   function collectFiles(files) {
@@ -409,6 +522,17 @@
     if (assets.length) assetFiles = assetFiles.concat(assets);
     updateUi();
     setStatusKey(mdFile ? "ready" : "chooseMarkdown", false);
+    if (deck && ui.editor) {
+      readFileText(deck).then(function (text) {
+        ui.editor.value = text;
+        updateUi();
+        schedulePreviewRender(0);
+      }).catch(function (error) {
+        setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
+      });
+      return;
+    }
+    schedulePreviewRender(0);
   }
 
   function showPlayer() {
@@ -437,13 +561,14 @@
   }
 
   function openDeck() {
-    if (!mdFile) return;
+    var markdown = getCurrentMarkdown();
+    if (!markdown && !mdFile) return;
 
     setStatusKey("parsing", false);
 
-    readFileText(mdFile)
+    (markdown ? Promise.resolve(markdown) : readFileText(mdFile))
       .then(function (text) {
-        return openMarkdownText(text, { name: mdFile.name, assets: assetFiles });
+        return openMarkdownText(text, { name: getCurrentDeckName(), assets: assetFiles });
       })
       .then(function () {
         setStatus("", false);
@@ -457,6 +582,14 @@
     mdFile = ui.deckInput.files[0] || null;
     updateUi();
     setStatusKey(mdFile ? "deckSelected" : "dropHint", false);
+    if (!mdFile || !ui.editor) return;
+    readFileText(mdFile).then(function (text) {
+      ui.editor.value = text;
+      updateUi();
+      schedulePreviewRender(0);
+    }).catch(function (error) {
+      setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
+    });
   });
 
   if (ui.assetInput) {
@@ -464,10 +597,20 @@
       assetFiles = Array.prototype.slice.call(ui.assetInput.files || []);
       updateUi();
       setStatusKey(assetFiles.length ? "assetsSelected" : "dropHint", false);
+      schedulePreviewRender(0);
     });
   }
 
   ui.openButton.addEventListener("click", openDeck);
+  if (ui.renderButton) ui.renderButton.addEventListener("click", function () { schedulePreviewRender(0); });
+  if (ui.templateButton) ui.templateButton.addEventListener("click", loadTemplate);
+  if (ui.editor) {
+    ui.editor.addEventListener("input", function () {
+      mdFile = null;
+      updateUi();
+      schedulePreviewRender(450);
+    });
+  }
 
   if (ui.dropZone) {
     ["dragenter", "dragover"].forEach(function (type) {
@@ -493,13 +636,66 @@
     setLanguage(button.dataset.localLang);
   });
 
+  function postPreviewPayload() {
+    if (!ui.previewFrame || !ui.previewFrame.contentWindow || !pendingPreviewPayload) return;
+    ui.previewFrame.contentWindow.postMessage(pendingPreviewPayload, window.location.origin);
+  }
+
+  function renderPreview() {
+    if (!ui.previewFrame || !ui.editor) return;
+
+    pendingPreviewPayload = {
+      type: "local-slide-preview",
+      markdown: ui.editor.value || DEFAULT_TEMPLATE,
+      name: getCurrentDeckName(),
+      assets: assetFiles
+    };
+    previewVersion += 1;
+    ui.previewFrame.src = "preview.html?v=" + String(previewVersion);
+  }
+
+  function schedulePreviewRender(delay) {
+    if (!ui.previewFrame || !ui.editor) return;
+    window.clearTimeout(previewTimer);
+    previewTimer = window.setTimeout(renderPreview, delay || 0);
+  }
+
+  window.addEventListener("message", function (event) {
+    if (event.origin !== window.location.origin) return;
+    if (!event.data || event.data.type !== "local-slide-preview-ready") return;
+    postPreviewPayload();
+  });
+
+  window.addEventListener("message", function (event) {
+    if (event.origin !== window.location.origin) return;
+    if (!event.data || event.data.type !== "local-slide-preview") return;
+    openMarkdownText(event.data.markdown || DEFAULT_TEMPLATE, {
+      name: event.data.name || "preview.md",
+      assets: event.data.assets || []
+    }).catch(function (error) {
+      setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
+    });
+  });
+
+  if (ui.editor && !ui.editor.value.trim()) {
+    ui.editor.value = DEFAULT_TEMPLATE;
+  }
   updateUi();
   setLanguage(getStoredLanguage());
   setStatusKey("dropHint", false);
+  schedulePreviewRender(0);
+
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: "local-slide-preview-ready" }, window.location.origin);
+  }
 
   window.LocalSlidePlayer = {
-    openMarkdownText: function (text, name) {
-      return openMarkdownText(text, { name: name || "local-deck.md", assets: [] });
+    openMarkdownText: function (text, options) {
+      if (typeof options === "string") options = { name: options };
+      return openMarkdownText(text, {
+        name: options && options.name ? options.name : "local-deck.md",
+        assets: options && options.assets ? options.assets : []
+      });
     }
   };
 })();

@@ -18,3 +18,12 @@
   summary: "面向 Q1/Hex 局部加密的浏览器工作台。"
   summary_en: "A browser workbench for conforming Q1/Hex local refinement."
   featured: true
+- name: "Markdown Slide Player"
+  url: "https://hl-ren.github.io/slide-player/"
+  category: "演示工具"
+  category_en: "Presentation"
+  status: "在线"
+  status_en: "Online"
+  summary: "左侧编辑 Markdown，右侧用同一套幻灯片内核实时预览和播放。"
+  summary_en: "Edit Markdown on the left and preview or present slides with the same deck engine on the right."
+  featured: true

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>本地幻灯片播放器</title>
+    <title>Slide Preview</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
@@ -21,8 +21,8 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
   </head>
-  <body class="slides-body local-player-body" data-deck-title="Local Deck" data-deck-subtitle="" data-deck-author="" data-deck-category="Slides" data-deck-logo="" data-deck-logo-alt="Logo" data-slide-theme="paper" data-slide-theme-default="paper" data-slide-aspect="16:9" data-slide-aspect-default="16:9" data-slide-topbar-color="default" data-slide-topbar-default="default" data-slide-content-color="default" data-slide-content-default="default" data-slide-footer-color="default" data-slide-footer-default="default" data-slide-bullets="item" data-slide-bullets-default="item" data-slide-hash="false">
-    <main class="local-player-shell" data-local-player>
+  <body class="slides-body local-player-body local-preview-body" data-deck-title="Preview" data-deck-subtitle="" data-deck-author="" data-deck-category="Slides" data-deck-logo="" data-deck-logo-alt="Logo" data-slide-theme="paper" data-slide-theme-default="paper" data-slide-aspect="16:9" data-slide-aspect-default="16:9" data-slide-topbar-color="default" data-slide-topbar-default="default" data-slide-content-color="default" data-slide-content-default="default" data-slide-footer-color="default" data-slide-footer-default="default" data-slide-bullets="item" data-slide-bullets-default="item" data-slide-hash="false">
+    <main class="local-player-shell" data-local-player hidden>
       <section class="local-player-card" data-local-drop>
         <div class="local-player-language" aria-label="Language">
           <button type="button" data-local-lang="zh">中</button>
@@ -33,42 +33,16 @@
           <h1 data-local-i18n="title">Markdown 幻灯片编辑器</h1>
           <p data-local-i18n="description">左边编辑或粘贴 md，右边即时渲染为 PPT。也可以导入本地 <code>index.md</code> 和图片/视频文件夹。</p>
         </div>
-
         <div class="local-player-actions">
           <label>
             <span data-local-i18n="markdown">Markdown</span>
             <input type="file" accept=".md,.markdown,text/markdown,text/plain" data-local-deck-input>
             <strong data-local-deck-name>未选择</strong>
           </label>
-          <label>
-            <span data-local-i18n="assets">图片/视频文件夹</span>
-            <input type="file" multiple webkitdirectory data-local-assets-input>
-            <strong><span data-local-asset-count>0</span> <span data-local-asset-word>个文件</span></strong>
-          </label>
         </div>
-
         <div class="local-player-footer">
           <button type="button" data-local-open data-local-i18n="open">打开幻灯片</button>
-          <button type="button" data-local-render data-local-i18n="render">刷新预览</button>
-          <button type="button" data-local-template data-local-i18n="template">载入模板</button>
-          <p data-local-status>也可以把 md 和资源文件拖到这里。</p>
-        </div>
-      </section>
-
-      <section class="local-player-editor" aria-label="Markdown slide editor">
-        <div class="local-editor-pane">
-          <div class="local-editor-toolbar">
-            <strong data-local-i18n="editor">Markdown</strong>
-            <span data-local-i18n="editorHint">编辑后会自动刷新预览</span>
-          </div>
-          <textarea data-local-editor spellcheck="false"></textarea>
-        </div>
-        <div class="local-preview-pane">
-          <div class="local-editor-toolbar">
-            <strong data-local-i18n="preview">Preview</strong>
-            <span data-local-i18n="previewHint">使用同一套 slides 内核</span>
-          </div>
-          <iframe title="Slide preview" data-local-preview src="preview.html"></iframe>
+          <p data-local-status></p>
         </div>
       </section>
     </main>

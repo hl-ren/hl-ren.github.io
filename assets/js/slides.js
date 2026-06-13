@@ -346,8 +346,11 @@
     var elementNodes = originalNodes.filter(function (node) {
       return node.nodeType === 1 && node.textContent.trim();
     });
-    var authorNode = elementNodes[0] || null;
-    var authorText = authorNode ? authorNode.textContent.trim() : meta.author;
+    var inferredAuthorNode = elementNodes[0] || null;
+    var metaAuthor = (meta.author || "").trim();
+    var inferredAuthor = inferredAuthorNode ? inferredAuthorNode.textContent.trim() : "";
+    var authorText = metaAuthor || inferredAuthor;
+    var authorNode = null;
     var hero = document.createElement("div");
     var textBlock = document.createElement("div");
     var title = createNode("title-slide-heading", slideTitle);
@@ -358,6 +361,12 @@
     hero.classList.toggle("has-title-slide-subtitle", Boolean(meta.subtitle));
     textBlock.className = "title-slide-text";
     info.className = "title-slide-info";
+
+    if (!metaAuthor) {
+      authorNode = inferredAuthorNode;
+    } else if (inferredAuthorNode && normalizeText(inferredAuthor) === normalizeText(metaAuthor)) {
+      authorNode = inferredAuthorNode;
+    }
 
     originalNodes.forEach(function (node) {
       if (node === authorNode) return;
