@@ -136,14 +136,15 @@
     var portrait = handheld && fullscreen && window.innerHeight > window.innerWidth;
     var thumbnailHeight = getCssPixelValue("--slide-thumbnails-height", 142);
     var previewMode = document.body.classList.contains("local-preview-body");
-    var thumbnailsVisible = !fullscreen && !previewMode;
+    var thumbnailsVisible = !fullscreen;
     var availableHeight = Math.max(1, viewportHeight - (thumbnailsVisible ? thumbnailHeight : 0));
+    var availableWidth = Math.max(1, viewportWidth - (previewMode && !fullscreen ? 76 : 0));
     var stageSize = getSlideStageSize();
     var stageWidth = portrait ? stageSize.height : stageSize.width;
     var stageHeight = portrait ? stageSize.width : stageSize.height;
     var stageScale = 1;
 
-    stageScale = Math.min(viewportWidth / stageWidth, availableHeight / stageHeight);
+    stageScale = Math.min(availableWidth / stageWidth, availableHeight / stageHeight);
     stageScale = Math.max(0.1, Math.min(2, stageScale));
 
     document.body.classList.toggle("is-scaled-stage", !isRevealPrintPage() && !isPdfExportPage());
