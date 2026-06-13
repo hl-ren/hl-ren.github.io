@@ -1,6 +1,6 @@
 .slides-body {
   --slide-topbar-height: 96px;
-  --slide-footer-height: 40px;
+  --slide-footer-height: 54px;
   --slide-thumbnails-height: 142px;
   --slide-print-width: 1280px;
   --slide-print-height: 720px;
@@ -628,11 +628,13 @@
 
 .slide-footer {
   grid-template-columns: 1fr 2fr 1fr;
-  padding: 0 54px;
+  padding: 4px 54px 6px;
   border-top: 2px solid var(--slide-line);
   background: var(--slide-footer-bg);
   color: var(--slide-footer-ink);
   font-size: 0.69em;
+  line-height: 1;
+  overflow: visible;
 }
 
 .slide-topic {
@@ -670,6 +672,7 @@
 .slide-page-number {
   flex: 0 0 auto;
   font-size: 1.08em;
+  line-height: 1;
 }
 
 .slide-author,
@@ -679,10 +682,15 @@
 
 .slide-topic {
   text-align: center;
+  justify-content: center;
 }
 
 .slide-footer-cell {
   min-width: 0;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  line-height: 1;
 }
 
 .slide-footer-actions {
