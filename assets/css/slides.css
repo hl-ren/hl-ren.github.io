@@ -1,5 +1,6 @@
 .slides-body {
-  --slide-topbar-height: 142px;
+  --slide-topbar-height: 96px;
+  --slide-footer-height: 40px;
   --slide-thumbnails-height: 142px;
   --slide-print-width: 1280px;
   --slide-print-height: 720px;
@@ -436,7 +437,7 @@
 
 .slides-body.is-print-pdf .reveal .slides .pdf-page > section {
   display: grid !important;
-  grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 60px !important;
+  grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) var(--slide-footer-height) !important;
   padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -506,7 +507,7 @@
 .reveal .slides > section,
 .reveal .pdf-page > section {
   display: grid !important;
-  grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 60px;
+  grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) var(--slide-footer-height);
   width: 100%;
   height: 100%;
   padding: 0;
@@ -538,7 +539,7 @@
   column-gap: 34px;
   position: relative;
   min-height: var(--slide-topbar-height);
-  padding: 22px 320px 24px 54px;
+  padding: 10px 230px 10px 48px;
   border-bottom: 2px solid var(--slide-line);
   background: var(--slide-topbar-bg);
   font-size: 0.36em;
@@ -567,7 +568,7 @@
   font-size: 4.5em;
   font-weight: 820;
   letter-spacing: 0;
-  line-height: 1.14;
+  line-height: 1.05;
   white-space: nowrap;
 }
 
@@ -661,7 +662,7 @@
   display: flex;
   align-items: center;
   min-height: var(--slide-topbar-height);
-  padding: 0 320px 0 54px;
+  padding: 0 230px 0 48px;
   color: var(--slide-heading);
   font-family: var(--slide-display-font);
   font-size: 0.72em;
