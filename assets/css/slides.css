@@ -171,10 +171,11 @@
   z-index: 5;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   padding: 0;
   border: 0;
   background: transparent;
+  color: inherit;
   opacity: 1;
 }
 
@@ -204,13 +205,20 @@
   display: none;
 }
 
-.deck-controls button,
-.deck-controls select {
-  min-height: 36px;
-  border: 1px solid var(--slide-line);
-  border-radius: 6px;
+.deck-settings-panel button,
+.deck-settings-panel select {
+  border-color: var(--slide-line);
   background: var(--slide-panel);
   color: var(--slide-ink);
+}
+
+.deck-controls button,
+.deck-controls select {
+  min-height: 34px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
   cursor: pointer;
   font: inherit;
   font-size: 15px;
@@ -218,14 +226,14 @@
 }
 
 .deck-controls button {
-  min-width: 36px;
-  padding: 0 10px;
+  min-width: 34px;
+  padding: 0 6px;
 }
 
 .deck-controls button[data-slide-prev],
 .deck-controls button[data-slide-next] {
-  min-width: 36px;
-  font-size: 27px;
+  min-width: 34px;
+  font-size: 31px;
   line-height: 1;
 }
 
@@ -234,10 +242,8 @@
   place-items: center;
   width: 42px;
   min-width: 42px;
-  min-height: 36px;
+  min-height: 34px;
   padding: 0;
-  border-color: var(--slide-line);
-  background: var(--slide-panel);
   font-size: 0;
 }
 
@@ -255,7 +261,7 @@
   place-items: center;
   width: 42px;
   min-width: 42px;
-  min-height: 36px;
+  min-height: 34px;
   padding: 0;
   font-size: 0;
 }
@@ -267,13 +273,13 @@
 }
 
 .deck-controls button.is-active {
-  background: var(--slide-ink);
-  color: var(--slide-bg);
+  background: transparent;
+  color: inherit;
 }
 
 .deck-controls button[data-slide-fullscreen].is-active {
-  background: var(--slide-panel);
-  color: var(--slide-ink);
+  background: transparent;
+  color: inherit;
 }
 
 .deck-controls label {
