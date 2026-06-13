@@ -9,6 +9,17 @@ permalink: /slides/
 
 {% assign decks = site.pages | where: "layout", "slides" | sort: "date" | reverse %}
 
+<article class="slide-card slide-player-card">
+  <div class="post-card-meta">
+    <span data-i18n-key="slides.localType">本地工具</span>
+  </div>
+  <h2><a href="{{ '/slide-player/' | relative_url }}" data-i18n-key="slides.localTitle">本地 Markdown 播放器</a></h2>
+  <p data-i18n-key="slides.localDescription">选择一个 md 和图片文件夹，直接在浏览器里播放成 PPT。</p>
+  <div class="slide-actions">
+    <a href="{{ '/slide-player/' | relative_url }}" data-i18n-key="slides.localOpen">打开本地播放器</a>
+  </div>
+</article>
+
 {% if decks.size > 0 %}
   <div class="slide-grid">
     {% for deck in decks %}

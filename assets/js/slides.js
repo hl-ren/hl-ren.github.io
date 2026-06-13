@@ -47,6 +47,10 @@
     return hasQueryFlag("download-pdf");
   }
 
+  function isSlideHashEnabled() {
+    return document.body.dataset.slideHash !== "false";
+  }
+
   var Preferences = {
     read: function (key, fallback) {
       try {
@@ -944,6 +948,7 @@
 
   var Navigation = {
     syncHash: function (index) {
+      if (!isSlideHashEnabled()) return;
       if (!window.history || !window.history.replaceState) return;
 
       var hash = index > 0 ? "#/" + String(index) : "";
@@ -1245,42 +1250,61 @@
     autoPrintPdf(0);
   }
 
-  splitSlides();
-  enhanceSlides();
+  function initializeDeck() {
+    if (document.body.dataset.slideDeckInitialized === "true") return Promise.resolve();
+    document.body.dataset.slideDeckInitialized = "true";
 
-  if (isPdfExportPage()) {
-    preparePdfExport();
-    return;
+    splitSlides();
+    enhanceSlides();
+
+    if (isPdfExportPage()) {
+      preparePdfExport();
+      return Promise.resolve();
+    }
+
+    buildThumbnailTray();
+    localizeDeckLink();
+    setupThemeSwitcher();
+    setupAspectSwitcher();
+    setupColorSwitchers();
+    syncViewportMode();
+
+    return Reveal.initialize({
+      hash: isSlideHashEnabled(),
+      history: isSlideHashEnabled(),
+      respondToHashChanges: isSlideHashEnabled(),
+      controls: false,
+      progress: true,
+      center: false,
+      slideNumber: false,
+      transition: "slide",
+      width: "100%",
+      height: "100%",
+      margin: 0,
+      minScale: 0.2,
+      maxScale: 1.6,
+      pdfSeparateFragments: false,
+      pdfMaxPagesPerSlide: 1,
+      plugins: window.RevealHighlight ? [window.RevealHighlight] : []
+    }).then(function () {
+      setupOverviewGrid();
+      setupDeckControls();
+      fitAllSlideContent();
+      typesetMath(0);
+      bindDynamicContentFit();
+      autoPrintPdf(0);
+    });
   }
 
-  buildThumbnailTray();
-  localizeDeckLink();
-  setupThemeSwitcher();
-  setupAspectSwitcher();
-  setupColorSwitchers();
-  syncViewportMode();
+  window.SlideDeckRuntime = {
+    initialize: initializeDeck,
+    setSourceHtml: function (html) {
+      source.innerHTML = html;
+      target.innerHTML = "";
+    }
+  };
 
-  Reveal.initialize({
-    hash: true,
-    controls: false,
-    progress: true,
-    center: false,
-    slideNumber: false,
-    transition: "slide",
-    width: "100%",
-    height: "100%",
-    margin: 0,
-    minScale: 0.2,
-    maxScale: 1.6,
-    pdfSeparateFragments: false,
-    pdfMaxPagesPerSlide: 1,
-    plugins: window.RevealHighlight ? [window.RevealHighlight] : []
-  }).then(function () {
-    setupOverviewGrid();
-    setupDeckControls();
-    fitAllSlideContent();
-    typesetMath(0);
-    bindDynamicContentFit();
-    autoPrintPdf(0);
-  });
+  if (source.hasAttribute("data-deck-defer")) return;
+
+  initializeDeck();
 })();

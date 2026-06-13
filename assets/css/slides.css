@@ -49,6 +49,149 @@
   box-sizing: border-box;
 }
 
+.local-player-body:not(.local-deck-loaded) {
+  overflow: auto;
+}
+
+.local-player-body:not(.local-deck-loaded) .reveal,
+.local-player-body:not(.local-deck-loaded) .deck-controls[data-slide-controls-template] {
+  display: none;
+}
+
+.local-player-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: var(--slide-bg);
+}
+
+.local-player-card {
+  width: min(760px, 100%);
+  display: grid;
+  gap: 22px;
+  padding: 28px;
+  border: 1px solid var(--slide-line);
+  border-radius: 10px;
+  background: var(--slide-panel);
+  box-shadow: 0 18px 52px rgba(31, 37, 35, 0.14);
+}
+
+.local-player-card.is-dragging {
+  border-color: var(--slide-accent);
+  box-shadow: 0 18px 52px rgba(15, 118, 110, 0.2);
+}
+
+.local-player-kicker {
+  margin: 0 0 8px;
+  color: var(--slide-accent);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.local-player-card h1 {
+  margin: 0 0 10px;
+  color: var(--slide-ink);
+  font-family: var(--slide-display-font);
+  font-size: 32px;
+  line-height: 1.18;
+}
+
+.local-player-card p {
+  margin: 0;
+  color: var(--slide-muted);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.local-player-card code {
+  color: var(--slide-heading);
+  font-weight: 800;
+}
+
+.local-player-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.local-player-actions label {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--slide-line);
+  border-radius: 8px;
+  background: var(--slide-soft);
+}
+
+.local-player-actions span {
+  color: var(--slide-ink);
+  font-weight: 850;
+}
+
+.local-player-actions input {
+  width: 100%;
+  color: var(--slide-muted);
+  font: inherit;
+}
+
+.local-player-actions strong {
+  color: var(--slide-heading);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.local-player-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.local-player-footer button {
+  min-height: 40px;
+  padding: 6px 16px;
+  border: 1px solid var(--slide-accent);
+  border-radius: 6px;
+  background: var(--slide-accent);
+  color: var(--slide-bg);
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.local-player-footer button:disabled {
+  border-color: var(--slide-line);
+  background: var(--slide-line);
+  color: var(--slide-muted);
+  cursor: not-allowed;
+}
+
+.local-player-footer p.is-error {
+  color: #b42318;
+}
+
+@media (max-width: 720px) {
+  .local-player-shell {
+    padding: 16px;
+  }
+
+  .local-player-card {
+    padding: 18px;
+  }
+
+  .local-player-actions label {
+    grid-template-columns: 1fr;
+  }
+
+  .local-player-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
 .slides-body[data-slide-theme="sage"] {
   --slide-ink: #1f2b27;
   --slide-muted: #66736b;

@@ -441,6 +441,10 @@ a:hover {
   gap: 12px;
 }
 
+.slide-player-card {
+  margin-bottom: 16px;
+}
+
 .tool-actions,
 .slide-actions {
   display: flex;

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>本地幻灯片播放器</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="../assets/css/slides.css">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"], ["\\(", "\\)"]],
+          displayMath: [["$$", "$$"], ["\\[", "\\]"]]
+        },
+        startup: {
+          typeset: false
+        }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
+  </head>
+  <body class="slides-body local-player-body" data-deck-title="Local Deck" data-deck-subtitle="" data-deck-author="" data-deck-category="Slides" data-deck-logo="" data-deck-logo-alt="Logo" data-slide-theme="paper" data-slide-theme-default="paper" data-slide-aspect="16:9" data-slide-aspect-default="16:9" data-slide-topbar-color="default" data-slide-topbar-default="default" data-slide-content-color="default" data-slide-content-default="default" data-slide-footer-color="default" data-slide-footer-default="default" data-slide-bullets="item" data-slide-bullets-default="item" data-slide-hash="false">
+    <main class="local-player-shell" data-local-player>
+      <section class="local-player-card" data-local-drop>
+        <div>
+          <p class="local-player-kicker">Local Slide Player</p>
+          <h1>打开本地 Markdown 幻灯片</h1>
+          <p>选择一个 <code>index.md</code>，如有图片或视频，再选择同目录资源文件夹。播放器会在浏览器里生成和线上版相同的 PPT。</p>
+        </div>
+
+        <div class="local-player-actions">
+          <label>
+            <span>Markdown</span>
+            <input type="file" accept=".md,.markdown,text/markdown,text/plain" data-local-deck-input>
+            <strong data-local-deck-name>未选择</strong>
+          </label>
+          <label>
+            <span>图片/视频文件夹</span>
+            <input type="file" multiple webkitdirectory data-local-assets-input>
+            <strong><span data-local-asset-count>0</span> 个文件</strong>
+          </label>
+        </div>
+
+        <div class="local-player-footer">
+          <button type="button" data-local-open>打开幻灯片</button>
+          <p data-local-status>也可以把 md 和资源文件拖到这里。</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="reveal">
+      <div class="slides" id="deck-slides"></div>
+    </div>
+
+    <div class="deck-controls" data-slide-controls-template aria-label="Slide controls">
+      <button type="button" data-slide-fullscreen data-fullscreen-label="Fullscreen" data-exit-label="Exit">Fullscreen</button>
+      <button type="button" data-slide-prev aria-label="Previous slide">‹</button>
+      <button type="button" data-slide-next aria-label="Next slide">›</button>
+      <button type="button" data-slide-settings-toggle aria-expanded="false" aria-controls="deck-settings-panel">Settings</button>
+      <div class="deck-settings-panel" id="deck-settings-panel" hidden>
+        <button type="button" data-slide-export-pdf>Export PDF</button>
+        <label>
+          <span>Aspect</span>
+          <select data-slide-aspect-select aria-label="Slide aspect ratio">
+            <option value="16:9">16:9</option>
+            <option value="4:3">4:3</option>
+          </select>
+        </label>
+        <label>
+          <span>Theme</span>
+          <select data-slide-theme-select aria-label="Slide theme">
+            <option value="paper">Paper</option>
+            <option value="sage">Sage</option>
+            <option value="midnight">Midnight</option>
+            <option value="amber">Amber</option>
+          </select>
+        </label>
+        <label>
+          <span>Top</span>
+          <select data-slide-color-select="topbar" aria-label="Top bar color">
+            <option value="default">Theme</option>
+            <option value="white">White</option>
+            <option value="sage">Sage</option>
+            <option value="blue">Blue</option>
+            <option value="amber">Amber</option>
+            <option value="charcoal">Charcoal</option>
+          </select>
+        </label>
+        <label>
+          <span>Middle</span>
+          <select data-slide-color-select="content" aria-label="Middle area color">
+            <option value="default">Theme</option>
+            <option value="white">White</option>
+            <option value="soft">Soft</option>
+            <option value="sage">Sage</option>
+            <option value="blue">Blue</option>
+            <option value="amber">Amber</option>
+          </select>
+        </label>
+        <label>
+          <span>Bottom</span>
+          <select data-slide-color-select="footer" aria-label="Bottom bar color">
+            <option value="default">Theme</option>
+            <option value="white">White</option>
+            <option value="sage">Sage</option>
+            <option value="blue">Blue</option>
+            <option value="amber">Amber</option>
+            <option value="charcoal">Charcoal</option>
+          </select>
+        </label>
+        <label>
+          <span>Bullets</span>
+          <select data-slide-bullets aria-label="Bullet playback">
+            <option value="item">Item</option>
+            <option value="page">Page</option>
+            <option value="off">Off</option>
+          </select>
+        </label>
+        <label>
+          <span>Play</span>
+          <select data-slide-autoplay aria-label="Autoplay">
+            <option value="0">Off</option>
+            <option value="5000">5s</option>
+            <option value="10000">10s</option>
+            <option value="20000">20s</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <template id="deck-source" data-deck-defer></template>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script src="../assets/js/slides.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="../assets/js/local-slide-player.js"></script>
+  </body>
+</html>
