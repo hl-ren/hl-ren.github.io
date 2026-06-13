@@ -256,20 +256,21 @@
 .deck-controls button[data-slide-fullscreen] {
   display: inline-grid;
   place-items: center;
-  width: 42px;
-  min-width: 42px;
-  min-height: 34px;
+  width: 84px;
+  min-width: 84px;
+  min-height: 52px;
   padding: 0;
   font-size: 0;
+  touch-action: manipulation;
 }
 
 .deck-controls button[data-slide-fullscreen]::before {
   content: "\26F6";
   display: block;
-  width: 28px;
-  height: 28px;
-  font-size: 30px;
-  line-height: 28px;
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+  line-height: 44px;
   text-align: center;
 }
 
@@ -385,16 +386,12 @@
   transform: translate(-50%, -50%) rotate(90deg) scale(var(--slide-stage-scale, 1));
 }
 
-.slides-body.is-scaled-stage:not(.is-overview):not(.is-fullscreen):not(.is-handheld):not(.is-export-pdf):not(.is-print-pdf) .slide-thumbnails {
+.slides-body.is-scaled-stage:not(.is-overview):not(.is-fullscreen):not(.is-export-pdf):not(.is-print-pdf) .slide-thumbnails {
   position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 3;
-}
-
-.slides-body.is-handheld:not(.is-overview):not(.is-export-pdf):not(.is-print-pdf) .slide-thumbnails {
-  display: none;
 }
 
 .slides-body.is-print-pdf .reveal {
@@ -1262,6 +1259,19 @@
   .deck-controls button[data-slide-prev],
   .deck-controls button[data-slide-next] {
     font-size: 21px;
+  }
+
+  .deck-controls button[data-slide-fullscreen] {
+    width: 156px;
+    min-width: 156px;
+    min-height: 104px;
+  }
+
+  .deck-controls button[data-slide-fullscreen]::before {
+    width: 82px;
+    height: 82px;
+    font-size: 82px;
+    line-height: 76px;
   }
 
   .deck-settings-panel {

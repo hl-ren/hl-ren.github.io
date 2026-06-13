@@ -117,7 +117,7 @@
     var fullscreen = Boolean(document.fullscreenElement);
     var portrait = handheld && fullscreen && window.innerHeight > window.innerWidth;
     var thumbnailHeight = getCssPixelValue("--slide-thumbnails-height", 142);
-    var thumbnailsVisible = !fullscreen && !handheld;
+    var thumbnailsVisible = !fullscreen;
     var availableHeight = Math.max(1, viewportHeight - (thumbnailsVisible ? thumbnailHeight : 0));
     var stageSize = getSlideStageSize();
     var stageWidth = portrait ? stageSize.height : stageSize.width;
