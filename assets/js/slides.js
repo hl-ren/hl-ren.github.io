@@ -35,23 +35,34 @@
       window.matchMedia("(hover: none) and (max-width: 1100px)").matches;
   }
 
+  function getCssPixelValue(name, fallback) {
+    var value = window.getComputedStyle(document.body).getPropertyValue(name);
+    var parsed = parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  }
+
   function syncViewportMode() {
     var handheld = isHandheldViewport();
     var portrait = handheld && window.innerHeight > window.innerWidth;
     var viewportWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
     var viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    var fullscreen = Boolean(document.fullscreenElement);
+    var thumbnailHeight = getCssPixelValue("--slide-thumbnails-height", 142);
+    var thumbnailsVisible = !fullscreen && !handheld;
+    var availableHeight = Math.max(1, viewportHeight - (thumbnailsVisible ? thumbnailHeight : 0));
+    var stageWidth = portrait ? 720 : 1280;
+    var stageHeight = portrait ? 1280 : 720;
     var stageScale = 1;
 
-    if (handheld) {
-      stageScale = portrait ?
-        Math.min(viewportWidth / 720, viewportHeight / 1280) :
-        Math.min(viewportWidth / 1280, viewportHeight / 720);
-      stageScale = Math.max(0.1, Math.min(1, stageScale));
-    }
+    stageScale = Math.min(viewportWidth / stageWidth, availableHeight / stageHeight);
+    stageScale = Math.max(0.1, Math.min(2, stageScale));
 
+    document.body.classList.toggle("is-scaled-stage", !isRevealPrintPage() && !isPdfExportPage());
     document.body.classList.toggle("is-handheld", handheld);
     document.body.classList.toggle("is-handheld-portrait", portrait);
     document.body.style.setProperty("--slide-stage-scale", String(stageScale));
+    document.body.style.setProperty("--slide-stage-left", String(viewportWidth / 2) + "px");
+    document.body.style.setProperty("--slide-stage-top", String(availableHeight / 2) + "px");
 
     window.requestAnimationFrame(function () {
       if (window.Reveal && window.Reveal.layout) window.Reveal.layout();
@@ -312,8 +323,18 @@
     var content = section.querySelector(".slide-content");
     if (!content || content.closest(".no-fit, [data-no-fit]")) return;
 
-    var maxSize = Math.min(getSlideTitleFontSize(section), section.classList.contains("title-slide") ? 54 : 46);
-    var minSize = 18;
+    var sectionRect = section.getBoundingClientRect();
+    var sectionWidth = section.clientWidth || sectionRect.width || 1280;
+    var sectionHeight = section.clientHeight || sectionRect.height || 720;
+    var pageBase = Math.min(sectionWidth / 27.826, sectionHeight / 15.652);
+    var maxRatio = section.classList.contains("title-slide") ? 0.075 : 0.064;
+    var minRatio = 0.025;
+    var maxSize = Math.min(
+      getSlideTitleFontSize(section),
+      sectionHeight * maxRatio,
+      pageBase
+    );
+    var minSize = Math.max(14, Math.min(sectionHeight * minRatio, maxSize));
     var low = minSize;
     var high = maxSize;
     var best = minSize;
