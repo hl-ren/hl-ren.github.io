@@ -786,6 +786,35 @@
     button.setAttribute("aria-expanded", open ? "true" : "false");
   }
 
+  function shouldIgnoreSlideClick(event) {
+    return Boolean(event.target.closest(
+      "button, a, input, select, textarea, label, summary, " +
+      "video, audio, iframe, pre, code, table, " +
+      ".deck-controls, .deck-settings-panel, .slide-thumbnail-grid"
+    ));
+  }
+
+  function navigateBySlideClick(event) {
+    if (!window.Reveal || shouldIgnoreSlideClick(event)) return;
+    if (document.querySelector(".reveal.overview")) return;
+
+    var reveal = document.querySelector(".reveal");
+    if (!reveal) return;
+
+    var revealRect = reveal.getBoundingClientRect();
+    var insideReveal = event.clientX >= revealRect.left &&
+      event.clientX <= revealRect.right &&
+      event.clientY >= revealRect.top &&
+      event.clientY <= revealRect.bottom;
+    if (!insideReveal) return;
+
+    if (event.clientX < revealRect.left + revealRect.width / 2) {
+      window.Reveal.prev();
+    } else {
+      window.Reveal.next();
+    }
+  }
+
   function attachDeckControls() {
     var template = document.querySelector("[data-slide-controls-template]");
     if (!template) return;
@@ -873,23 +902,7 @@
         return;
       }
 
-      if (
-        (document.fullscreenElement || isHandheldViewport()) &&
-        !event.target.closest("button, a, input, select, textarea, label, .deck-controls, .deck-settings-panel")
-      ) {
-        var revealRect = document.querySelector(".reveal").getBoundingClientRect();
-        var insideReveal = event.clientX >= revealRect.left &&
-          event.clientX <= revealRect.right &&
-          event.clientY >= revealRect.top &&
-          event.clientY <= revealRect.bottom;
-        if (!insideReveal) return;
-
-        if (event.clientX < revealRect.left + revealRect.width / 2) {
-          window.Reveal.prev();
-        } else {
-          window.Reveal.next();
-        }
-      }
+      navigateBySlideClick(event);
     });
 
     document.addEventListener("change", function (event) {

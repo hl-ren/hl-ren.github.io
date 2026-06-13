@@ -188,13 +188,17 @@
 }
 
 .deck-settings-panel {
+  --slide-settings-label-width: 92px;
+  --slide-settings-control-width: 160px;
   position: absolute;
   right: 0;
   bottom: calc(100% + 6px);
   display: grid;
-  gap: 8px;
-  min-width: 220px;
-  padding: 10px;
+  grid-template-columns: var(--slide-settings-label-width) var(--slide-settings-control-width);
+  align-items: center;
+  gap: 9px 14px;
+  min-width: 286px;
+  padding: 12px;
   border: 1px solid var(--slide-line);
   border-radius: 10px;
   background: var(--slide-panel);
@@ -210,6 +214,11 @@
   border-color: var(--slide-line);
   background: var(--slide-panel);
   color: var(--slide-ink);
+}
+
+.deck-controls .deck-settings-panel [data-slide-export-pdf] {
+  grid-column: 1 / -1;
+  width: 100%;
 }
 
 .deck-controls button,
@@ -297,7 +306,20 @@
 }
 
 .deck-settings-panel label {
-  justify-content: space-between;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: var(--slide-settings-label-width) var(--slide-settings-control-width);
+  gap: 14px;
+  justify-content: stretch;
+}
+
+.deck-settings-panel label span {
+  min-width: 0;
+}
+
+.deck-settings-panel label select {
+  width: 100%;
+  min-width: 0;
 }
 
 .deck-controls select {
