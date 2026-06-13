@@ -138,6 +138,7 @@ date: 2026-06-12
 category: "Research"
 tags: ["Mechanics", "Peridynamics", "FEM"]
 summary: "A browser-based talk deck for sharing the main ideas."
+slide_aspect: "16:9" # use "5:4" for a squarer teaching/PPT layout
 ---
 
 # A Short Introduction to Nonlocal Mechanics

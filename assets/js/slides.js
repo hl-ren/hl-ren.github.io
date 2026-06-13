@@ -41,6 +41,13 @@
     return Number.isFinite(parsed) ? parsed : fallback;
   }
 
+  function getSlideStageSize() {
+    return {
+      width: getCssPixelValue("--slide-print-width", 1280),
+      height: getCssPixelValue("--slide-print-height", 720)
+    };
+  }
+
   function syncViewportMode() {
     var handheld = isHandheldViewport();
     var viewportWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
@@ -50,8 +57,9 @@
     var thumbnailHeight = getCssPixelValue("--slide-thumbnails-height", 142);
     var thumbnailsVisible = !fullscreen && !handheld;
     var availableHeight = Math.max(1, viewportHeight - (thumbnailsVisible ? thumbnailHeight : 0));
-    var stageWidth = portrait ? 720 : 1280;
-    var stageHeight = portrait ? 1280 : 720;
+    var stageSize = getSlideStageSize();
+    var stageWidth = portrait ? stageSize.height : stageSize.width;
+    var stageHeight = portrait ? stageSize.width : stageSize.height;
     var stageScale = 1;
 
     stageScale = Math.min(viewportWidth / stageWidth, availableHeight / stageHeight);
@@ -637,6 +645,45 @@
     } catch (error) {}
   }
 
+  function normalizeAspect(value) {
+    return value === "5:4" ? "5:4" : "16:9";
+  }
+
+  function getStoredAspect() {
+    try {
+      return normalizeAspect(localStorage.getItem("slide-aspect") || (document.body.dataset.slideAspectDefault || "16:9"));
+    } catch (error) {
+      return normalizeAspect(document.body.dataset.slideAspectDefault || "16:9");
+    }
+  }
+
+  function applyAspect(aspect) {
+    var selected = normalizeAspect(aspect);
+    document.body.dataset.slideAspect = selected;
+    document.querySelectorAll("[data-slide-aspect-select]").forEach(function (select) {
+      select.value = selected;
+    });
+
+    if (window.Reveal && window.Reveal.layout) window.Reveal.layout();
+    syncViewportMode();
+    fitAllSlideContent();
+    if (document.querySelector(".reveal.overview")) layoutOverviewGrid();
+
+    try {
+      localStorage.setItem("slide-aspect", selected);
+    } catch (error) {}
+  }
+
+  function setupAspectSwitcher() {
+    applyAspect(getStoredAspect());
+
+    document.addEventListener("change", function (event) {
+      var select = event.target.closest("[data-slide-aspect-select]");
+      if (!select) return;
+      applyAspect(select.value);
+    });
+  }
+
   function setupThemeSwitcher() {
     applyTheme(getStoredTheme());
 
@@ -1005,6 +1052,7 @@
     if (template) template.remove();
 
     showAllFragmentsForExport();
+    applyAspect(getStoredAspect());
     applyTheme(getStoredTheme());
     ["topbar", "content", "footer"].forEach(function (region) {
       applySlideColor(region, getStoredColor(region));
@@ -1034,6 +1082,7 @@
   buildThumbnailTray();
   localizeDeckLink();
   setupThemeSwitcher();
+  setupAspectSwitcher();
   setupColorSwitchers();
   syncViewportMode();
 

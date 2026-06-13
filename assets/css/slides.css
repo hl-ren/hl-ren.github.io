@@ -28,6 +28,13 @@
   --slide-content-font: "Aptos", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+.slides-body[data-slide-aspect="5:4"] {
+  --slide-print-width: 1250px;
+  --slide-print-height: 1000px;
+  --slide-aspect-width: 5;
+  --slide-aspect-height: 4;
+}
+
 .slides-body {
   margin: 0;
   background: var(--slide-bg);
@@ -1070,7 +1077,7 @@
 
 @media print {
   @page {
-    size: 1280px 720px;
+    size: var(--slide-print-width) var(--slide-print-height);
     margin: 0;
   }
 

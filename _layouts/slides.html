@@ -31,7 +31,8 @@
   {% assign slide_content_color = page.slide_content_color | default: page.slide_content | default: 'default' %}
   {% assign slide_footer_color = page.slide_footer_color | default: page.slide_footer | default: 'default' %}
   {% assign slide_bullets = page.slide_bullets | default: page.bullet_mode | default: 'item' %}
-  <body class="slides-body" data-deck-title="{{ page.title | escape }}" data-deck-subtitle="{{ page.subtitle | default: page.slide_subtitle | escape }}" data-deck-author="{{ page.author | default: site.author.name | escape }}" data-deck-category="{{ page.category | default: 'Slides' | escape }}" data-deck-logo="{{ deck_logo | escape }}" data-deck-logo-alt="{{ page.logo_alt | default: page.title | escape }}" data-slide-theme="{{ slide_theme | escape }}" data-slide-theme-default="{{ slide_theme | escape }}" data-slide-topbar-color="{{ slide_topbar_color | escape }}" data-slide-topbar-default="{{ slide_topbar_color | escape }}" data-slide-content-color="{{ slide_content_color | escape }}" data-slide-content-default="{{ slide_content_color | escape }}" data-slide-footer-color="{{ slide_footer_color | escape }}" data-slide-footer-default="{{ slide_footer_color | escape }}" data-slide-bullets="{{ slide_bullets | escape }}" data-slide-bullets-default="{{ slide_bullets | escape }}">
+  {% assign slide_aspect = page.slide_aspect | default: page.aspect | default: '16:9' %}
+  <body class="slides-body" data-deck-title="{{ page.title | escape }}" data-deck-subtitle="{{ page.subtitle | default: page.slide_subtitle | escape }}" data-deck-author="{{ page.author | default: site.author.name | escape }}" data-deck-category="{{ page.category | default: 'Slides' | escape }}" data-deck-logo="{{ deck_logo | escape }}" data-deck-logo-alt="{{ page.logo_alt | default: page.title | escape }}" data-slide-theme="{{ slide_theme | escape }}" data-slide-theme-default="{{ slide_theme | escape }}" data-slide-aspect="{{ slide_aspect | escape }}" data-slide-aspect-default="{{ slide_aspect | escape }}" data-slide-topbar-color="{{ slide_topbar_color | escape }}" data-slide-topbar-default="{{ slide_topbar_color | escape }}" data-slide-content-color="{{ slide_content_color | escape }}" data-slide-content-default="{{ slide_content_color | escape }}" data-slide-footer-color="{{ slide_footer_color | escape }}" data-slide-footer-default="{{ slide_footer_color | escape }}" data-slide-bullets="{{ slide_bullets | escape }}" data-slide-bullets-default="{{ slide_bullets | escape }}">
     <div class="reveal">
       <div class="slides" id="deck-slides"></div>
     </div>
@@ -43,6 +44,13 @@
       <button type="button" data-slide-settings-toggle aria-expanded="false" aria-controls="deck-settings-panel">Settings</button>
       <div class="deck-settings-panel" id="deck-settings-panel" hidden>
         <button type="button" data-slide-export-pdf>Export PDF</button>
+        <label>
+          <span>Aspect</span>
+          <select data-slide-aspect-select aria-label="Slide aspect ratio">
+            <option value="16:9">16:9</option>
+            <option value="5:4">5:4</option>
+          </select>
+        </label>
         <label>
           <span>Theme</span>
           <select data-slide-theme-select aria-label="Slide theme">
