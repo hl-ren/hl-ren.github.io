@@ -9,7 +9,9 @@
     settingsPanel: ".deck-settings-panel",
     settingsToggle: "[data-slide-settings-toggle]",
     thumbnail: ".slide-thumbnail",
-    slideSection: "#deck-slides > section"
+    slideSection: "#deck-slides > section",
+    overviewReveal: ".reveal.overview",
+    overviewSlide: "#deck-slides > section[data-overview-grid]"
   };
 
   var STORAGE_KEYS = {
@@ -45,43 +47,47 @@
     return hasQueryFlag("download-pdf");
   }
 
-  function readPreference(key, fallback) {
-    try {
-      return localStorage.getItem(key) || fallback;
-    } catch (error) {
-      return fallback;
+  var Preferences = {
+    read: function (key, fallback) {
+      try {
+        return localStorage.getItem(key) || fallback;
+      } catch (error) {
+        return fallback;
+      }
+    },
+
+    write: function (key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (error) {}
+    },
+
+    syncSelect: function (selector, value) {
+      document.querySelectorAll(selector).forEach(function (select) {
+        select.value = value;
+      });
     }
-  }
+  };
 
-  function writePreference(key, value) {
-    try {
-      localStorage.setItem(key, value);
-    } catch (error) {}
-  }
+  var Slides = {
+    all: function () {
+      return Array.prototype.slice.call(target.children);
+    },
 
-  function syncSelectValue(selector, value) {
-    document.querySelectorAll(selector).forEach(function (select) {
-      select.value = value;
-    });
-  }
+    count: function () {
+      return deckState.total || target.children.length || 1;
+    },
 
-  function getSlideSections() {
-    return Array.prototype.slice.call(target.children);
-  }
+    currentIndex: function () {
+      if (!window.Reveal || !window.Reveal.getIndices) return deckState.currentIndex || 0;
+      return window.Reveal.getIndices().h || 0;
+    },
 
-  function getSlideCount() {
-    return deckState.total || target.children.length || 1;
-  }
-
-  function getCurrentSlideIndex() {
-    if (!window.Reveal || !window.Reveal.getIndices) return deckState.currentIndex || 0;
-    return window.Reveal.getIndices().h || 0;
-  }
-
-  function normalizeSlideIndex(index) {
-    var total = getSlideCount();
-    return ((index % total) + total) % total;
-  }
+    normalizeIndex: function (index) {
+      var total = Slides.count();
+      return ((index % total) + total) % total;
+    }
+  };
 
   if (isRevealPrintPage()) document.body.classList.add("is-print-pdf");
   if (isPdfExportPage()) document.body.classList.add("is-export-pdf");
@@ -131,7 +137,7 @@
     window.requestAnimationFrame(function () {
       if (window.Reveal && window.Reveal.layout) window.Reveal.layout();
       fitAllSlideContent();
-      if (document.querySelector(".reveal.overview")) layoutOverviewGrid();
+      if (document.querySelector(SELECTORS.overviewReveal)) layoutOverviewGrid();
     });
   }
 
@@ -302,19 +308,19 @@
   function applyBulletMode(mode) {
     var selected = mode || "item";
     document.body.dataset.slideBullets = selected;
-    getSlideSections().forEach(function (section) {
+    Slides.all().forEach(function (section) {
       applyBulletModeToSlide(section, selected);
     });
-    syncSelectValue("[data-slide-bullets]", selected);
+    Preferences.syncSelect("[data-slide-bullets]", selected);
 
     if (window.Reveal && window.Reveal.sync) window.Reveal.sync();
     fitAllSlideContent();
 
-    writePreference(STORAGE_KEYS.bullets, selected);
+    Preferences.write(STORAGE_KEYS.bullets, selected);
   }
 
   function getStoredBulletMode() {
-    return readPreference(STORAGE_KEYS.bullets, document.body.dataset.slideBulletsDefault || "item");
+    return Preferences.read(STORAGE_KEYS.bullets, document.body.dataset.slideBulletsDefault || "item");
   }
 
   function applyCurrentSectionHighlight(content, sectionTitle) {
@@ -435,7 +441,7 @@
   }
 
   function fitAllSlideContent() {
-    getSlideSections().forEach(fitSlideContent);
+    Slides.all().forEach(fitSlideContent);
   }
 
   function scheduleFitAllSlideContent(delay) {
@@ -468,7 +474,7 @@
 
   function enhanceSlides() {
     var meta = getDeckMeta();
-    var sections = getSlideSections();
+    var sections = Slides.all();
     var total = sections.length;
     var currentSectionTitle = meta.category;
     deckState.total = total;
@@ -555,7 +561,7 @@
     tray.setAttribute("aria-label", "Slide thumbnails");
     grid.className = "slide-thumbnail-grid";
 
-    getSlideSections().forEach(function (section, index) {
+    Slides.all().forEach(function (section, index) {
       var button = document.createElement("button");
       var number = document.createElement("span");
       var title = document.createElement("span");
@@ -579,11 +585,11 @@
     });
 
     tray.appendChild(grid);
-    document.querySelector(".reveal").insertAdjacentElement("afterend", tray);
+    document.querySelector(SELECTORS.reveal).insertAdjacentElement("afterend", tray);
   }
 
   function syncThumbnailState() {
-    var current = getCurrentSlideIndex();
+    var current = Slides.currentIndex();
     document.querySelectorAll(SELECTORS.thumbnail).forEach(function (button) {
       var active = Number(button.dataset.slideIndex) === current;
       button.classList.toggle("is-active", active);
@@ -592,7 +598,7 @@
   }
 
   function getOverviewSpacer() {
-    var reveal = document.querySelector(".reveal");
+    var reveal = document.querySelector(SELECTORS.reveal);
     var spacer = document.querySelector(".overview-grid-spacer");
     if (!reveal) return null;
 
@@ -617,8 +623,8 @@
 
   function layoutOverviewGrid() {
     var reveal = document.querySelector(SELECTORS.reveal);
-    var slides = document.querySelector(".reveal .slides");
-    var sections = getSlideSections();
+    var slides = document.querySelector(SELECTORS.reveal + " .slides");
+    var sections = Slides.all();
     if (!reveal || !slides || !sections.length || !reveal.classList.contains("overview")) return;
 
     document.body.classList.add("is-overview");
@@ -667,7 +673,7 @@
 
   function resetOverviewGrid() {
     var reveal = document.querySelector(SELECTORS.reveal);
-    var slides = document.querySelector(".reveal .slides");
+    var slides = document.querySelector(SELECTORS.reveal + " .slides");
     var spacer = document.querySelector(".overview-grid-spacer");
 
     if (reveal) reveal.classList.remove("overview-grid");
@@ -684,7 +690,7 @@
       slides.style.transform = "";
     }
 
-    getSlideSections().forEach(function (section) {
+    Slides.all().forEach(function (section) {
       if (!section.dataset.overviewGrid) return;
       section.style.width = "";
       section.style.height = "";
@@ -705,7 +711,7 @@
     });
     window.Reveal.on("overviewhidden", resetOverviewGrid);
     window.addEventListener("resize", function () {
-      if (document.querySelector(".reveal.overview")) layoutOverviewGrid();
+      if (document.querySelector(SELECTORS.overviewReveal)) layoutOverviewGrid();
     });
   }
 
@@ -713,21 +719,21 @@
     var link = document.querySelector(".deck-home");
     if (!link) return;
 
-    var lang = readPreference("site-language", "zh");
+    var lang = Preferences.read("site-language", "zh");
 
     link.textContent = lang === "en" ? link.dataset.i18nEn : link.dataset.i18nZh;
   }
 
   function getStoredTheme() {
-    return readPreference(STORAGE_KEYS.theme, document.body.dataset.slideThemeDefault || "paper");
+    return Preferences.read(STORAGE_KEYS.theme, document.body.dataset.slideThemeDefault || "paper");
   }
 
   function applyTheme(theme) {
     var selected = theme || "paper";
     document.body.dataset.slideTheme = selected;
-    syncSelectValue("[data-slide-theme-select]", selected);
+    Preferences.syncSelect("[data-slide-theme-select]", selected);
 
-    writePreference(STORAGE_KEYS.theme, selected);
+    Preferences.write(STORAGE_KEYS.theme, selected);
   }
 
   function normalizeAspect(value) {
@@ -735,20 +741,20 @@
   }
 
   function getStoredAspect() {
-    return normalizeAspect(readPreference(STORAGE_KEYS.aspect, document.body.dataset.slideAspectDefault || "16:9"));
+    return normalizeAspect(Preferences.read(STORAGE_KEYS.aspect, document.body.dataset.slideAspectDefault || "16:9"));
   }
 
   function applyAspect(aspect) {
     var selected = normalizeAspect(aspect);
     document.body.dataset.slideAspect = selected;
-    syncSelectValue("[data-slide-aspect-select]", selected);
+    Preferences.syncSelect("[data-slide-aspect-select]", selected);
 
     if (window.Reveal && window.Reveal.layout) window.Reveal.layout();
     syncViewportMode();
     fitAllSlideContent();
-    if (document.querySelector(".reveal.overview")) layoutOverviewGrid();
+    if (document.querySelector(SELECTORS.overviewReveal)) layoutOverviewGrid();
 
-    writePreference(STORAGE_KEYS.aspect, selected);
+    Preferences.write(STORAGE_KEYS.aspect, selected);
   }
 
   function setupAspectSwitcher() {
@@ -789,7 +795,7 @@
   }
 
   function getStoredColor(region) {
-    return readPreference("slide-" + region + "-color", getColorDefault(region));
+    return Preferences.read("slide-" + region + "-color", getColorDefault(region));
   }
 
   function applySlideColor(region, value) {
@@ -802,7 +808,7 @@
       select.value = selected;
     });
 
-    writePreference("slide-" + region + "-color", selected);
+    Preferences.write("slide-" + region + "-color", selected);
   }
 
   function setupColorSwitchers() {
@@ -818,7 +824,7 @@
   }
 
   function getStoredAutoplay() {
-    return readPreference(STORAGE_KEYS.autoplay, "0");
+    return Preferences.read(STORAGE_KEYS.autoplay, "0");
   }
 
   function applyAutoplay(value) {
@@ -831,7 +837,7 @@
       window.Reveal.configure({ autoSlide: interval });
     }
 
-    writePreference(STORAGE_KEYS.autoplay, String(interval));
+    Preferences.write(STORAGE_KEYS.autoplay, String(interval));
   }
 
   function getPdfExportUrl() {
@@ -870,8 +876,8 @@
   function syncSlideStatus() {
     var status = document.querySelector("[data-slide-status]");
     if (!status || !window.Reveal || !window.Reveal.getIndices) return;
-    var total = getSlideCount();
-    var current = getCurrentSlideIndex() + 1;
+    var total = Slides.count();
+    var current = Slides.currentIndex() + 1;
     deckState.currentIndex = current - 1;
     status.textContent = String(current) + " / " + String(total);
   }
@@ -897,7 +903,7 @@
 
   function toggleSettings(button, forceOpen) {
     var controls = button && button.closest(".deck-controls");
-    var panel = controls && controls.querySelector(".deck-settings-panel");
+    var panel = controls && controls.querySelector(SELECTORS.settingsPanel);
     if (!panel || !button) return;
 
     var open = typeof forceOpen === "boolean" ? forceOpen : panel.hasAttribute("hidden");
@@ -917,9 +923,9 @@
 
   function goToPreviousSlide() {
     if (!window.Reveal) return;
-    var current = getCurrentSlideIndex();
+    var current = Slides.currentIndex();
     if (current <= 0) {
-      goToSlide(getSlideCount() - 1);
+      goToSlide(Slides.count() - 1);
       return;
     }
     window.Reveal.prev();
@@ -928,8 +934,8 @@
   function goToNextSlide() {
     if (!window.Reveal) return;
 
-    var current = getCurrentSlideIndex();
-    var total = getSlideCount();
+    var current = Slides.currentIndex();
+    var total = Slides.count();
     if (current >= total - 1) {
       goToSlide(0);
       return;
@@ -941,7 +947,7 @@
   function goToSlide(index) {
     if (!window.Reveal || !window.Reveal.slide) return;
 
-    var nextIndex = normalizeSlideIndex(index);
+    var nextIndex = Slides.normalizeIndex(index);
     deckState.currentIndex = nextIndex;
     window.Reveal.slide(nextIndex);
     syncSlideHash(nextIndex);
@@ -951,7 +957,7 @@
 
   function navigateBySlideClick(event) {
     if (!window.Reveal || shouldIgnoreSlideClick(event)) return;
-    if (document.querySelector(".reveal.overview")) return;
+    if (document.querySelector(SELECTORS.overviewReveal)) return;
 
     var reveal = document.querySelector(SELECTORS.reveal);
     if (!reveal) return;
@@ -980,13 +986,13 @@
   }
 
   function handleOverviewGridClick(event) {
-    var reveal = document.querySelector(".reveal.overview");
+    var reveal = document.querySelector(SELECTORS.overviewReveal);
     if (!reveal || !window.Reveal || !window.Reveal.slide) return;
 
-    var section = event.target.closest("#deck-slides > section[data-overview-grid]");
+    var section = event.target.closest(SELECTORS.overviewSlide);
     if (!section) return;
 
-    var sections = getSlideSections();
+    var sections = Slides.all();
     var index = sections.indexOf(section);
     if (index < 0) return;
 
@@ -1005,8 +1011,8 @@
     if (event.target.closest("input, select, textarea, [contenteditable='true']")) return;
 
     var key = event.key;
-    var current = getCurrentSlideIndex();
-    var total = getSlideCount();
+    var current = Slides.currentIndex();
+    var total = Slides.count();
     var wantsPrevious = key === "ArrowLeft" || key === "ArrowUp" || key === "PageUp";
     var wantsNext = key === "ArrowRight" || key === "ArrowDown" || key === "PageDown" || key === " ";
 
