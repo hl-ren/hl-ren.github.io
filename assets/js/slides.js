@@ -646,7 +646,7 @@
   }
 
   function normalizeAspect(value) {
-    return value === "5:4" ? "5:4" : "16:9";
+    return value === "4:3" ? "4:3" : "16:9";
   }
 
   function getStoredAspect() {

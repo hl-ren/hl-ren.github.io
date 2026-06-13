@@ -28,11 +28,11 @@
   --slide-content-font: "Aptos", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
-.slides-body[data-slide-aspect="5:4"] {
-  --slide-print-width: 1250px;
-  --slide-print-height: 1000px;
-  --slide-aspect-width: 5;
-  --slide-aspect-height: 4;
+.slides-body[data-slide-aspect="4:3"] {
+  --slide-print-width: 1200px;
+  --slide-print-height: 900px;
+  --slide-aspect-width: 4;
+  --slide-aspect-height: 3;
 }
 
 .slides-body {
