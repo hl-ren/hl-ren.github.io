@@ -966,6 +966,70 @@
   font-size: 1.12em;
 }
 
+.slide-env {
+  position: relative;
+  margin: 0.75em 0;
+  padding: 0.78em 0.9em 0.72em;
+  border: 1px solid var(--slide-line);
+  border-left: 0.24em solid var(--slide-accent);
+  border-radius: 8px;
+  background: var(--slide-panel);
+  color: var(--slide-ink);
+  font-size: 0.82em;
+  line-height: 1.32;
+}
+
+.slide-env > :first-child {
+  margin-top: 0;
+}
+
+.slide-env > :last-child {
+  margin-bottom: 0;
+}
+
+.slide-env-title {
+  display: block;
+  margin-bottom: 0.35em;
+  color: var(--slide-heading);
+  font-family: var(--slide-display-font);
+  font-weight: 850;
+}
+
+.slide-env.definition {
+  border-left-color: #2563eb;
+}
+
+.slide-env.theorem {
+  border-left-color: #7c3aed;
+}
+
+.slide-env.proof {
+  border-left-color: #475569;
+  background: var(--slide-soft);
+}
+
+.slide-env.example {
+  border-left-color: #0f766e;
+}
+
+.slide-env.remark,
+.slide-env.note {
+  border-left-color: #b45309;
+}
+
+.slide-env.warning {
+  border-left-color: #dc2626;
+}
+
+.slide-env.compact {
+  font-size: 0.72em;
+}
+
+.slide-auto-columns,
+.slide-columns {
+  font-size: 0.82em;
+}
+
 .slide-note {
   margin-top: 18px;
   color: var(--slide-muted);

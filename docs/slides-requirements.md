@@ -333,6 +333,18 @@ $$
 
 Use MathJax or Reveal.js math plugin.
 
+Supported authoring patterns:
+
+- Markdown headings, lists, links, block quotes, tables, and fenced code blocks.
+- Inline math with `\( ... \)` or `$ ... $`.
+- Display math with `\[ ... \]` or `$$ ... $$`.
+- MathJax environments such as `aligned`, `cases`, `matrix`, `bmatrix`, sums, integrals, and Greek symbols.
+- HTML blocks with `markdown="1"` for theorem, proof, remark, warning, example, and note-style slide environments.
+
+This is not a full LaTeX or Beamer compiler. LaTeX math is supported through MathJax, while Beamer-style commands should be represented with Markdown/HTML slide blocks.
+
+For HTML slide blocks, prefer `$...$` and `$$...$$` for math. Keep Markdown tables in normal Markdown slide content rather than inside an HTML block.
+
 ## Visual Requirements
 
 Slides pages should not use the normal article reading layout.

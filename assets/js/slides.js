@@ -334,9 +334,14 @@
     var sectionRect = section.getBoundingClientRect();
     var sectionWidth = section.clientWidth || sectionRect.width || 1280;
     var sectionHeight = section.clientHeight || sectionRect.height || 720;
+    var hasColumns = Boolean(content.querySelector(".slide-columns, .slide-auto-columns"));
     var pageBase = Math.min(sectionWidth / 27.826, sectionHeight / 15.652);
     var maxRatio = section.classList.contains("title-slide") ? 0.075 : 0.064;
     var minRatio = 0.025;
+    if (hasColumns) {
+      maxRatio = Math.min(maxRatio, 0.044);
+      pageBase *= 0.72;
+    }
     var maxSize = Math.min(
       getSlideTitleFontSize(section),
       sectionHeight * maxRatio,
