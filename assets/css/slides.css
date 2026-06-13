@@ -262,6 +262,11 @@
   background: var(--slide-bg);
 }
 
+.slides-body.is-fullscreen,
+.slides-body.is-fullscreen.reveal-viewport {
+  background: #000000;
+}
+
 .reveal {
   height: calc(100vh - var(--slide-thumbnails-height));
 }
