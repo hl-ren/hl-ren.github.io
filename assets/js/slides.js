@@ -182,8 +182,36 @@
     target.appendChild(section);
   }
 
+  function isSlideCommentText(text) {
+    var trimmed = String(text || "").trim();
+    return /^%%(?:\s|$|\{)/.test(trimmed);
+  }
+
+  function removeRenderedSlideComments(root) {
+    var inBlock = false;
+
+    Array.prototype.slice.call(root.querySelectorAll("p, li, blockquote")).forEach(function (node) {
+      var text = node.textContent.trim();
+
+      if (inBlock) {
+        node.remove();
+        if (/\}%%\s*$/.test(text)) inBlock = false;
+        return;
+      }
+
+      if (/^%%\{/.test(text)) {
+        if (!/\}%%\s*$/.test(text)) inBlock = true;
+        node.remove();
+        return;
+      }
+
+      if (isSlideCommentText(text)) node.remove();
+    });
+  }
+
   function splitSlides() {
     var section = document.createElement("section");
+    removeRenderedSlideComments(source.content);
     var nodes = Array.prototype.slice.call(source.content.childNodes);
 
     nodes.forEach(function (node) {

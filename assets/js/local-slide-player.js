@@ -341,8 +341,33 @@
     return attrs;
   }
 
+  function stripSlideComments(markdown) {
+    var output = [];
+    var inBlock = false;
+
+    String(markdown || "").split(/\r?\n/).forEach(function (line) {
+      var trimmed = line.trim();
+
+      if (inBlock) {
+        if (/\}%%\s*$/.test(trimmed)) inBlock = false;
+        return;
+      }
+
+      if (/^%%\{/.test(trimmed)) {
+        if (!/\}%%\s*$/.test(trimmed)) inBlock = true;
+        return;
+      }
+
+      if (/^%%(?:\s|$)/.test(trimmed)) return;
+
+      output.push(line);
+    });
+
+    return output.join("\n");
+  }
+
   function preprocessMarkdown(markdown) {
-    return String(markdown || "").replace(
+    return stripSlideComments(markdown).replace(
       /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)\s*\{:\s*([^}]*)\}/g,
       function (_, alt, src, title, attrSource) {
         var attrs = parseKramdownAttrs(attrSource);
