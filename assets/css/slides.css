@@ -336,6 +336,21 @@
   max-height: var(--slide-print-height) !important;
 }
 
+.slides-body.is-print-pdf .reveal .slides .pdf-page > section {
+  display: grid !important;
+  grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 60px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--slide-panel) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.slides-body.is-print-pdf .reveal .slides .pdf-page > section.title-slide {
+  grid-template-rows: minmax(0, 1fr) !important;
+}
+
 .slide-thumbnail-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
@@ -390,7 +405,8 @@
   white-space: nowrap;
 }
 
-.reveal .slides > section {
+.reveal .slides > section,
+.reveal .pdf-page > section {
   display: grid !important;
   grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 60px;
   width: 100%;
@@ -403,7 +419,8 @@
   overflow: hidden;
 }
 
-.reveal .slides > section.title-slide {
+.reveal .slides > section.title-slide,
+.reveal .pdf-page > section.title-slide {
   grid-template-rows: minmax(0, 1fr);
 }
 
@@ -999,13 +1016,15 @@
     gap: 14px;
   }
 
-  .reveal .slides > section {
+  .reveal .slides > section,
+  .reveal .pdf-page > section {
     grid-template-rows: var(--slide-topbar-height) minmax(0, 1fr) 51px;
     padding: 0;
     border-radius: 0;
   }
 
-  .reveal .slides > section.title-slide {
+  .reveal .slides > section.title-slide,
+  .reveal .pdf-page > section.title-slide {
     grid-template-rows: minmax(0, 1fr);
   }
 
