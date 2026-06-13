@@ -407,7 +407,7 @@
     var hasDenseContent = hasDenseSlideContent(content);
     var pageBase = Math.min(sectionWidth / 27.826, sectionHeight / 15.652);
     var maxRatio = section.classList.contains("title-slide") ? 0.075 : 0.064;
-    var minRatio = hasDenseContent ? 0.018 : 0.025;
+    var minRatio = hasDenseContent ? 0.012 : 0.021;
     if (hasColumns) {
       maxRatio = Math.min(maxRatio, 0.044);
       pageBase *= 0.72;
@@ -417,7 +417,7 @@
       sectionHeight * maxRatio,
       pageBase
     );
-    var minSize = Math.max(hasDenseContent ? 10 : 14, Math.min(sectionHeight * minRatio, maxSize));
+    var minSize = Math.max(hasDenseContent ? 7 : 11, Math.min(sectionHeight * minRatio, maxSize));
     var low = minSize;
     var high = maxSize;
     var best = minSize;
@@ -427,7 +427,7 @@
     if (contentFits(content)) {
       best = high;
     } else {
-      for (var i = 0; i < 9; i += 1) {
+      for (var i = 0; i < 12; i += 1) {
         var mid = (low + high) / 2;
         content.style.fontSize = String(mid) + "px";
         if (contentFits(content)) {
@@ -439,7 +439,12 @@
       }
     }
 
-    content.style.fontSize = String(Math.floor(best * 10) / 10) + "px";
+    best = Math.floor(best * 10) / 10;
+    content.style.fontSize = String(best) + "px";
+    for (var shrink = 0; shrink < 8 && !contentFits(content) && best > minSize; shrink += 1) {
+      best = Math.max(minSize, Math.floor((best * 0.96) * 10) / 10);
+      content.style.fontSize = String(best) + "px";
+    }
     content.classList.toggle("is-overflowing", !contentFits(content));
     section.dataset.contentFontSize = content.style.fontSize;
   }
