@@ -750,6 +750,7 @@
       button.textContent = active ? button.dataset.exitLabel : button.dataset.fullscreenLabel;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
+      button.setAttribute("aria-label", active ? button.dataset.exitLabel : button.dataset.fullscreenLabel);
     });
     syncViewportMode();
   }
@@ -873,10 +874,16 @@
       }
 
       if (
-        document.fullscreenElement &&
+        (document.fullscreenElement || isHandheldViewport()) &&
         !event.target.closest("button, a, input, select, textarea, label, .deck-controls, .deck-settings-panel")
       ) {
         var revealRect = document.querySelector(".reveal").getBoundingClientRect();
+        var insideReveal = event.clientX >= revealRect.left &&
+          event.clientX <= revealRect.right &&
+          event.clientY >= revealRect.top &&
+          event.clientY <= revealRect.bottom;
+        if (!insideReveal) return;
+
         if (event.clientX < revealRect.left + revealRect.width / 2) {
           window.Reveal.prev();
         } else {
