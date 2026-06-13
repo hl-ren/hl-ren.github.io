@@ -855,7 +855,12 @@
         document.fullscreenElement &&
         !event.target.closest("button, a, input, select, textarea, label, .deck-controls, .deck-settings-panel")
       ) {
-        window.Reveal.next();
+        var revealRect = document.querySelector(".reveal").getBoundingClientRect();
+        if (event.clientX < revealRect.left + revealRect.width / 2) {
+          window.Reveal.prev();
+        } else {
+          window.Reveal.next();
+        }
       }
     });
 
