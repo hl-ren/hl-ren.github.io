@@ -1005,12 +1005,34 @@
 }
 
 .equation-box {
+  padding: 0.18em 0.28em;
+  border-radius: 8px;
   color: var(--slide-heading);
+  line-height: 1.05;
   text-align: center;
 }
 
+.equation-box p {
+  margin: 0.04em 0;
+}
+
+.slide-content mjx-container[display="true"] {
+  margin: 0.18em 0 !important;
+}
+
 .equation-box mjx-container {
-  font-size: 1.12em;
+  font-size: 0.78em;
+  line-height: 1;
+  margin: 0.02em 0 !important;
+}
+
+.equation-box mjx-container[display="true"] {
+  margin: 0.02em 0 !important;
+}
+
+.slide-auto-columns mjx-container[display="true"],
+.slide-columns mjx-container[display="true"] {
+  font-size: 0.84em;
 }
 
 .slide-env {
