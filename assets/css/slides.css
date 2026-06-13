@@ -3,6 +3,9 @@
   --slide-thumbnails-height: 142px;
   --slide-print-width: 1280px;
   --slide-print-height: 720px;
+  --slide-aspect-width: 16;
+  --slide-aspect-height: 9;
+  --slide-stage-scale: 1;
   --slide-ink: #1f2523;
   --slide-muted: #69716d;
   --slide-accent: #0f766e;
@@ -267,6 +270,37 @@
 
 .slides-body.is-overview .reveal {
   height: 100vh;
+}
+
+.slides-body.is-handheld:not(.is-overview):not(.is-export-pdf):not(.is-print-pdf) {
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.slides-body.is-handheld:not(.is-overview):not(.is-export-pdf):not(.is-print-pdf) .slide-thumbnails {
+  display: none;
+}
+
+.slides-body.is-handheld:not(.is-overview):not(.is-export-pdf):not(.is-print-pdf) .reveal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: var(--slide-print-width);
+  height: var(--slide-print-height);
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  transform: translate(-50%, -50%) scale(var(--slide-stage-scale, 1));
+  transform-origin: center center;
+}
+
+.slides-body.is-handheld-portrait:not(.is-overview):not(.is-export-pdf):not(.is-print-pdf) .reveal {
+  transform: translate(-50%, -50%) rotate(90deg) scale(var(--slide-stage-scale, 1));
+}
+
+.slides-body.is-handheld:not(.is-export-pdf):not(.is-print-pdf) .deck-controls {
+  display: none;
 }
 
 .slides-body.is-print-pdf .reveal {

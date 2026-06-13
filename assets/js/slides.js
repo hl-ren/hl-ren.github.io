@@ -30,6 +30,50 @@
   if (isRevealPrintPage()) document.body.classList.add("is-print-pdf");
   if (isPdfExportPage()) document.body.classList.add("is-export-pdf");
 
+  function isHandheldViewport() {
+    return window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(hover: none) and (max-width: 1100px)").matches;
+  }
+
+  function syncViewportMode() {
+    var handheld = isHandheldViewport();
+    var portrait = handheld && window.innerHeight > window.innerWidth;
+    var viewportWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+    var viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    var stageScale = 1;
+
+    if (handheld) {
+      stageScale = portrait ?
+        Math.min(viewportWidth / 720, viewportHeight / 1280) :
+        Math.min(viewportWidth / 1280, viewportHeight / 720);
+      stageScale = Math.max(0.1, Math.min(1, stageScale));
+    }
+
+    document.body.classList.toggle("is-handheld", handheld);
+    document.body.classList.toggle("is-handheld-portrait", portrait);
+    document.body.style.setProperty("--slide-stage-scale", String(stageScale));
+
+    window.requestAnimationFrame(function () {
+      if (window.Reveal && window.Reveal.layout) window.Reveal.layout();
+      fitAllSlideContent();
+      if (document.querySelector(".reveal.overview")) layoutOverviewGrid();
+    });
+  }
+
+  function lockLandscapeOrientation() {
+    if (!screen.orientation || !screen.orientation.lock) return;
+    if (!document.fullscreenElement) return;
+
+    screen.orientation.lock("landscape").catch(function () {});
+  }
+
+  function unlockOrientation() {
+    if (!screen.orientation || !screen.orientation.unlock) return;
+    try {
+      screen.orientation.unlock();
+    } catch (error) {}
+  }
+
   function hasContent(section) {
     return section.textContent.trim() || section.querySelector("img, video, iframe, table, pre");
   }
@@ -676,11 +720,17 @@
   function syncFullscreenButton() {
     var active = Boolean(document.fullscreenElement);
     document.body.classList.toggle("is-fullscreen", active);
+    if (active) {
+      lockLandscapeOrientation();
+    } else {
+      unlockOrientation();
+    }
     document.querySelectorAll("[data-slide-fullscreen]").forEach(function (button) {
       button.textContent = active ? button.dataset.exitLabel : button.dataset.fullscreenLabel;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
     });
+    syncViewportMode();
   }
 
   function syncSlideStatus() {
@@ -789,7 +839,9 @@
         if (document.fullscreenElement) {
           document.exitFullscreen().catch(function () {});
         } else {
-          document.documentElement.requestFullscreen().catch(function () {});
+          document.documentElement.requestFullscreen()
+            .then(lockLandscapeOrientation)
+            .catch(function () {});
         }
         return;
       }
@@ -797,6 +849,13 @@
       if (event.target.closest("[data-slide-export-pdf]")) {
         openPdfExport();
         return;
+      }
+
+      if (
+        document.fullscreenElement &&
+        !event.target.closest("button, a, input, select, textarea, label, .deck-controls, .deck-settings-panel")
+      ) {
+        window.Reveal.next();
       }
     });
 
@@ -821,8 +880,10 @@
       window.Reveal.on("ready", syncThumbnailState);
       window.Reveal.on("ready", fitAllSlideContent);
     }
-    window.addEventListener("resize", fitAllSlideContent);
+    window.addEventListener("resize", syncViewportMode);
+    window.addEventListener("orientationchange", syncViewportMode);
     syncFullscreenButton();
+    syncViewportMode();
     syncSlideStatus();
     syncThumbnailState();
     applyTheme(getStoredTheme());
@@ -902,6 +963,7 @@
   localizeDeckLink();
   setupThemeSwitcher();
   setupColorSwitchers();
+  syncViewportMode();
 
   Reveal.initialize({
     hash: true,
