@@ -624,18 +624,20 @@
   background: var(--slide-bg);
 }
 
+html.is-slide-fullscreen,
+html.is-slide-fullscreen body,
+html:fullscreen,
+html:fullscreen body,
+body:fullscreen,
 .slides-body.is-fullscreen,
-.slides-body.is-fullscreen.reveal-viewport {
-  background: #000000;
+.slides-body.is-fullscreen.reveal-viewport,
+.slides-body.is-fullscreen .reveal,
+.slides-body.is-fullscreen .reveal-viewport {
+  background: #000000 !important;
 }
 
 :fullscreen {
-  background: #000000;
-}
-
-.slides-body.is-fullscreen .reveal,
-.slides-body.is-fullscreen .reveal-viewport {
-  background: #000000;
+  background: #000000 !important;
 }
 
 .reveal {

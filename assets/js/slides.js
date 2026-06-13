@@ -1047,6 +1047,7 @@
   function syncFullscreenButton() {
     var active = Boolean(document.fullscreenElement);
     document.body.classList.toggle("is-fullscreen", active);
+    document.documentElement.classList.toggle("is-slide-fullscreen", active);
     if (active) {
       lockLandscapeOrientation();
     } else {
