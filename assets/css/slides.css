@@ -232,35 +232,37 @@
 .deck-controls button[data-slide-fullscreen] {
   display: inline-grid;
   place-items: center;
-  width: 36px;
-  min-width: 36px;
+  width: 42px;
+  min-width: 42px;
+  min-height: 36px;
   padding: 0;
-  border-color: transparent;
-  background: transparent;
+  border-color: var(--slide-line);
+  background: var(--slide-panel);
   font-size: 0;
 }
 
 .deck-controls button[data-slide-fullscreen]::before {
   content: "";
   display: block;
-  width: 18px;
-  height: 13px;
-  border: 2px dashed currentColor;
-  border-radius: 2px;
+  width: 28px;
+  height: 20px;
+  border: 3px dashed currentColor;
+  border-radius: 3px;
 }
 
 .deck-controls button[data-slide-settings-toggle] {
   display: inline-grid;
   place-items: center;
-  width: 36px;
-  min-width: 36px;
+  width: 42px;
+  min-width: 42px;
+  min-height: 36px;
   padding: 0;
   font-size: 0;
 }
 
 .deck-controls button[data-slide-settings-toggle]::before {
   content: "\2699";
-  font-size: 18px;
+  font-size: 30px;
   line-height: 1;
 }
 
@@ -270,8 +272,8 @@
 }
 
 .deck-controls button[data-slide-fullscreen].is-active {
-  background: transparent;
-  color: inherit;
+  background: var(--slide-panel);
+  color: var(--slide-ink);
 }
 
 .deck-controls label {
