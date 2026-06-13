@@ -50,6 +50,14 @@
 }
 
 .local-player-body:not(.local-deck-loaded) {
+  --slide-ink: #202428;
+  --slide-muted: #677078;
+  --slide-accent: #32383f;
+  --slide-heading: #22272d;
+  --slide-line: #d8dee4;
+  --slide-bg: #f5f6f7;
+  --slide-panel: #ffffff;
+  --slide-soft: #f0f2f3;
   overflow: auto;
 }
 
@@ -58,12 +66,26 @@
   display: none;
 }
 
+.local-player-body.local-deck-loaded {
+  background: #000000 !important;
+}
+
+.local-player-body.local-deck-loaded .local-player-shell {
+  display: none !important;
+}
+
+.local-player-body.local-deck-loaded .reveal,
+.local-player-body.local-deck-loaded.reveal-viewport,
+.local-player-body.local-deck-loaded .reveal-viewport {
+  background: #000000 !important;
+}
+
 .local-player-shell {
   min-height: 100vh;
   display: grid;
   align-content: start;
-  gap: 14px;
-  padding: 28px;
+  gap: 12px;
+  padding: 20px;
   background: var(--slide-bg);
 }
 
@@ -72,8 +94,8 @@
   width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  gap: 16px;
-  padding: 20px;
+  gap: 13px;
+  padding: 16px;
   border: 1px solid var(--slide-line);
   border-radius: 10px;
   background: var(--slide-panel);
@@ -82,8 +104,8 @@
 
 .local-player-language {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 14px;
+  right: 14px;
   display: inline-flex;
   gap: 4px;
   padding: 3px;
@@ -93,15 +115,15 @@
 }
 
 .local-player-language button {
-  min-width: 34px;
-  min-height: 28px;
+  min-width: 31px;
+  min-height: 25px;
   padding: 2px 8px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--slide-muted);
   font: inherit;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
   cursor: pointer;
 }
@@ -113,31 +135,26 @@
 
 .local-player-card.is-dragging {
   border-color: var(--slide-accent);
-  box-shadow: 0 18px 52px rgba(15, 118, 110, 0.2);
+  box-shadow: 0 18px 52px rgba(32, 36, 40, 0.14);
 }
 
 .local-player-kicker {
-  margin: 0 0 8px;
-  color: var(--slide-accent);
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  display: none !important;
 }
 
 .local-player-card h1 {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: var(--slide-ink);
   font-family: var(--slide-display-font);
-  font-size: 28px;
-  line-height: 1.18;
+  font-size: 22px;
+  line-height: 1.15;
 }
 
 .local-player-card p {
   margin: 0;
   color: var(--slide-muted);
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .local-player-card code {
@@ -148,15 +165,15 @@
 .local-player-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .local-player-actions label {
   display: grid;
-  grid-template-columns: 160px minmax(0, 1fr) auto;
+  grid-template-columns: 138px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
+  gap: 10px;
+  padding: 10px 12px;
   border: 1px solid var(--slide-line);
   border-radius: 8px;
   background: var(--slide-soft);
@@ -164,18 +181,20 @@
 
 .local-player-actions span {
   color: var(--slide-ink);
-  font-weight: 850;
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .local-player-actions input {
   width: 100%;
   color: var(--slide-muted);
   font: inherit;
+  font-size: 14px;
 }
 
 .local-player-actions strong {
   color: var(--slide-heading);
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -183,18 +202,19 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 10px;
 }
 
 .local-player-footer button {
-  min-height: 40px;
-  padding: 6px 16px;
+  min-height: 34px;
+  padding: 5px 13px;
   border: 1px solid var(--slide-accent);
   border-radius: 6px;
   background: var(--slide-accent);
   color: var(--slide-bg);
   font: inherit;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 850;
   cursor: pointer;
 }
 
@@ -291,6 +311,15 @@
 
 .local-preview-body.local-player-body:not(.local-deck-loaded) .deck-controls[data-slide-controls-template] {
   display: none;
+}
+
+.local-preview-body.local-deck-loaded .deck-controls,
+.local-preview-body.local-deck-loaded .slide-thumbnails {
+  display: none !important;
+}
+
+.local-preview-body.local-deck-loaded .reveal {
+  height: 100vh !important;
 }
 
 @media (max-width: 720px) {

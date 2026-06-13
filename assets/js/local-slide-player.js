@@ -614,6 +614,9 @@
   }
 
   function showPlayer() {
+    window.clearTimeout(previewTimer);
+    pendingPreviewPayload = null;
+    if (ui.previewFrame) ui.previewFrame.src = "about:blank";
     ui.shell.hidden = true;
     document.body.classList.add("local-deck-loaded");
   }
