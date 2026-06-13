@@ -385,8 +385,23 @@
     return Number.isFinite(size) ? size : 46;
   }
 
-  function contentFits(content) {
-    return content.scrollHeight <= content.clientHeight + 2 && content.scrollWidth <= content.clientWidth + 2;
+  function contentFits(content, safetyMargin) {
+    var margin = safetyMargin || 0;
+    if (margin > 0) {
+      var contentRect = content.getBoundingClientRect();
+      var scale = contentRect.height / Math.max(content.clientHeight, 1);
+      var visualBottom = 0;
+      Array.prototype.slice.call(content.children).forEach(function (child) {
+        var rect = child.getBoundingClientRect();
+        if (rect.width || rect.height) visualBottom = Math.max(visualBottom, rect.bottom);
+      });
+
+      return visualBottom <= contentRect.bottom - margin * scale &&
+        content.scrollWidth <= content.clientWidth + 2;
+    }
+
+    return content.scrollHeight <= content.clientHeight - margin &&
+      content.scrollWidth <= content.clientWidth + 2;
   }
 
   function hasDenseSlideContent(content) {
@@ -405,6 +420,7 @@
     var sectionHeight = section.clientHeight || sectionRect.height || 720;
     var hasColumns = Boolean(content.querySelector(".slide-columns, .slide-auto-columns"));
     var hasDenseContent = hasDenseSlideContent(content);
+    var safetyMargin = section.classList.contains("media-list-slide") ? Math.max(12, sectionHeight * 0.024) : 0;
     var pageBase = Math.min(sectionWidth / 27.826, sectionHeight / 15.652);
     var maxRatio = section.classList.contains("title-slide") ? 0.075 : 0.064;
     var minRatio = hasDenseContent ? 0.012 : 0.021;
@@ -424,13 +440,13 @@
 
     content.classList.remove("is-overflowing");
     content.style.fontSize = String(high) + "px";
-    if (contentFits(content)) {
+    if (contentFits(content, safetyMargin)) {
       best = high;
     } else {
       for (var i = 0; i < 12; i += 1) {
         var mid = (low + high) / 2;
         content.style.fontSize = String(mid) + "px";
-        if (contentFits(content)) {
+        if (contentFits(content, safetyMargin)) {
           best = mid;
           low = mid;
         } else {
@@ -441,11 +457,11 @@
 
     best = Math.floor(best * 10) / 10;
     content.style.fontSize = String(best) + "px";
-    for (var shrink = 0; shrink < 8 && !contentFits(content) && best > minSize; shrink += 1) {
-      best = Math.max(minSize, Math.floor((best * 0.96) * 10) / 10);
+    for (var shrink = 0; shrink < 12 && !contentFits(content, safetyMargin) && best > minSize; shrink += 1) {
+      best = Math.max(minSize, Math.floor((best * 0.94) * 10) / 10);
       content.style.fontSize = String(best) + "px";
     }
-    content.classList.toggle("is-overflowing", !contentFits(content));
+    content.classList.toggle("is-overflowing", !contentFits(content, safetyMargin));
     section.dataset.contentFontSize = content.style.fontSize;
   }
 
@@ -519,6 +535,8 @@
         if (isSectionSlide) applyCurrentSectionHighlight(content, slideTitle);
       }
 
+      var hasMediaAndList = Boolean(content.querySelector("img, video") && content.querySelector("ul, ol"));
+
       var topbarTitle = isSectionSlide ? "Outline" : slideTitle;
       var topbar = document.createElement("div");
       topbar.className = "slide-topbar";
@@ -557,6 +575,7 @@
       section.classList.toggle("section-slide", isSectionSlide);
       section.classList.toggle("content-slide", !isTitleSlide && !isSectionSlide && !isEndSlide);
       section.classList.toggle("end-slide", isEndSlide);
+      section.classList.toggle("media-list-slide", !isTitleSlide && !isSectionSlide && !isEndSlide && hasMediaAndList);
       section.appendChild(topbar);
       section.appendChild(content);
       section.appendChild(footer);
