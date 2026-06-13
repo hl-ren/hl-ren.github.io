@@ -277,20 +277,21 @@
 .deck-controls button[data-slide-settings-toggle] {
   display: inline-grid;
   place-items: center;
-  width: 42px;
-  min-width: 42px;
-  min-height: 34px;
+  width: 72px;
+  min-width: 72px;
+  min-height: 52px;
   padding: 0;
   font-size: 0;
+  touch-action: manipulation;
 }
 
 .deck-controls button[data-slide-settings-toggle]::before {
   content: "\2699";
   display: block;
-  width: 28px;
-  height: 28px;
-  font-size: 30px;
-  line-height: 28px;
+  width: 46px;
+  height: 46px;
+  font-size: 48px;
+  line-height: 42px;
   text-align: center;
 }
 
@@ -1248,6 +1249,10 @@
 }
 
 @media (max-width: 720px) {
+  .slides-body {
+    --slide-footer-height: 112px;
+  }
+
   .deck-controls {
     flex: 0 0 auto;
   }
@@ -1280,6 +1285,19 @@
     height: 82px;
     font-size: 82px;
     line-height: 76px;
+  }
+
+  .deck-controls button[data-slide-settings-toggle] {
+    width: 132px;
+    min-width: 132px;
+    min-height: 104px;
+  }
+
+  .deck-controls button[data-slide-settings-toggle]::before {
+    width: 76px;
+    height: 76px;
+    font-size: 78px;
+    line-height: 72px;
   }
 
   .deck-settings-panel {
