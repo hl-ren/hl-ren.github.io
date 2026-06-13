@@ -43,10 +43,10 @@
 
   function syncViewportMode() {
     var handheld = isHandheldViewport();
-    var portrait = handheld && window.innerHeight > window.innerWidth;
     var viewportWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
     var viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
     var fullscreen = Boolean(document.fullscreenElement);
+    var portrait = handheld && fullscreen && window.innerHeight > window.innerWidth;
     var thumbnailHeight = getCssPixelValue("--slide-thumbnails-height", 142);
     var thumbnailsVisible = !fullscreen && !handheld;
     var availableHeight = Math.max(1, viewportHeight - (thumbnailsVisible ? thumbnailHeight : 0));
