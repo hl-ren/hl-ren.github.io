@@ -1,6 +1,8 @@
 .slides-body {
   --slide-topbar-height: 142px;
   --slide-thumbnails-height: 142px;
+  --slide-print-width: 1280px;
+  --slide-print-height: 720px;
   --slide-ink: #1f2523;
   --slide-muted: #69716d;
   --slide-accent: #0f766e;
@@ -316,6 +318,22 @@
 .slides-body.is-print-pdf .deck-controls,
 .slides-body.is-print-pdf .slide-thumbnails {
   display: none !important;
+}
+
+.slides-body.is-print-pdf .pdf-page {
+  width: var(--slide-print-width) !important;
+  height: var(--slide-print-height) !important;
+  min-height: var(--slide-print-height) !important;
+  max-height: var(--slide-print-height) !important;
+  overflow: hidden !important;
+}
+
+.slides-body.is-print-pdf .pdf-page section,
+.slides-body.is-print-pdf .pdf-page .slide-background {
+  width: var(--slide-print-width) !important;
+  height: var(--slide-print-height) !important;
+  min-height: var(--slide-print-height) !important;
+  max-height: var(--slide-print-height) !important;
 }
 
 .slide-thumbnail-grid {
@@ -859,13 +877,44 @@
 }
 
 @media print {
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: var(--slide-print-width) !important;
+    height: var(--slide-print-height) !important;
+    margin: 0 !important;
+    background: var(--slide-bg) !important;
+  }
+
   .deck-controls,
   .slide-thumbnails {
     display: none !important;
   }
 
   .reveal {
-    height: 100vh !important;
+    width: var(--slide-print-width) !important;
+    height: var(--slide-print-height) !important;
+  }
+
+  .pdf-page {
+    width: var(--slide-print-width) !important;
+    height: var(--slide-print-height) !important;
+    min-height: var(--slide-print-height) !important;
+    max-height: var(--slide-print-height) !important;
+    overflow: hidden !important;
+    page-break-after: always;
+  }
+
+  .pdf-page section,
+  .pdf-page .slide-background {
+    width: var(--slide-print-width) !important;
+    height: var(--slide-print-height) !important;
+    min-height: var(--slide-print-height) !important;
+    max-height: var(--slide-print-height) !important;
   }
 }
 

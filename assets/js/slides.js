@@ -11,6 +11,14 @@
     }
   }
 
+  function shouldAutoPrintPdf() {
+    try {
+      return new URLSearchParams(window.location.search).has("download-pdf");
+    } catch (error) {
+      return window.location.search.indexOf("download-pdf") !== -1;
+    }
+  }
+
   if (isPdfExportPage()) document.body.classList.add("is-print-pdf");
 
   function hasContent(section) {
@@ -643,6 +651,7 @@
   function getPdfExportUrl() {
     var url = new URL(window.location.href);
     url.searchParams.set("print-pdf", "");
+    url.searchParams.set("download-pdf", "");
     url.hash = window.location.hash || "";
     return url.toString();
   }
@@ -821,6 +830,22 @@
     if (attempt < 20) window.setTimeout(function () { typesetMath(attempt + 1); }, 120);
   }
 
+  function autoPrintPdf(attempt) {
+    if (!isPdfExportPage() || !shouldAutoPrintPdf()) return;
+
+    var ready = document.querySelectorAll(".pdf-page").length > 0;
+    if (ready || attempt > 80) {
+      window.setTimeout(function () {
+        window.print();
+      }, 200);
+      return;
+    }
+
+    window.setTimeout(function () {
+      autoPrintPdf(attempt + 1);
+    }, 150);
+  }
+
   splitSlides();
   enhanceSlides();
   buildThumbnailTray();
@@ -840,11 +865,14 @@
     margin: 0,
     minScale: 0.2,
     maxScale: 1.6,
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1,
     plugins: window.RevealHighlight ? [window.RevealHighlight] : []
   }).then(function () {
     setupOverviewGrid();
     setupDeckControls();
     fitAllSlideContent();
     typesetMath(0);
+    autoPrintPdf(0);
   });
 })();
