@@ -577,7 +577,7 @@
       button.appendChild(title);
       button.addEventListener("click", function (event) {
         event.stopPropagation();
-        goToSlide(index);
+        Navigation.goTo(index);
         closeSettingsPanels();
         syncThumbnailState();
       });
@@ -882,14 +882,6 @@
     status.textContent = String(current) + " / " + String(total);
   }
 
-  function syncSlideHash(index) {
-    if (!window.history || !window.history.replaceState) return;
-
-    var hash = index > 0 ? "#/" + String(index) : "";
-    var nextUrl = window.location.pathname + window.location.search + hash;
-    window.history.replaceState(null, "", nextUrl);
-  }
-
   function closeSettingsPanels() {
     document.querySelectorAll(".deck-controls").forEach(function (controls) {
       var panel = controls.querySelector(SELECTORS.settingsPanel);
@@ -921,114 +913,122 @@
     ));
   }
 
-  function goToPreviousSlide() {
-    if (!window.Reveal) return;
-    var current = Slides.currentIndex();
-    if (current <= 0) {
-      goToSlide(Slides.count() - 1);
-      return;
-    }
-    window.Reveal.prev();
-  }
+  var Navigation = {
+    syncHash: function (index) {
+      if (!window.history || !window.history.replaceState) return;
 
-  function goToNextSlide() {
-    if (!window.Reveal) return;
+      var hash = index > 0 ? "#/" + String(index) : "";
+      var nextUrl = window.location.pathname + window.location.search + hash;
+      window.history.replaceState(null, "", nextUrl);
+    },
 
-    var current = Slides.currentIndex();
-    var total = Slides.count();
-    if (current >= total - 1) {
-      goToSlide(0);
-      return;
-    }
+    goTo: function (index) {
+      if (!window.Reveal || !window.Reveal.slide) return;
 
-    window.Reveal.next();
-  }
+      var nextIndex = Slides.normalizeIndex(index);
+      deckState.currentIndex = nextIndex;
+      window.Reveal.slide(nextIndex);
+      Navigation.syncHash(nextIndex);
+      syncSlideStatus();
+      syncThumbnailState();
+    },
 
-  function goToSlide(index) {
-    if (!window.Reveal || !window.Reveal.slide) return;
+    previous: function () {
+      if (!window.Reveal) return;
 
-    var nextIndex = Slides.normalizeIndex(index);
-    deckState.currentIndex = nextIndex;
-    window.Reveal.slide(nextIndex);
-    syncSlideHash(nextIndex);
-    syncSlideStatus();
-    syncThumbnailState();
-  }
+      if (Slides.currentIndex() <= 0) {
+        Navigation.goTo(Slides.count() - 1);
+        return;
+      }
 
-  function navigateBySlideClick(event) {
-    if (!window.Reveal || shouldIgnoreSlideClick(event)) return;
-    if (document.querySelector(SELECTORS.overviewReveal)) return;
+      window.Reveal.prev();
+    },
 
-    var reveal = document.querySelector(SELECTORS.reveal);
-    if (!reveal) return;
+    next: function () {
+      if (!window.Reveal) return;
 
-    var revealRect = reveal.getBoundingClientRect();
-    var insideReveal = event.clientX >= revealRect.left &&
-      event.clientX <= revealRect.right &&
-      event.clientY >= revealRect.top &&
-      event.clientY <= revealRect.bottom;
-    if (!insideReveal) return;
+      if (Slides.currentIndex() >= Slides.count() - 1) {
+        Navigation.goTo(0);
+        return;
+      }
 
-    if (event.clientX < revealRect.left + revealRect.width / 2) {
-      goToPreviousSlide();
-    } else {
-      goToNextSlide();
-    }
-  }
+      window.Reveal.next();
+    },
 
-  function closeOverview() {
-    if (!window.Reveal) return;
-    if (window.Reveal.toggleOverview) {
-      window.Reveal.toggleOverview(false);
-      return;
-    }
-    resetOverviewGrid();
-  }
+    closeOverview: function () {
+      if (!window.Reveal) return;
+      if (window.Reveal.toggleOverview) {
+        window.Reveal.toggleOverview(false);
+        return;
+      }
+      resetOverviewGrid();
+    },
 
-  function handleOverviewGridClick(event) {
-    var reveal = document.querySelector(SELECTORS.overviewReveal);
-    if (!reveal || !window.Reveal || !window.Reveal.slide) return;
+    handleSlideClick: function (event) {
+      if (!window.Reveal || shouldIgnoreSlideClick(event)) return;
+      if (document.querySelector(SELECTORS.overviewReveal)) return;
 
-    var section = event.target.closest(SELECTORS.overviewSlide);
-    if (!section) return;
+      var reveal = document.querySelector(SELECTORS.reveal);
+      if (!reveal) return;
 
-    var sections = Slides.all();
-    var index = sections.indexOf(section);
-    if (index < 0) return;
+      var revealRect = reveal.getBoundingClientRect();
+      var insideReveal = event.clientX >= revealRect.left &&
+        event.clientX <= revealRect.right &&
+        event.clientY >= revealRect.top &&
+        event.clientY <= revealRect.bottom;
+      if (!insideReveal) return;
 
-    event.preventDefault();
-    event.stopPropagation();
-    if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+      if (event.clientX < revealRect.left + revealRect.width / 2) {
+        Navigation.previous();
+      } else {
+        Navigation.next();
+      }
+    },
 
-    goToSlide(index);
-    closeOverview();
-  }
+    handleOverviewClick: function (event) {
+      var reveal = document.querySelector(SELECTORS.overviewReveal);
+      if (!reveal || !window.Reveal || !window.Reveal.slide) return;
 
-  function handleLoopingKeyboard(event) {
-    if (!window.Reveal || !window.Reveal.getIndices) return;
-    if (event.defaultPrevented) return;
-    if (event.metaKey || event.ctrlKey || event.altKey) return;
-    if (event.target.closest("input, select, textarea, [contenteditable='true']")) return;
+      var section = event.target.closest(SELECTORS.overviewSlide);
+      if (!section) return;
 
-    var key = event.key;
-    var current = Slides.currentIndex();
-    var total = Slides.count();
-    var wantsPrevious = key === "ArrowLeft" || key === "ArrowUp" || key === "PageUp";
-    var wantsNext = key === "ArrowRight" || key === "ArrowDown" || key === "PageDown" || key === " ";
+      var index = Slides.all().indexOf(section);
+      if (index < 0) return;
 
-    if (wantsPrevious && current <= 0) {
       event.preventDefault();
       event.stopPropagation();
-      goToSlide(total - 1);
-      return;
-    }
+      if (event.stopImmediatePropagation) event.stopImmediatePropagation();
 
-    if (wantsNext && current >= total - 1) {
-      event.preventDefault();
-      event.stopPropagation();
-      goToSlide(0);
+      Navigation.goTo(index);
+      Navigation.closeOverview();
+    },
+
+    handleLoopingKeyboard: function (event) {
+      if (!window.Reveal || !window.Reveal.getIndices) return;
+      if (event.defaultPrevented) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.target.closest("input, select, textarea, [contenteditable='true']")) return;
+
+      var key = event.key;
+      var current = Slides.currentIndex();
+      var total = Slides.count();
+      var wantsPrevious = key === "ArrowLeft" || key === "ArrowUp" || key === "PageUp";
+      var wantsNext = key === "ArrowRight" || key === "ArrowDown" || key === "PageDown" || key === " ";
+
+      if (wantsPrevious && current <= 0) {
+        event.preventDefault();
+        event.stopPropagation();
+        Navigation.goTo(total - 1);
+        return;
+      }
+
+      if (wantsNext && current >= total - 1) {
+        event.preventDefault();
+        event.stopPropagation();
+        Navigation.goTo(0);
+      }
     }
-  }
+  };
 
   function attachDeckControls() {
     var template = document.querySelector(SELECTORS.controlsTemplate);
@@ -1082,12 +1082,12 @@
 
     document.addEventListener("click", function (event) {
       if (event.target.closest("[data-slide-prev]")) {
-        goToPreviousSlide();
+        Navigation.previous();
         return;
       }
 
       if (event.target.closest("[data-slide-next]")) {
-        goToNextSlide();
+        Navigation.next();
         return;
       }
 
@@ -1117,11 +1117,11 @@
         return;
       }
 
-      navigateBySlideClick(event);
+      Navigation.handleSlideClick(event);
     });
 
-    document.addEventListener("click", handleOverviewGridClick, true);
-    document.addEventListener("keydown", handleLoopingKeyboard, true);
+    document.addEventListener("click", Navigation.handleOverviewClick, true);
+    document.addEventListener("keydown", Navigation.handleLoopingKeyboard, true);
 
     document.addEventListener("change", function (event) {
       var select = event.target.closest("[data-slide-autoplay]");
