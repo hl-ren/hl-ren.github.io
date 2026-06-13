@@ -518,7 +518,10 @@
       button.appendChild(title);
       button.addEventListener("click", function (event) {
         event.stopPropagation();
-        if (window.Reveal && window.Reveal.slide) window.Reveal.slide(index);
+        if (window.Reveal && window.Reveal.slide) {
+          window.Reveal.slide(index);
+          syncSlideHash(index);
+        }
         closeSettingsPanels();
         syncThumbnailState();
       });
@@ -854,6 +857,14 @@
     status.textContent = String(current) + " / " + String(total);
   }
 
+  function syncSlideHash(index) {
+    if (!window.history || !window.history.replaceState) return;
+
+    var hash = index > 0 ? "#/" + String(index) : "";
+    var nextUrl = window.location.pathname + window.location.search + hash;
+    window.history.replaceState(null, "", nextUrl);
+  }
+
   function closeSettingsPanels() {
     document.querySelectorAll(".deck-controls").forEach(function (controls) {
       var panel = controls.querySelector(".deck-settings-panel");
@@ -892,6 +903,7 @@
     var total = target.children.length || 1;
     if (current <= 0) {
       window.Reveal.slide(total - 1);
+      syncSlideHash(total - 1);
       return;
     }
 
@@ -905,6 +917,7 @@
     var total = target.children.length || 1;
     if (current >= total - 1) {
       window.Reveal.slide(0);
+      syncSlideHash(0);
       return;
     }
 
@@ -957,6 +970,7 @@
     if (event.stopImmediatePropagation) event.stopImmediatePropagation();
 
     window.Reveal.slide(index);
+    syncSlideHash(index);
     closeOverview();
     syncThumbnailState();
   }
@@ -977,6 +991,7 @@
       event.preventDefault();
       event.stopPropagation();
       window.Reveal.slide(total - 1);
+      syncSlideHash(total - 1);
       return;
     }
 
@@ -984,6 +999,7 @@
       event.preventDefault();
       event.stopPropagation();
       window.Reveal.slide(0);
+      syncSlideHash(0);
     }
   }
 
