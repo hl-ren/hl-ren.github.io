@@ -205,8 +205,8 @@
   display: none;
 }
 
-.deck-settings-panel button,
-.deck-settings-panel select {
+.deck-controls .deck-settings-panel button,
+.deck-controls .deck-settings-panel select {
   border-color: var(--slide-line);
   background: var(--slide-panel);
   color: var(--slide-ink);
