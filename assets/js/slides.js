@@ -69,6 +69,10 @@
     }
   };
 
+  function getDeckPreferenceKey(key) {
+    return key + ":" + window.location.pathname;
+  }
+
   var Slides = {
     all: function () {
       return Array.prototype.slice.call(target.children);
@@ -741,7 +745,8 @@
   }
 
   function getStoredAspect() {
-    return normalizeAspect(Preferences.read(STORAGE_KEYS.aspect, document.body.dataset.slideAspectDefault || "16:9"));
+    var deckDefault = document.body.dataset.slideAspectDefault || "16:9";
+    return normalizeAspect(Preferences.read(getDeckPreferenceKey(STORAGE_KEYS.aspect), deckDefault));
   }
 
   function applyAspect(aspect) {
@@ -754,7 +759,7 @@
     fitAllSlideContent();
     if (document.querySelector(SELECTORS.overviewReveal)) layoutOverviewGrid();
 
-    Preferences.write(STORAGE_KEYS.aspect, selected);
+    Preferences.write(getDeckPreferenceKey(STORAGE_KEYS.aspect), selected);
   }
 
   function setupAspectSwitcher() {
