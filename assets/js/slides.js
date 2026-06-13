@@ -21,6 +21,16 @@
     autoplay: "slide-autoplay"
   };
 
+  var CUSTOM_COLOR_DATASET_VALUE = "custom";
+  var COLOR_CACHE = {};
+  var CUSTOM_COLOR_SELECTORS = ["topbar", "content", "footer"];
+  var COMMON_COLOR_OPTIONS = [
+    "red", "crimson", "tomato", "coral", "orange", "gold", "yellow", "khaki",
+    "green", "lime", "olive", "teal", "turquoise", "cyan", "aqua",
+    "blue", "navy", "indigo", "purple", "violet", "plum", "orchid",
+    "pink", "salmon", "brown", "maroon", "gray", "silver", "black"
+  ];
+
   var deckState = {
     meta: null,
     total: 0,
@@ -837,7 +847,108 @@
   }
 
   function getStoredColor(region) {
-    return Preferences.read("slide-" + region + "-color", getColorDefault(region));
+    return getColorDefault(region);
+  }
+
+  function isPresetSlideColor(value) {
+    return ["default", "white", "soft", "sage", "blue", "amber", "charcoal"].indexOf(value) !== -1;
+  }
+
+  function parseCssColor(value) {
+    var color = String(value || "").trim();
+    if (!color || color === "default") return null;
+    if (COLOR_CACHE[color]) return COLOR_CACHE[color];
+    if (window.CSS && CSS.supports && !CSS.supports("color", color)) return null;
+
+    var probe = document.createElement("span");
+    probe.style.color = color;
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    document.body.appendChild(probe);
+
+    var computed = window.getComputedStyle(probe).color;
+    probe.remove();
+
+    var match = computed.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+    if (!match) return null;
+
+    var parsed = {
+      raw: color,
+      rgb: "rgb(" + match[1] + " " + match[2] + " " + match[3] + ")",
+      r: Number(match[1]),
+      g: Number(match[2]),
+      b: Number(match[3])
+    };
+    COLOR_CACHE[color] = parsed;
+    return parsed;
+  }
+
+  function readableInk(color) {
+    var luminance = (0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b) / 255;
+    return luminance > 0.58 ? "#1f2523" : "#ffffff";
+  }
+
+  function tintColor(color, amount) {
+    var mix = Math.max(0, Math.min(1, amount));
+    var r = Math.round(color.r + (255 - color.r) * mix);
+    var g = Math.round(color.g + (255 - color.g) * mix);
+    var b = Math.round(color.b + (255 - color.b) * mix);
+    return "rgb(" + r + " " + g + " " + b + ")";
+  }
+
+  function clearInlineSlideColor(region) {
+    var style = document.body.style;
+    if (region === "topbar") {
+      style.removeProperty("--slide-topbar-bg");
+      style.removeProperty("--slide-topbar-ink");
+      return;
+    }
+    if (region === "content") {
+      style.removeProperty("--slide-content-bg");
+      return;
+    }
+    if (region === "footer") {
+      style.removeProperty("--slide-footer-bg");
+      style.removeProperty("--slide-footer-ink");
+    }
+  }
+
+  function applyInlineSlideColor(region, color) {
+    if (region === "topbar") {
+      document.body.style.setProperty("--slide-topbar-bg", color.rgb);
+      document.body.style.setProperty("--slide-topbar-ink", readableInk(color));
+      return;
+    }
+    if (region === "content") {
+      document.body.style.setProperty("--slide-content-bg", tintColor(color, 0.86));
+      return;
+    }
+    if (region === "footer") {
+      document.body.style.setProperty("--slide-footer-bg", color.rgb);
+      document.body.style.setProperty("--slide-footer-ink", readableInk(color));
+    }
+  }
+
+  function ensureColorOption(select, value) {
+    if (!select || !value) return;
+    var hasOption = Array.prototype.some.call(select.options, function (option) {
+      return option.value === value;
+    });
+    if (hasOption) return;
+
+    var option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    option.dataset.customColorOption = "true";
+    select.appendChild(option);
+  }
+
+  function populateCommonColorOptions() {
+    document.querySelectorAll("[data-slide-color-select]").forEach(function (select) {
+      COMMON_COLOR_OPTIONS.forEach(function (color) {
+        ensureColorOption(select, color);
+      });
+    });
   }
 
   function applySlideColor(region, value) {
@@ -845,16 +956,23 @@
     if (!key) return;
 
     var selected = value || "default";
-    document.body.dataset[key] = selected;
+    var parsed = isPresetSlideColor(selected) ? null : parseCssColor(selected);
+
+    clearInlineSlideColor(region);
+    document.body.dataset[key] = parsed ? CUSTOM_COLOR_DATASET_VALUE : selected;
+    if (parsed) applyInlineSlideColor(region, parsed);
+
     document.querySelectorAll('[data-slide-color-select="' + region + '"]').forEach(function (select) {
+      if (parsed) ensureColorOption(select, selected);
       select.value = selected;
     });
 
-    Preferences.write("slide-" + region + "-color", selected);
   }
 
   function setupColorSwitchers() {
-    ["topbar", "content", "footer"].forEach(function (region) {
+    populateCommonColorOptions();
+
+    CUSTOM_COLOR_SELECTORS.forEach(function (region) {
       applySlideColor(region, getStoredColor(region));
     });
 

@@ -5,6 +5,7 @@
   var currentLanguage = "zh";
   var previewTimer = 0;
   var pendingPreviewPayload = null;
+  var pendingPreviewIndex = 0;
   var previewVersion = 0;
 
   var DEFAULT_TEMPLATE = [
@@ -158,9 +159,9 @@
 
   function getStoredLanguage() {
     try {
-      return localStorage.getItem("site-language") || "zh";
+      return localStorage.getItem("local-slide-language") || "en";
     } catch (error) {
-      return "zh";
+      return "en";
     }
   }
 
@@ -179,7 +180,7 @@
     });
 
     try {
-      localStorage.setItem("site-language", currentLanguage);
+      localStorage.setItem("local-slide-language", currentLanguage);
     } catch (error) {}
 
     updateUi();
@@ -504,6 +505,58 @@
     return "editor.md";
   }
 
+  function getMarkdownLineAtPoint(textarea, clientY) {
+    if (!textarea) return 1;
+
+    var rect = textarea.getBoundingClientRect();
+    var style = window.getComputedStyle(textarea);
+    var lineHeight = parseFloat(style.lineHeight);
+    if (!lineHeight || Number.isNaN(lineHeight)) {
+      lineHeight = (parseFloat(style.fontSize) || 15) * 1.35;
+    }
+
+    var paddingTop = parseFloat(style.paddingTop) || 0;
+    var offsetY = clientY - rect.top - paddingTop + textarea.scrollTop;
+    return Math.max(1, Math.floor(offsetY / lineHeight) + 1);
+  }
+
+  function getSlideIndexForLine(markdown, lineNumber) {
+    var lines = String(markdown || "").split(/\r?\n/);
+    var bodyStart = 1;
+    var slideIndex = 0;
+
+    if (lines[0] && lines[0].trim() === "---") {
+      for (var i = 1; i < lines.length; i += 1) {
+        if (lines[i].trim() === "---") {
+          bodyStart = i + 2;
+          break;
+        }
+      }
+    }
+
+    if (lineNumber < bodyStart) return 0;
+
+    for (var index = bodyStart - 1; index < lines.length && index < lineNumber - 1; index += 1) {
+      if (/^\s*---\s*$/.test(lines[index])) slideIndex += 1;
+    }
+
+    return slideIndex;
+  }
+
+  function postPreviewGoto(index) {
+    pendingPreviewIndex = Math.max(0, Number(index) || 0);
+    if (!ui.previewFrame || !ui.previewFrame.contentWindow) return;
+    ui.previewFrame.contentWindow.postMessage({
+      type: "local-slide-preview-goto",
+      index: pendingPreviewIndex
+    }, window.location.origin);
+  }
+
+  function syncPreviewToEditorPoint(event) {
+    var line = getMarkdownLineAtPoint(ui.editor, event.clientY);
+    postPreviewGoto(getSlideIndexForLine(ui.editor.value, line));
+  }
+
   function loadTemplate() {
     if (!ui.editor) return;
     ui.editor.value = DEFAULT_TEMPLATE;
@@ -610,6 +663,8 @@
       updateUi();
       schedulePreviewRender(450);
     });
+    ui.editor.addEventListener("mousemove", syncPreviewToEditorPoint);
+    ui.editor.addEventListener("click", syncPreviewToEditorPoint);
   }
 
   if (ui.dropZone) {
@@ -639,6 +694,7 @@
   function postPreviewPayload() {
     if (!ui.previewFrame || !ui.previewFrame.contentWindow || !pendingPreviewPayload) return;
     ui.previewFrame.contentWindow.postMessage(pendingPreviewPayload, window.location.origin);
+    postPreviewGoto(pendingPreviewIndex);
   }
 
   function renderPreview() {
@@ -648,7 +704,8 @@
       type: "local-slide-preview",
       markdown: ui.editor.value || DEFAULT_TEMPLATE,
       name: getCurrentDeckName(),
-      assets: assetFiles
+      assets: assetFiles,
+      index: pendingPreviewIndex
     };
     previewVersion += 1;
     ui.previewFrame.src = "preview.html?v=" + String(previewVersion);
@@ -672,9 +729,21 @@
     openMarkdownText(event.data.markdown || DEFAULT_TEMPLATE, {
       name: event.data.name || "preview.md",
       assets: event.data.assets || []
+    }).then(function () {
+      if (window.Reveal && window.Reveal.slide) {
+        window.Reveal.slide(Math.max(0, Number(event.data.index) || 0));
+      }
     }).catch(function (error) {
       setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
     });
+  });
+
+  window.addEventListener("message", function (event) {
+    if (event.origin !== window.location.origin) return;
+    if (!event.data || event.data.type !== "local-slide-preview-goto") return;
+    if (window.Reveal && window.Reveal.slide) {
+      window.Reveal.slide(Math.max(0, Number(event.data.index) || 0));
+    }
   });
 
   if (ui.editor && !ui.editor.value.trim()) {
