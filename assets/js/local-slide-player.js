@@ -83,10 +83,10 @@
 
   var messages = {
     zh: {
-      title: "打开本地 Markdown 幻灯片",
+      title: "Slide Player",
       description: "左边编辑或粘贴 md，右边即时渲染为 PPT。也可以导入本地 <code>index.md</code> 和图片/视频文件夹。",
       markdown: "Markdown",
-      assets: "图片/视频文件夹",
+      assets: "资源",
       open: "打开幻灯片",
       render: "刷新预览",
       template: "载入模板",
@@ -105,10 +105,10 @@
       dropHint: "也可以把 md 和资源文件拖到这里。"
     },
     en: {
-      title: "Open a Local Markdown Deck",
+      title: "Slide Player",
       description: "Edit or paste Markdown on the left and preview slides on the right. You can also import a local <code>index.md</code> and asset folder.",
       markdown: "Markdown",
-      assets: "Image / video folder",
+      assets: "Assets",
       open: "Open Slides",
       render: "Refresh Preview",
       template: "Load Template",
