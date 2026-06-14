@@ -105,7 +105,6 @@
       previewHint: "使用同一套 slides 内核",
       notSelected: "未选择",
       assetCount: "{count} 个文件",
-      ready: "",
       chooseMarkdown: "请选择一个 Markdown 文件。",
       deckSelected: "已选择 Markdown 文件。",
       assetsSelected: "已选择资源文件。",
@@ -130,7 +129,6 @@
       previewHint: "Same slide engine",
       notSelected: "None",
       assetCount: "{count} files",
-      ready: "",
       chooseMarkdown: "Choose a Markdown file.",
       deckSelected: "Markdown file selected.",
       assetsSelected: "Asset folder selected.",
@@ -608,7 +606,7 @@
     ui.editor.value = DEFAULT_TEMPLATE;
     mdFile = null;
     updateUi();
-    setStatusKey("ready", false);
+    setStatus("", false);
     schedulePreviewRender(0);
   }
 
@@ -620,7 +618,7 @@
     if (deck) mdFile = deck;
     if (assets.length) assetFiles = assetFiles.concat(assets);
     updateUi();
-    setStatusKey(mdFile ? "ready" : "chooseMarkdown", false);
+    setStatusKey(mdFile ? "deckSelected" : "chooseMarkdown", false);
     if (deck && ui.editor) {
       readFileText(deck).then(function (text) {
         ui.editor.value = text;
@@ -647,7 +645,7 @@
     document.body.classList.remove("local-deck-loaded");
     if (ui.shell) ui.shell.hidden = false;
     document.title = t("pageTitle");
-    setStatusKey("ready", false);
+    setStatus("", false);
     schedulePreviewRender(0);
   }
 
