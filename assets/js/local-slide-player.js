@@ -8,6 +8,11 @@
   var pendingPreviewIndex = 0;
   var previewVersion = 0;
   var returnToEditorAfterFullscreen = false;
+  var MESSAGE_TYPES = {
+    previewReady: "local-slide-preview-ready",
+    previewRender: "local-slide-preview",
+    previewGoto: "local-slide-preview-goto"
+  };
 
   var DEFAULT_TEMPLATE = [
     "---",
@@ -152,7 +157,7 @@
     downloadButton: document.querySelector("[data-local-download]")
   };
 
-  if (!ui.shell || !ui.deckInput || !ui.openButton) return;
+  var hasWorkbench = Boolean(ui.shell && ui.deckInput && ui.openButton);
 
   function t(key, values) {
     var dict = messages[currentLanguage] || messages.zh;
@@ -521,7 +526,7 @@
 
   function updateUi() {
     var hasEditorMarkdown = ui.editor && ui.editor.value.trim();
-    ui.openButton.disabled = !mdFile && !hasEditorMarkdown;
+    if (ui.openButton) ui.openButton.disabled = !mdFile && !hasEditorMarkdown;
     if (ui.deckName) ui.deckName.textContent = mdFile ? mdFile.name : t("notSelected");
     if (ui.assetCount) ui.assetCount.textContent = String(assetFiles.length);
     if (ui.assetWord) {
@@ -588,7 +593,7 @@
     pendingPreviewIndex = Math.max(0, Number(index) || 0);
     if (!ui.previewFrame || !ui.previewFrame.contentWindow) return;
     ui.previewFrame.contentWindow.postMessage({
-      type: "local-slide-preview-goto",
+      type: MESSAGE_TYPES.previewGoto,
       index: pendingPreviewIndex
     }, window.location.origin);
   }
@@ -633,14 +638,14 @@
     window.clearTimeout(previewTimer);
     pendingPreviewPayload = null;
     if (ui.previewFrame) ui.previewFrame.src = "about:blank";
-    ui.shell.hidden = true;
+    if (ui.shell) ui.shell.hidden = true;
     document.body.classList.add("local-deck-loaded");
   }
 
   function returnToEditor() {
     returnToEditorAfterFullscreen = false;
     document.body.classList.remove("local-deck-loaded");
-    ui.shell.hidden = false;
+    if (ui.shell) ui.shell.hidden = false;
     document.title = t("pageTitle");
     setStatusKey("ready", false);
     schedulePreviewRender(0);
@@ -738,49 +743,53 @@
     });
   }
 
-  ui.deckInput.addEventListener("change", function () {
-    loadDeckFile(ui.deckInput.files[0] || null, "deckSelected");
-  });
+  function bindWorkbenchEvents() {
+    if (!hasWorkbench) return;
 
-  if (ui.assetInput) {
-    ui.assetInput.addEventListener("change", function () {
-      assetFiles = Array.prototype.slice.call(ui.assetInput.files || []);
-      updateUi();
-      setStatusKey(assetFiles.length ? "assetsSelected" : "dropHint", false);
-      schedulePreviewRender(0);
+    ui.deckInput.addEventListener("change", function () {
+      loadDeckFile(ui.deckInput.files[0] || null, "deckSelected");
     });
-  }
 
-  ui.openButton.addEventListener("click", openPlayer);
-  if (ui.downloadButton) ui.downloadButton.addEventListener("click", downloadMarkdown);
-  if (ui.renderButton) ui.renderButton.addEventListener("click", function () { schedulePreviewRender(0); });
-  if (ui.templateButton) ui.templateButton.addEventListener("click", loadTemplate);
-  if (ui.editor) {
-    ui.editor.addEventListener("input", function () {
-      mdFile = null;
-      updateUi();
-      schedulePreviewRender(450);
-    });
-    ui.editor.addEventListener("mousemove", syncPreviewToEditorPoint);
-    ui.editor.addEventListener("click", syncPreviewToEditorPoint);
-  }
-
-  if (ui.dropZone) {
-    ["dragenter", "dragover"].forEach(function (type) {
-      ui.dropZone.addEventListener(type, function (event) {
-        event.preventDefault();
-        ui.dropZone.classList.add("is-dragging");
+    if (ui.assetInput) {
+      ui.assetInput.addEventListener("change", function () {
+        assetFiles = Array.prototype.slice.call(ui.assetInput.files || []);
+        updateUi();
+        setStatusKey(assetFiles.length ? "assetsSelected" : "dropHint", false);
+        schedulePreviewRender(0);
       });
-    });
-    ["dragleave", "drop"].forEach(function (type) {
-      ui.dropZone.addEventListener(type, function (event) {
-        event.preventDefault();
-        ui.dropZone.classList.remove("is-dragging");
+    }
+
+    ui.openButton.addEventListener("click", openPlayer);
+    if (ui.downloadButton) ui.downloadButton.addEventListener("click", downloadMarkdown);
+    if (ui.renderButton) ui.renderButton.addEventListener("click", function () { schedulePreviewRender(0); });
+    if (ui.templateButton) ui.templateButton.addEventListener("click", loadTemplate);
+    if (ui.editor) {
+      ui.editor.addEventListener("input", function () {
+        mdFile = null;
+        updateUi();
+        schedulePreviewRender(450);
       });
-    });
-    ui.dropZone.addEventListener("drop", function (event) {
-      collectFiles(event.dataTransfer.files);
-    });
+      ui.editor.addEventListener("mousemove", syncPreviewToEditorPoint);
+      ui.editor.addEventListener("click", syncPreviewToEditorPoint);
+    }
+
+    if (ui.dropZone) {
+      ["dragenter", "dragover"].forEach(function (type) {
+        ui.dropZone.addEventListener(type, function (event) {
+          event.preventDefault();
+          ui.dropZone.classList.add("is-dragging");
+        });
+      });
+      ["dragleave", "drop"].forEach(function (type) {
+        ui.dropZone.addEventListener(type, function (event) {
+          event.preventDefault();
+          ui.dropZone.classList.remove("is-dragging");
+        });
+      });
+      ui.dropZone.addEventListener("drop", function (event) {
+        collectFiles(event.dataTransfer.files);
+      });
+    }
   }
 
   document.addEventListener("click", function (event) {
@@ -805,7 +814,7 @@
     if (!ui.previewFrame || !ui.editor) return;
 
     pendingPreviewPayload = {
-      type: "local-slide-preview",
+      type: MESSAGE_TYPES.previewRender,
       markdown: ui.editor.value || DEFAULT_TEMPLATE,
       name: getCurrentDeckName(),
       assets: assetFiles,
@@ -823,13 +832,13 @@
 
   window.addEventListener("message", function (event) {
     if (event.origin !== window.location.origin) return;
-    if (!event.data || event.data.type !== "local-slide-preview-ready") return;
+    if (!event.data || event.data.type !== MESSAGE_TYPES.previewReady) return;
     postPreviewPayload();
   });
 
   window.addEventListener("message", function (event) {
     if (event.origin !== window.location.origin) return;
-    if (!event.data || event.data.type !== "local-slide-preview") return;
+    if (!event.data || event.data.type !== MESSAGE_TYPES.previewRender) return;
     openMarkdownText(event.data.markdown || DEFAULT_TEMPLATE, {
       name: event.data.name || "preview.md",
       assets: event.data.assets || []
@@ -844,32 +853,41 @@
 
   window.addEventListener("message", function (event) {
     if (event.origin !== window.location.origin) return;
-    if (!event.data || event.data.type !== "local-slide-preview-goto") return;
+    if (!event.data || event.data.type !== MESSAGE_TYPES.previewGoto) return;
     if (window.Reveal && window.Reveal.slide) {
       window.Reveal.slide(Math.max(0, Number(event.data.index) || 0));
     }
   });
 
-  var initialDeckFile = ui.deckInput.files && ui.deckInput.files[0] ? ui.deckInput.files[0] : null;
-  var initialAssetFiles = ui.assetInput ? Array.prototype.slice.call(ui.assetInput.files || []) : [];
+  function initializeWorkbench() {
+    if (!hasWorkbench) return;
 
-  if (initialDeckFile) mdFile = initialDeckFile;
-  if (initialAssetFiles.length) assetFiles = initialAssetFiles;
+    var initialDeckFile = ui.deckInput.files && ui.deckInput.files[0] ? ui.deckInput.files[0] : null;
+    var initialAssetFiles = ui.assetInput ? Array.prototype.slice.call(ui.assetInput.files || []) : [];
 
-  if (ui.editor && !ui.editor.value.trim() && !initialDeckFile) {
-    ui.editor.value = DEFAULT_TEMPLATE;
-  }
-  updateUi();
-  setLanguage(getStoredLanguage());
-  if (initialDeckFile) {
-    loadDeckFile(initialDeckFile, "deckSelected");
-  } else {
+    if (initialDeckFile) mdFile = initialDeckFile;
+    if (initialAssetFiles.length) assetFiles = initialAssetFiles;
+
+    if (ui.editor && !ui.editor.value.trim() && !initialDeckFile) {
+      ui.editor.value = DEFAULT_TEMPLATE;
+    }
+
+    if (initialDeckFile) {
+      loadDeckFile(initialDeckFile, "deckSelected");
+      return;
+    }
+
     setStatusKey("dropHint", false);
     schedulePreviewRender(0);
   }
 
+  bindWorkbenchEvents();
+  updateUi();
+  setLanguage(getStoredLanguage());
+  initializeWorkbench();
+
   if (window.parent && window.parent !== window) {
-    window.parent.postMessage({ type: "local-slide-preview-ready" }, window.location.origin);
+    window.parent.postMessage({ type: MESSAGE_TYPES.previewReady }, window.location.origin);
   }
 
   window.LocalSlidePlayer = {
