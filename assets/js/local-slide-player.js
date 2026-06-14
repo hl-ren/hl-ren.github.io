@@ -7,6 +7,7 @@
   var pendingPreviewPayload = null;
   var pendingPreviewIndex = 0;
   var previewVersion = 0;
+  var returnToEditorAfterFullscreen = false;
 
   var DEFAULT_TEMPLATE = [
     "---",
@@ -87,7 +88,10 @@
       description: "左边编辑或粘贴 md，右边即时渲染为 PPT。也可以导入本地 <code>index.md</code> 和图片/视频文件夹。",
       markdown: "Markdown",
       assets: "资源",
-      open: "打开幻灯片",
+      chooseMd: "Choose md file",
+      chooseAssets: "Choose assets file",
+      player: "Player",
+      download: "Download MD",
       render: "刷新预览",
       template: "载入模板",
       editor: "Markdown",
@@ -109,7 +113,10 @@
       description: "Edit or paste Markdown on the left and preview slides on the right. You can also import a local <code>index.md</code> and asset folder.",
       markdown: "Markdown",
       assets: "Assets",
-      open: "Open Slides",
+      chooseMd: "Choose md file",
+      chooseAssets: "Choose assets file",
+      player: "Player",
+      download: "Download MD",
       render: "Refresh Preview",
       template: "Load Template",
       editor: "Markdown",
@@ -141,7 +148,8 @@
     editor: document.querySelector("[data-local-editor]"),
     previewFrame: document.querySelector("[data-local-preview]"),
     renderButton: document.querySelector("[data-local-render]"),
-    templateButton: document.querySelector("[data-local-template]")
+    templateButton: document.querySelector("[data-local-template]"),
+    downloadButton: document.querySelector("[data-local-download]")
   };
 
   if (!ui.shell || !ui.deckInput || !ui.openButton) return;
@@ -530,6 +538,11 @@
     return "editor.md";
   }
 
+  function getDownloadName() {
+    var name = getCurrentDeckName() || "deck.md";
+    return /\.(md|markdown)$/i.test(name) ? name : name + ".md";
+  }
+
   function getMarkdownLineAtPoint(textarea, clientY) {
     if (!textarea) return 1;
 
@@ -621,6 +634,33 @@
     document.body.classList.add("local-deck-loaded");
   }
 
+  function returnToEditor() {
+    returnToEditorAfterFullscreen = false;
+    document.body.classList.remove("local-deck-loaded");
+    ui.shell.hidden = false;
+    setStatusKey("ready", false);
+    schedulePreviewRender(0);
+  }
+
+  function requestPlayerFullscreen() {
+    if (document.fullscreenElement) {
+      returnToEditorAfterFullscreen = true;
+      return Promise.resolve(true);
+    }
+    if (!document.documentElement.requestFullscreen) {
+      return Promise.resolve(Boolean(document.fullscreenElement));
+    }
+
+    return document.documentElement.requestFullscreen()
+      .then(function () {
+        returnToEditorAfterFullscreen = true;
+        return true;
+      })
+      .catch(function () {
+        return false;
+      });
+  }
+
   function openMarkdownText(text, options) {
     var fileInfo = {
       name: options && options.name ? options.name : mdFile ? mdFile.name : "local-deck.md"
@@ -643,11 +683,11 @@
 
   function openDeck() {
     var markdown = getCurrentMarkdown();
-    if (!markdown && !mdFile) return;
+    if (!markdown && !mdFile) return Promise.resolve();
 
     setStatusKey("parsing", false);
 
-    (markdown ? Promise.resolve(markdown) : readFileText(mdFile))
+    return (markdown ? Promise.resolve(markdown) : readFileText(mdFile))
       .then(function (text) {
         return openMarkdownText(text, { name: getCurrentDeckName(), assets: assetFiles });
       })
@@ -659,10 +699,31 @@
       });
   }
 
-  ui.deckInput.addEventListener("change", function () {
-    mdFile = ui.deckInput.files[0] || null;
+  function openPlayer() {
+    returnToEditorAfterFullscreen = false;
+    requestPlayerFullscreen();
+    openDeck();
+  }
+
+  function downloadMarkdown() {
+    var markdown = getCurrentMarkdown() || DEFAULT_TEMPLATE;
+    var blob = new Blob([markdown], { type: "text/markdown;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    link.download = getDownloadName();
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(function () {
+      URL.revokeObjectURL(url);
+    }, 0);
+  }
+
+  function loadDeckFile(file, statusKey) {
+    mdFile = file || null;
     updateUi();
-    setStatusKey(mdFile ? "deckSelected" : "dropHint", false);
+    setStatusKey(mdFile ? statusKey || "deckSelected" : "dropHint", false);
     if (!mdFile || !ui.editor) return;
     readFileText(mdFile).then(function (text) {
       ui.editor.value = text;
@@ -671,6 +732,10 @@
     }).catch(function (error) {
       setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
     });
+  }
+
+  ui.deckInput.addEventListener("change", function () {
+    loadDeckFile(ui.deckInput.files[0] || null, "deckSelected");
   });
 
   if (ui.assetInput) {
@@ -682,7 +747,8 @@
     });
   }
 
-  ui.openButton.addEventListener("click", openDeck);
+  ui.openButton.addEventListener("click", openPlayer);
+  if (ui.downloadButton) ui.downloadButton.addEventListener("click", downloadMarkdown);
   if (ui.renderButton) ui.renderButton.addEventListener("click", function () { schedulePreviewRender(0); });
   if (ui.templateButton) ui.templateButton.addEventListener("click", loadTemplate);
   if (ui.editor) {
@@ -718,6 +784,12 @@
     if (!button) return;
     setLanguage(button.dataset.localLang);
   });
+
+  document.addEventListener("fullscreenchange", function () {
+    if (document.fullscreenElement || !returnToEditorAfterFullscreen) return;
+    if (!document.body.classList.contains("local-deck-loaded")) return;
+    returnToEditor();
+  }, true);
 
   function postPreviewPayload() {
     if (!ui.previewFrame || !ui.previewFrame.contentWindow || !pendingPreviewPayload) return;
@@ -774,13 +846,23 @@
     }
   });
 
-  if (ui.editor && !ui.editor.value.trim()) {
+  var initialDeckFile = ui.deckInput.files && ui.deckInput.files[0] ? ui.deckInput.files[0] : null;
+  var initialAssetFiles = ui.assetInput ? Array.prototype.slice.call(ui.assetInput.files || []) : [];
+
+  if (initialDeckFile) mdFile = initialDeckFile;
+  if (initialAssetFiles.length) assetFiles = initialAssetFiles;
+
+  if (ui.editor && !ui.editor.value.trim() && !initialDeckFile) {
     ui.editor.value = DEFAULT_TEMPLATE;
   }
   updateUi();
   setLanguage(getStoredLanguage());
-  setStatusKey("dropHint", false);
-  schedulePreviewRender(0);
+  if (initialDeckFile) {
+    loadDeckFile(initialDeckFile, "deckSelected");
+  } else {
+    setStatusKey("dropHint", false);
+    schedulePreviewRender(0);
+  }
 
   if (window.parent && window.parent !== window) {
     window.parent.postMessage({ type: "local-slide-preview-ready" }, window.location.origin);

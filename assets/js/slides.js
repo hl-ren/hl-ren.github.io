@@ -34,7 +34,8 @@
   var deckState = {
     meta: null,
     total: 0,
-    currentIndex: 0
+    currentIndex: 0,
+    controlsTemplateMarkup: null
   };
 
   function hasQueryFlag(name) {
@@ -128,7 +129,18 @@
     };
   }
 
+  function isInactiveLocalPlayer() {
+    return document.body.classList.contains("local-player-body") &&
+      !document.body.classList.contains("local-preview-body") &&
+      !document.body.classList.contains("local-deck-loaded");
+  }
+
   function syncViewportMode() {
+    if (isInactiveLocalPlayer()) {
+      document.body.classList.remove("is-scaled-stage", "is-handheld", "is-handheld-portrait");
+      return;
+    }
+
     var handheld = isHandheldViewport();
     var viewportWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
     var viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -636,6 +648,10 @@
   }
 
   function buildThumbnailTray() {
+    document.querySelectorAll(".slide-thumbnails").forEach(function (tray) {
+      tray.remove();
+    });
+
     var tray = document.createElement("nav");
     var grid = document.createElement("div");
     tray.className = "slide-thumbnails";
@@ -1224,7 +1240,17 @@
 
   function attachDeckControls() {
     var template = document.querySelector(SELECTORS.controlsTemplate);
+    if (template) deckState.controlsTemplateMarkup = template.outerHTML;
+    if (!template && deckState.controlsTemplateMarkup) {
+      var wrapper = document.createElement("div");
+      wrapper.innerHTML = deckState.controlsTemplateMarkup;
+      template = wrapper.firstElementChild;
+    }
     if (!template) return;
+
+    document.querySelectorAll(".slide-footer-actions .deck-controls, .title-slide-controls .deck-controls").forEach(function (controls) {
+      controls.remove();
+    });
 
     document.querySelectorAll(".slide-footer-actions").forEach(function (slot, index) {
       var controls = template.cloneNode(true);
@@ -1264,7 +1290,7 @@
       slot.appendChild(controls);
     });
 
-    template.remove();
+    if (template.parentNode) template.remove();
   }
 
   function setupDeckControls() {
@@ -1408,8 +1434,35 @@
     autoPrintPdf(0);
   }
 
+  function refreshInitializedDeck() {
+    splitSlides();
+    enhanceSlides();
+    buildThumbnailTray();
+    attachDeckControls();
+    setupOverviewGrid();
+    populateCommonColorOptions();
+    applyTheme(getStoredTheme());
+    applyAspect(getStoredAspect());
+    CUSTOM_COLOR_SELECTORS.forEach(function (region) {
+      applySlideColor(region, getStoredColor(region));
+    });
+    applyBulletMode(getStoredBulletMode());
+    applyAutoplay(getStoredAutoplay());
+
+    if (window.Reveal && window.Reveal.sync) window.Reveal.sync();
+    if (window.Reveal && window.Reveal.slide) window.Reveal.slide(0);
+    syncViewportMode();
+    syncSlideStatus();
+    syncThumbnailState();
+    fitAllSlideContent();
+    typesetMath(0);
+  }
+
   function initializeDeck() {
-    if (document.body.dataset.slideDeckInitialized === "true") return Promise.resolve();
+    if (document.body.dataset.slideDeckInitialized === "true") {
+      refreshInitializedDeck();
+      return Promise.resolve();
+    }
     document.body.dataset.slideDeckInitialized = "true";
 
     splitSlides();
