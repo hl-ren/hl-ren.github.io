@@ -85,7 +85,7 @@
   var messages = {
     zh: {
       title: "Slide Player",
-      description: "左边编辑或粘贴 md，右边即时渲染为 PPT。也可以导入本地 <code>index.md</code> 和图片/视频文件夹。",
+      pageTitle: "本地幻灯片播放器",
       markdown: "Markdown",
       assets: "资源",
       chooseMd: "Choose md file",
@@ -100,7 +100,7 @@
       previewHint: "使用同一套 slides 内核",
       notSelected: "未选择",
       assetCount: "{count} 个文件",
-      ready: "已准备，可以打开。",
+      ready: "",
       chooseMarkdown: "请选择一个 Markdown 文件。",
       deckSelected: "已选择 Markdown 文件。",
       assetsSelected: "已选择资源文件。",
@@ -110,7 +110,7 @@
     },
     en: {
       title: "Slide Player",
-      description: "Edit or paste Markdown on the left and preview slides on the right. You can also import a local <code>index.md</code> and asset folder.",
+      pageTitle: "Local Slide Player",
       markdown: "Markdown",
       assets: "Assets",
       chooseMd: "Choose md file",
@@ -125,7 +125,7 @@
       previewHint: "Same slide engine",
       notSelected: "None",
       assetCount: "{count} files",
-      ready: "Ready to open.",
+      ready: "",
       chooseMarkdown: "Choose a Markdown file.",
       deckSelected: "Markdown file selected.",
       assetsSelected: "Asset folder selected.",
@@ -193,6 +193,9 @@
 
     updateUi();
     refreshStatusLanguage();
+    if (!document.body.classList.contains("local-deck-loaded")) {
+      document.title = t("pageTitle");
+    }
   }
 
   function setStatus(text, isError) {
@@ -486,7 +489,7 @@
     var aspect = meta.slide_aspect || meta.aspect || "16:9";
     var bullets = meta.slide_bullets || meta.bullet_mode || "item";
 
-    document.title = title + " - Local Slide Player";
+    document.title = title + " - " + t("pageTitle");
     setDatasetValue("deckTitle", title, "Local Deck");
     setDatasetValue("deckSubtitle", meta.subtitle || meta.slide_subtitle, "");
     setDatasetValue("deckAuthor", meta.author, "");
@@ -638,6 +641,7 @@
     returnToEditorAfterFullscreen = false;
     document.body.classList.remove("local-deck-loaded");
     ui.shell.hidden = false;
+    document.title = t("pageTitle");
     setStatusKey("ready", false);
     schedulePreviewRender(0);
   }
