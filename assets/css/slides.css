@@ -610,57 +610,6 @@
   color: inherit;
 }
 
-.local-preview-body .deck-controls {
-  gap: 3px;
-}
-
-.local-preview-body .deck-page-status {
-  min-width: 34px;
-  font-size: 12px;
-}
-
-.local-preview-body .deck-controls button {
-  min-width: 24px;
-  min-height: 24px;
-  padding: 0 3px;
-}
-
-.local-preview-body .deck-controls button[data-slide-prev],
-.local-preview-body .deck-controls button[data-slide-next] {
-  min-width: 22px;
-  font-size: 19px;
-}
-
-.local-preview-body .deck-controls button[data-slide-fullscreen] {
-  width: 38px;
-  min-width: 38px;
-  min-height: 30px;
-}
-
-.local-preview-body .deck-controls button[data-slide-fullscreen]::before {
-  width: 28px;
-  height: 28px;
-  font-size: 29px;
-  line-height: 25px;
-}
-
-.local-preview-body .deck-controls button[data-slide-settings-toggle] {
-  width: 34px;
-  min-width: 34px;
-  min-height: 30px;
-}
-
-.local-preview-body .deck-controls button[data-slide-settings-toggle]::before {
-  width: 28px;
-  height: 28px;
-  font-size: 30px;
-  line-height: 25px;
-}
-
-.local-preview-body .slide-footer-actions {
-  transform: translateX(-28px);
-}
-
 .deck-controls label {
   display: inline-flex;
   align-items: center;
@@ -1807,4 +1756,71 @@ body:fullscreen,
     padding: 6px 8px;
     font-size: 11px;
   }
+}
+
+.local-preview-body {
+  --slide-footer-height: 42px;
+}
+
+.local-preview-body .slide-footer {
+  padding-top: 2px;
+  padding-bottom: 3px;
+  font-size: 0.56em;
+}
+
+.local-preview-body .deck-controls {
+  gap: 3px;
+}
+
+.local-preview-body .deck-page-status {
+  min-width: 34px;
+  font-size: 12px;
+}
+
+.local-preview-body .slide-footer-actions {
+  transform: translateX(-28px);
+}
+
+.local-preview-body .deck-controls button,
+.local-preview-body .deck-controls select {
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 3px;
+  font-size: 12px;
+}
+
+.local-preview-body .deck-controls button {
+  font-size: 0;
+}
+
+.local-preview-body .deck-controls button[data-slide-prev],
+.local-preview-body .deck-controls button[data-slide-next] {
+  min-width: 22px;
+  font-size: 19px;
+}
+
+.local-preview-body .deck-controls button[data-slide-fullscreen] {
+  width: 38px;
+  min-width: 38px;
+  min-height: 30px;
+}
+
+.local-preview-body .deck-controls button[data-slide-fullscreen]::before {
+  width: 28px;
+  height: 28px;
+  font-size: 29px;
+  line-height: 25px;
+}
+
+.local-preview-body .deck-controls button[data-slide-settings-toggle] {
+  width: 34px;
+  min-width: 34px;
+  min-height: 30px;
+}
+
+.local-preview-body .deck-controls button[data-slide-settings-toggle]::before {
+  width: 28px;
+  height: 28px;
+  font-size: 30px;
+  line-height: 25px;
 }
