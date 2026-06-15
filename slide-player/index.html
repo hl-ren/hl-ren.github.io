@@ -87,10 +87,22 @@
       <section class="local-player-editor" aria-label="Markdown slide editor">
         <div class="local-editor-pane">
           <div class="local-editor-toolbar">
-            <strong data-local-i18n="editor">Markdown</strong>
-            <span data-local-i18n="editorHint">编辑后会自动刷新预览</span>
+            <div class="local-editor-title">
+              <strong data-local-i18n="editor">Markdown</strong>
+              <span data-local-i18n="editorHint">编辑后会自动刷新预览</span>
+            </div>
+            <div class="local-editor-inserts" aria-label="Insert Markdown">
+              <button type="button" data-local-insert="table" data-local-i18n="insertTable">Table</button>
+              <button type="button" data-local-insert="code" data-local-i18n="insertCode">Code</button>
+              <button type="button" data-local-insert="math" data-local-i18n="insertMath">Math</button>
+              <button type="button" data-local-insert="image" data-local-i18n="insertImage">Image</button>
+              <button type="button" data-local-insert="columns" data-local-i18n="insertColumns">Columns</button>
+            </div>
           </div>
-          <textarea data-local-editor spellcheck="false"></textarea>
+          <div class="local-editor-surface">
+            <pre class="local-editor-highlight" data-local-highlight aria-hidden="true"><code></code></pre>
+            <textarea data-local-editor spellcheck="false"></textarea>
+          </div>
         </div>
         <div class="local-preview-pane">
           <div class="local-editor-toolbar">

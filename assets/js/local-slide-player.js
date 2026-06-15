@@ -101,6 +101,11 @@
       template: "载入模板",
       editor: "Markdown",
       editorHint: "编辑后会自动刷新预览",
+      insertTable: "表格",
+      insertCode: "代码",
+      insertMath: "公式",
+      insertImage: "图片",
+      insertColumns: "双栏",
       preview: "预览",
       previewHint: "使用同一套 slides 内核",
       notSelected: "未选择",
@@ -125,6 +130,11 @@
       template: "Load Template",
       editor: "Markdown",
       editorHint: "Preview refreshes after edits",
+      insertTable: "Table",
+      insertCode: "Code",
+      insertMath: "Math",
+      insertImage: "Image",
+      insertColumns: "Columns",
       preview: "Preview",
       previewHint: "Same slide engine",
       notSelected: "None",
@@ -149,6 +159,7 @@
     status: document.querySelector("[data-local-status]"),
     dropZone: document.querySelector("[data-local-drop]"),
     editor: document.querySelector("[data-local-editor]"),
+    highlight: document.querySelector("[data-local-highlight] code"),
     previewFrame: document.querySelector("[data-local-preview]"),
     renderButton: document.querySelector("[data-local-render]"),
     templateButton: document.querySelector("[data-local-template]"),
@@ -334,6 +345,105 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function highlightInlineMarkdown(line) {
+    return line
+      .replace(/(`[^`]+`)/g, "<span class=\"md-code\">$1</span>")
+      .replace(/(!\[[^\]]*\]\([^)]+\))/g, "<span class=\"md-image\">$1</span>")
+      .replace(/(\[[^\]]+\]\([^)]+\))/g, "<span class=\"md-link\">$1</span>")
+      .replace(/(\{:\s*[^}]+\})/g, "<span class=\"md-muted\">$1</span>")
+      .replace(/(\*\*[^*]+\*\*)/g, "<span class=\"md-heading\">$1</span>");
+  }
+
+  function highlightMarkdown(markdown) {
+    var inFence = false;
+
+    return String(markdown || "").split(/\r?\n/).map(function (rawLine) {
+      var escaped = escapeHtml(rawLine);
+      var trimmed = rawLine.trim();
+
+      if (/^```/.test(trimmed)) {
+        inFence = !inFence;
+        return "<span class=\"md-fence\">" + escaped + "</span>";
+      }
+      if (inFence) return "<span class=\"md-code\">" + escaped + "</span>";
+      if (/^%%/.test(trimmed)) return "<span class=\"md-comment\">" + escaped + "</span>";
+      if (/^---\s*$/.test(trimmed)) return "<span class=\"md-hr\">" + escaped + "</span>";
+      if (/^\s*#{1,6}\s+/.test(rawLine)) return "<span class=\"md-heading\">" + escaped + "</span>";
+      if (/^\s*[-*+]\s+/.test(rawLine)) return escaped.replace(/^(\s*[-*+]\s+)/, "<span class=\"md-list\">$1</span>");
+      if (/^\s*&gt;/.test(escaped)) return "<span class=\"md-quote\">" + escaped + "</span>";
+      if (/^\s*\|.*\|\s*$/.test(rawLine)) return "<span class=\"md-table\">" + escaped + "</span>";
+      if (/^\s*(?:\$\$|\\\[|\\\])/.test(rawLine)) return "<span class=\"md-math\">" + escaped + "</span>";
+      if (/^\s*&lt;\/?[\w-]+/.test(escaped)) return "<span class=\"md-html\">" + escaped + "</span>";
+
+      return highlightInlineMarkdown(escaped);
+    }).join("\n");
+  }
+
+  function syncEditorHighlight() {
+    if (!ui.editor || !ui.highlight) return;
+    ui.highlight.innerHTML = highlightMarkdown(ui.editor.value) + "\n";
+    ui.highlight.parentElement.scrollTop = ui.editor.scrollTop;
+    ui.highlight.parentElement.scrollLeft = ui.editor.scrollLeft;
+  }
+
+  function getInsertSnippet(type) {
+    var snippets = {
+      table: [
+        "| Item | Notes |",
+        "| --- | --- |",
+        "| A | Replace me |",
+        "| B | Replace me |"
+      ].join("\n"),
+      code: [
+        "```python",
+        "# code here",
+        "```"
+      ].join("\n"),
+      math: [
+        "$$",
+        "a^2 + b^2 = c^2",
+        "$$"
+      ].join("\n"),
+      image: "![Alt text](images/example.png){: .w-60 }",
+      columns: [
+        "### Left column",
+        "",
+        "- Point A",
+        "- Point B",
+        "",
+        "### Right column",
+        "",
+        "- Point C",
+        "- Point D"
+      ].join("\n")
+    };
+
+    return snippets[type] || "";
+  }
+
+  function insertMarkdownSnippet(type) {
+    if (!ui.editor) return;
+    var snippet = getInsertSnippet(type);
+    if (!snippet) return;
+
+    var start = ui.editor.selectionStart || 0;
+    var end = ui.editor.selectionEnd || start;
+    var value = ui.editor.value;
+    var before = value.slice(0, start);
+    var after = value.slice(end);
+    var prefix = before && !/\n\n$/.test(before) ? before.endsWith("\n") ? "\n" : "\n\n" : "";
+    var suffix = after && !/^\n\n/.test(after) ? after.startsWith("\n") ? "\n" : "\n\n" : "";
+    var inserted = prefix + snippet + suffix;
+
+    ui.editor.value = before + inserted + after;
+    ui.editor.focus();
+    ui.editor.selectionStart = ui.editor.selectionEnd = start + inserted.length - suffix.length;
+    mdFile = null;
+    updateUi();
+    syncEditorHighlight();
+    schedulePreviewRender(0);
   }
 
   function parseKramdownAttrs(source) {
@@ -606,6 +716,7 @@
     ui.editor.value = DEFAULT_TEMPLATE;
     mdFile = null;
     updateUi();
+    syncEditorHighlight();
     setStatus("", false);
     schedulePreviewRender(0);
   }
@@ -623,6 +734,7 @@
       readFileText(deck).then(function (text) {
         ui.editor.value = text;
         updateUi();
+        syncEditorHighlight();
         schedulePreviewRender(0);
       }).catch(function (error) {
         setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
@@ -735,6 +847,7 @@
     readFileText(mdFile).then(function (text) {
       ui.editor.value = text;
       updateUi();
+      syncEditorHighlight();
       schedulePreviewRender(0);
     }).catch(function (error) {
       setStatusKey("failed", true, { message: error && error.message ? error.message : String(error) });
@@ -765,11 +878,19 @@
       ui.editor.addEventListener("input", function () {
         mdFile = null;
         updateUi();
+        syncEditorHighlight();
         schedulePreviewRender(450);
       });
+      ui.editor.addEventListener("scroll", syncEditorHighlight);
       ui.editor.addEventListener("mousemove", syncPreviewToEditorPoint);
       ui.editor.addEventListener("click", syncPreviewToEditorPoint);
     }
+
+    document.querySelectorAll("[data-local-insert]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        insertMarkdownSnippet(button.dataset.localInsert);
+      });
+    });
 
     if (ui.dropZone) {
       ["dragenter", "dragover"].forEach(function (type) {
@@ -868,6 +989,7 @@
 
     if (ui.editor && !ui.editor.value.trim() && !initialDeckFile) {
       ui.editor.value = DEFAULT_TEMPLATE;
+      syncEditorHighlight();
     }
 
     if (initialDeckFile) {

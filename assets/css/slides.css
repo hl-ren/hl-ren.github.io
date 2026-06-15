@@ -315,23 +315,141 @@
   font-size: 12px;
 }
 
+.local-editor-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
 .local-editor-toolbar strong {
   color: var(--slide-ink);
   font-size: 13px;
 }
 
-.local-editor-pane textarea {
+.local-editor-title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.local-editor-inserts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.local-editor-inserts button {
+  min-height: 24px;
+  padding: 2px 7px;
+  border: 1px solid var(--slide-line);
+  border-radius: 0;
+  background: var(--slide-panel);
+  color: var(--slide-heading);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.local-editor-inserts button:hover,
+.local-editor-inserts button:focus-visible {
+  border-color: var(--slide-accent);
+  outline: 0;
+}
+
+.local-editor-surface {
+  position: relative;
+  min-height: 0;
+  background: #fbfdfc;
+  overflow: hidden;
+}
+
+.local-editor-pane textarea,
+.local-editor-highlight {
   width: 100%;
   height: 100%;
   min-height: 0;
   padding: 12px;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  tab-size: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.local-editor-pane textarea {
+  position: relative;
   border: 0;
   outline: 0;
   resize: none;
-  background: #fbfdfc;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--slide-ink);
+  scrollbar-color: var(--slide-line) transparent;
+}
+
+.local-editor-pane textarea::selection {
+  background: rgba(47, 125, 98, 0.22);
+  color: transparent;
+}
+
+.local-editor-highlight {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  border: 0;
+  pointer-events: none;
   color: var(--slide-ink);
-  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  tab-size: 2;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.local-editor-highlight::-webkit-scrollbar {
+  display: none;
+}
+
+.md-muted {
+  color: #87908c;
+}
+
+.md-heading {
+  color: #0b4f4a;
+  font-weight: 850;
+}
+
+.md-hr,
+.md-list,
+.md-quote,
+.md-table {
+  color: #2f7d62;
+  font-weight: 750;
+}
+
+.md-code,
+.md-fence {
+  color: #475569;
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.md-math {
+  color: #7c3aed;
+}
+
+.md-link,
+.md-image {
+  color: #1d4ed8;
+}
+
+.md-comment {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.md-html {
+  color: #b45309;
 }
 
 .local-preview-pane iframe {
@@ -1469,7 +1587,7 @@ body:fullscreen,
 
 .slide-auto-columns,
 .slide-columns {
-  font-size: 0.82em;
+  font-size: 0.9em;
 }
 
 .slide-note {
