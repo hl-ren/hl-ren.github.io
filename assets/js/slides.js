@@ -372,6 +372,148 @@
     });
   }
 
+  function getPositionMarker(node) {
+    if (node.nodeType !== 1) return null;
+    var text = node.textContent.trim();
+    var match = text.match(/^\{\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)\s*\}/);
+    if (!match) return null;
+
+    var values = match.slice(1).map(function (value) {
+      return Math.max(0, Math.min(1, parseFloat(value)));
+    });
+    if (values.some(function (value) { return !Number.isFinite(value); })) return null;
+    if (values[2] <= values[0] || values[3] <= values[1]) return null;
+
+    return {
+      x1: values[0],
+      y1: values[1],
+      x2: values[2],
+      y2: values[3]
+    };
+  }
+
+  function isPositionEndMarker(node) {
+    return node.nodeType === 1 && node.textContent.trim() === "{/}";
+  }
+
+  function hasTrailingPositionEndMarker(node) {
+    return node.nodeType === 1 && /\{\/\}\s*$/.test(node.textContent.trim());
+  }
+
+  function isEmptyTextNode(node) {
+    return node.nodeType === 3 && !node.textContent.trim();
+  }
+
+  function hasPositionContent(node) {
+    return Boolean(node && (node.textContent.trim() || node.querySelector("img, video, iframe, table, pre, svg, canvas")));
+  }
+
+  function replaceTextInFirstTextNode(root, pattern, replacement) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var textNode = walker.nextNode();
+    if (!textNode) return;
+    textNode.nodeValue = textNode.nodeValue.replace(pattern, replacement);
+  }
+
+  function replaceTextInLastTextNode(root, pattern, replacement) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var textNode = null;
+    var next;
+
+    while ((next = walker.nextNode())) textNode = next;
+    if (!textNode) return;
+    textNode.nodeValue = textNode.nodeValue.replace(pattern, replacement);
+  }
+
+  function stripLeadingPositionMarker(node) {
+    replaceTextInFirstTextNode(
+      node,
+      /^\s*\{\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*\}\s*/,
+      ""
+    );
+    if (hasPositionContent(node)) return node;
+    node.remove();
+    return null;
+  }
+
+  function stripTrailingPositionEndMarker(node) {
+    replaceTextInLastTextNode(node, /\s*\{\/\}\s*$/, "");
+    if (hasPositionContent(node)) return node;
+    node.remove();
+    return null;
+  }
+
+  function createPositionBox(position) {
+    var box = document.createElement("div");
+    box.className = "slide-place";
+    box.style.setProperty("--place-left", String(position.x1 * 100) + "%");
+    box.style.setProperty("--place-bottom", String(position.y1 * 100) + "%");
+    box.style.setProperty("--place-width", String((position.x2 - position.x1) * 100) + "%");
+    box.style.setProperty("--place-height", String((position.y2 - position.y1) * 100) + "%");
+    return box;
+  }
+
+  function extractPositionBlocks(content) {
+    var nodes = Array.prototype.slice.call(content.childNodes);
+    var layer = document.createElement("div");
+    layer.className = "slide-place-layer";
+
+    for (var i = 0; i < nodes.length; i += 1) {
+      var position = getPositionMarker(nodes[i]);
+      if (!position) continue;
+
+      var marker = nodes[i];
+      var box = createPositionBox(position);
+      var hasEndMarker = nodes.slice(i).some(function (candidate, candidateIndex) {
+        return candidateIndex > 0 && (isPositionEndMarker(candidate) || hasTrailingPositionEndMarker(candidate));
+      });
+      var inlineContent = stripLeadingPositionMarker(marker);
+      if (inlineContent && hasTrailingPositionEndMarker(inlineContent)) {
+        inlineContent = stripTrailingPositionEndMarker(inlineContent);
+        hasEndMarker = true;
+      }
+
+      if (inlineContent) box.appendChild(inlineContent);
+      if (!hasEndMarker && inlineContent) {
+        layer.appendChild(box);
+        continue;
+      }
+
+      for (var j = i + 1; j < nodes.length; j += 1) {
+        if (isPositionEndMarker(nodes[j])) {
+          nodes[j].remove();
+          i = j;
+          break;
+        }
+
+        if (hasTrailingPositionEndMarker(nodes[j])) {
+          var trailingContent = stripTrailingPositionEndMarker(nodes[j]);
+          if (trailingContent) box.appendChild(trailingContent);
+          i = j;
+          break;
+        }
+
+        if (!hasEndMarker && box.childNodes.length && !isEmptyTextNode(nodes[j])) {
+          i = j - 1;
+          break;
+        }
+
+        box.appendChild(nodes[j]);
+
+        if (!hasEndMarker && !isEmptyTextNode(nodes[j])) {
+          i = j;
+          break;
+        }
+      }
+
+      if (box.textContent.trim() || box.querySelector("img, video, iframe, table, pre, svg, canvas")) {
+        layer.appendChild(box);
+      }
+    }
+
+    return layer.childNodes.length ? layer : null;
+  }
+
   function applyListFragments(content) {
     Array.prototype.slice.call(content.querySelectorAll("li")).forEach(function (item) {
       if (item.classList.contains("fragment")) return;
@@ -638,6 +780,7 @@
         content.appendChild(child);
       });
       expandSymbolShortcodes(content);
+      var placeLayer = extractPositionBlocks(content);
       if (isTitleSlide) {
         buildTitleSlide(content, slideTitle, meta);
         var titleControlsSlot = document.createElement("div");
@@ -692,6 +835,7 @@
       section.appendChild(topbar);
       section.appendChild(content);
       section.appendChild(footer);
+      if (placeLayer) section.appendChild(placeLayer);
     });
   }
 

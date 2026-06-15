@@ -107,6 +107,7 @@
       insertImage: "图片",
       insertColumns: "双栏",
       insertSymbol: "符号",
+      insertPlace: "定位",
       preview: "预览",
       previewHint: "使用同一套 slides 内核",
       notSelected: "未选择",
@@ -137,6 +138,7 @@
       insertImage: "Image",
       insertColumns: "Columns",
       insertSymbol: "Symbol",
+      insertPlace: "Place",
       preview: "Preview",
       previewHint: "Same slide engine",
       notSelected: "None",
@@ -376,6 +378,8 @@
       if (/^\s*#{1,6}\s+/.test(rawLine)) return "<span class=\"md-heading\">" + escaped + "</span>";
       if (/^\s*[-*+]\s+/.test(rawLine)) return escaped.replace(/^(\s*[-*+]\s+)/, "<span class=\"md-list\">$1</span>");
       if (/^\s*&gt;/.test(escaped)) return "<span class=\"md-quote\">" + escaped + "</span>";
+      if (/^\s*\{\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*\}\s*$/.test(rawLine) ||
+          /^\s*\{\/\}\s*$/.test(rawLine)) return "<span class=\"md-place\">" + escaped + "</span>";
       if (/^\s*\|.*\|\s*$/.test(rawLine)) return "<span class=\"md-table\">" + escaped + "</span>";
       if (/^\s*(?:\$\$|\\\[|\\\])/.test(rawLine)) return "<span class=\"md-math\">" + escaped + "</span>";
       if (/^\s*&lt;\/?[\w-]+/.test(escaped)) return "<span class=\"md-html\">" + escaped + "</span>";
@@ -414,6 +418,13 @@
         ":big[⚙️] Key idea",
         "",
         ":hero[ρ]"
+      ].join("\n"),
+      place: [
+        "{0.2,0.2,0.4,0.6}",
+        ":big[⚙️]",
+        "",
+        "Placed note",
+        "{/}"
       ].join("\n"),
       columns: [
         "### Left column",
