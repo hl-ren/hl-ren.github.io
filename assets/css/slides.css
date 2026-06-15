@@ -439,7 +439,8 @@
 }
 
 .md-link,
-.md-image {
+.md-image,
+.md-symbol {
   color: #1d4ed8;
 }
 
@@ -1509,6 +1510,32 @@ body:fullscreen,
 
 .slide-content mjx-container[display="true"] {
   margin: 0.18em 0 !important;
+}
+
+.slide-symbol {
+  display: inline-block;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: -0.08em;
+}
+
+.slide-symbol-icon {
+  font-size: 1.28em;
+}
+
+.slide-symbol-big {
+  margin: 0 0.06em;
+  font-size: 2.4em;
+  vertical-align: middle;
+}
+
+.slide-symbol-hero {
+  display: block;
+  margin: 0.08em auto;
+  font-size: min(5.2em, 22vh);
+  line-height: 0.92;
+  text-align: center;
 }
 
 .equation-box mjx-container {

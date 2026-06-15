@@ -325,6 +325,53 @@
     content.appendChild(columns);
   }
 
+  function createSymbolNode(size, text) {
+    var span = document.createElement("span");
+    span.className = "slide-symbol slide-symbol-" + size;
+    span.textContent = text;
+    return span;
+  }
+
+  function shouldSkipSymbolShortcodes(node) {
+    var parent = node.parentElement;
+    if (!parent) return true;
+
+    return Boolean(parent.closest(
+      "code, pre, script, style, textarea, mjx-container, .MathJax, .no-symbols, [data-no-symbols]"
+    ));
+  }
+
+  function expandSymbolShortcodes(root) {
+    var pattern = /:(icon|big|hero)\[([^\]\n]+)\]/g;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var textNodes = [];
+    var node;
+
+    while ((node = walker.nextNode())) {
+      if (!shouldSkipSymbolShortcodes(node) && pattern.test(node.nodeValue)) {
+        textNodes.push(node);
+      }
+      pattern.lastIndex = 0;
+    }
+
+    textNodes.forEach(function (textNode) {
+      var fragment = document.createDocumentFragment();
+      var sourceText = textNode.nodeValue;
+      var lastIndex = 0;
+      var match;
+
+      pattern.lastIndex = 0;
+      while ((match = pattern.exec(sourceText))) {
+        fragment.appendChild(document.createTextNode(sourceText.slice(lastIndex, match.index)));
+        fragment.appendChild(createSymbolNode(match[1], match[2]));
+        lastIndex = pattern.lastIndex;
+      }
+
+      fragment.appendChild(document.createTextNode(sourceText.slice(lastIndex)));
+      textNode.parentNode.replaceChild(fragment, textNode);
+    });
+  }
+
   function applyListFragments(content) {
     Array.prototype.slice.call(content.querySelectorAll("li")).forEach(function (item) {
       if (item.classList.contains("fragment")) return;
@@ -590,6 +637,7 @@
       Array.prototype.slice.call(section.childNodes).forEach(function (child) {
         content.appendChild(child);
       });
+      expandSymbolShortcodes(content);
       if (isTitleSlide) {
         buildTitleSlide(content, slideTitle, meta);
         var titleControlsSlot = document.createElement("div");

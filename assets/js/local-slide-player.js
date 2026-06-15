@@ -106,6 +106,7 @@
       insertMath: "公式",
       insertImage: "图片",
       insertColumns: "双栏",
+      insertSymbol: "符号",
       preview: "预览",
       previewHint: "使用同一套 slides 内核",
       notSelected: "未选择",
@@ -135,6 +136,7 @@
       insertMath: "Math",
       insertImage: "Image",
       insertColumns: "Columns",
+      insertSymbol: "Symbol",
       preview: "Preview",
       previewHint: "Same slide engine",
       notSelected: "None",
@@ -352,6 +354,7 @@
       .replace(/(`[^`]+`)/g, "<span class=\"md-code\">$1</span>")
       .replace(/(!\[[^\]]*\]\([^)]+\))/g, "<span class=\"md-image\">$1</span>")
       .replace(/(\[[^\]]+\]\([^)]+\))/g, "<span class=\"md-link\">$1</span>")
+      .replace(/(:(?:icon|big|hero)\[[^\]\n]+\])/g, "<span class=\"md-symbol\">$1</span>")
       .replace(/(\{:\s*[^}]+\})/g, "<span class=\"md-muted\">$1</span>")
       .replace(/(\*\*[^*]+\*\*)/g, "<span class=\"md-heading\">$1</span>");
   }
@@ -407,6 +410,11 @@
         "$$"
       ].join("\n"),
       image: "![Alt text](images/example.png){: .w-60 }",
+      symbol: [
+        ":big[⚙️] Key idea",
+        "",
+        ":hero[ρ]"
+      ].join("\n"),
       columns: [
         "### Left column",
         "",
